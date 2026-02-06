@@ -16,7 +16,7 @@ void loop()
   if (digitalRead(button) == LOW) 
   {
     state = 0;   
-    delay(300); // Delay is in milliseconds     
+    delay(1000); // Delay is in milliseconds     
   }
 
   // If LED is ON, blink it

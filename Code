@@ -1,0 +1,30 @@
+int light = 7;
+int button = 5;
+
+int state = 0;   // 0 = OFF, 1 = ON
+
+void setup() 
+{
+  pinMode(light, OUTPUT);
+  pinMode(button, INPUT);
+}
+
+void loop() 
+{
+
+  if (digitalRead(button) == LOW) 
+  {
+    state = 0;   
+    delay(300); // Delay is in milliseconds     
+  }
+
+  // If LED is ON, blink it
+  if (state == 1) {
+    digitalWrite(light, HIGH);
+    delay(2000); 
+    digitalWrite(light, LOW);
+    delay(2000);
+  } else {
+    digitalWrite(light, LOW);
+  }
+}

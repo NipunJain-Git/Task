@@ -1,1 +1,1 @@
-# Task
+In this project, an LED is controlled using a push button with Arduino. The button is configured using the internal pull-up resistor to detect user input. Each button press toggles the LED between ON and OFF states. When the LED is ON, it blinks using delay functions to control the speed. A small delay is added to avoid multiple toggles due to button bouncing. This approach demonstrates basic digital input, output control, and timing in Arduino.

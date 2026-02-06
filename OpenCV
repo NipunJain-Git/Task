@@ -1,0 +1,116 @@
+---
+
+## OpenCV for Robotic Vision
+
+OpenCV (Open Source Computer Vision Library) is a powerful open-source library designed for real-time image and video processing. It enables machines to interpret visual information from the environment, effectively allowing computers and robots to **“see” and analyze the world around them**.
+
+In robotics, OpenCV functions as the **perception layer**—the robot’s eyes 👀—by converting raw camera data into meaningful information that can be used for decision-making and control.
+
+### Applications of OpenCV in Robotics
+
+Some of the most common robot vision tasks implemented using OpenCV include:
+
+* **Obstacle detection and avoidance**
+* **Face and object recognition**
+* **Colour-based object detection**
+* **Line following and path tracking**
+* **Gesture and motion analysis**
+
+---
+
+## Image Representation in OpenCV
+
+In OpenCV, an image is stored as a **NumPy array**.
+
+* Each image consists of **rows (height)** and **columns (width)**.
+* Every pixel is represented by **three intensity values**, corresponding to colour channels.
+* Unlike the conventional RGB (Red, Green, Blue) format, **OpenCV stores colour images in BGR (Blue, Green, Red) order**.
+  This design choice optimizes performance and compatibility with certain imaging hardware.
+
+Understanding this representation is crucial for correct image processing and colour manipulation.
+
+---
+
+## Sample Project: Real-Time Colour Object Detection and Tracking
+
+### Objective
+
+To detect a specific coloured object (e.g., a blue bottle or red ball) using OpenCV and track its position in real time through a webcam feed.
+
+### Working Principle
+
+1. Capture live video frames from the webcam.
+2. Convert the image from **BGR to HSV colour space**, which is more robust to lighting variations.
+3. Apply colour thresholding to isolate the desired object.
+4. Reduce noise using morphological operations.
+5. Detect contours and identify the largest object.
+6. Draw a bounding box and mark the object’s center.
+
+---
+
+### Implementation (Python + OpenCV)
+
+```python
+import cv2
+import numpy as np
+
+# Open camera
+cap = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    # Convert BGR to HSV
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+    # Define color range (BLUE object)
+    lower_blue = np.array([100, 150, 50])
+    upper_blue = np.array([140, 255, 255])
+
+    # Create mask
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    # Remove noise using erosion and dilation
+    mask = cv2.erode(mask, None, iterations=2)
+    mask = cv2.dilate(mask, None, iterations=2)
+
+    # Find contours
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    if contours:
+        largest = max(contours, key=cv2.contourArea)
+        area = cv2.contourArea(largest)
+
+        if area > 500:
+            x, y, w, h = cv2.boundingRect(largest)
+
+            # Draw bounding box
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+            # Calculate center of object
+            cx = x + w // 2
+            cy = y + h // 2
+            cv2.circle(frame, (cx, cy), 5, (0, 0, 255), -1)
+
+            cv2.putText(frame, "Object Detected", (x, y-10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
+    # Display results
+    cv2.imshow("Frame", frame)
+    cv2.imshow("Mask", mask)
+
+    if cv2.waitKey(1) & 0xFF == 27:  # ESC key
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+```
+
+---
+
+## Conclusion
+
+This project demonstrates how OpenCV can be used to perform real-time colour-based object detection, a foundational technique in robotic vision. Such methods are widely applied in autonomous robots, surveillance systems, and human-robot interaction**, making OpenCV an essential tool in modern robotics and computer vision research.
+

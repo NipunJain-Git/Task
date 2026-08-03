@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "appTitle": "KaamSetu",
+  "loginTitle": "Welcome to KaamSetu",
+  "loginSubtitle": "Enter your phone number to continue",
+  "phoneLabel": "Phone Number",
+  "sendOtp": "Send OTP",
+  "verifyOtp": "Verify OTP",
+  "homeTab": "Home",
+  "jobsTab": "Jobs",
+  "profileTab": "Profile",
+  "findWork": "Find Work",
+  "postJob": "Post a Job",
+  "language": "Language",
+  "logout": "Logout"
+}

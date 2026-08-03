@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interested Workers - KaamSetu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#f3f0ef",
+                    "secondary-fixed": "#ffddb5",
+                    "on-error-container": "#93000a",
+                    "primary": "#00450d",
+                    "inverse-surface": "#303030",
+                    "on-secondary-fixed-variant": "#643f00",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#0c5216",
+                    "surface-container-low": "#f6f3f2",
+                    "secondary-fixed-dim": "#ffb957",
+                    "tertiary": "#323e36",
+                    "background": "#fcf9f8",
+                    "tertiary-container": "#49554c",
+                    "on-tertiary-fixed": "#131e17",
+                    "on-error": "#ffffff",
+                    "outline-variant": "#c0c9bb",
+                    "on-primary-fixed": "#002203",
+                    "on-tertiary-container": "#bcc9be",
+                    "on-secondary-container": "#694300",
+                    "primary-fixed-dim": "#91d78a",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-high": "#eae7e7",
+                    "outline": "#717a6d",
+                    "surface-tint": "#2a6b2c",
+                    "primary-container": "#1b5e20",
+                    "on-background": "#1b1c1c",
+                    "on-tertiary-fixed-variant": "#3e4a41",
+                    "on-surface": "#1b1c1c",
+                    "secondary": "#835400",
+                    "surface": "#fcf9f8",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#dcd9d9",
+                    "on-secondary-fixed": "#2a1800",
+                    "surface-variant": "#e5e2e1",
+                    "primary-fixed": "#acf4a4",
+                    "surface-container": "#f0eded",
+                    "on-surface-variant": "#41493e",
+                    "inverse-primary": "#91d78a",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#fcab28",
+                    "on-primary-container": "#90d689",
+                    "tertiary-fixed-dim": "#bdcabe",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed": "#d9e6da",
+                    "surface-bright": "#fcf9f8",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "margin-desktop": "32px",
+                    "touch-target-min": "48px",
+                    "stack-lg": "24px",
+                    "unit": "8px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "button-text": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "label-lg": ["16px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "button-text": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "30px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .worker-card {
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+        }
+        .worker-card:active {
+            transform: scale(0.98);
+        }
+        /* Custom scroll behavior */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- Top AppBar -->
+<header class="w-full top-0 sticky z-40 bg-surface border-b border-outline-variant">
+<div class="flex flex-col px-margin-mobile py-unit md:px-margin-desktop w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4 h-touch-target-min">
+<button aria-label="Back" class="w-touch-target-min h-touch-target-min flex items-center justify-center rounded-full hover:bg-surface-container-high active:scale-95 transition-all text-on-surface">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-on-surface">Interested Workers (5)</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">House Painting (2 Rooms)</p>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-md">
+<!-- Filter/Sort Section -->
+<div class="flex justify-end mb-stack-lg">
+<button class="flex items-center gap-2 px-4 h-touch-target-min bg-surface-container border border-outline-variant rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span>Sort by: Rating</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<!-- Worker List -->
+<div class="space-y-stack-md">
+<!-- Card 1: Ramesh Kumar -->
+<div class="worker-card bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center">
+<div class="flex-shrink-0">
+<img class="w-20 h-20 rounded-full object-cover border-2 border-primary-fixed shadow-sm" src="https://lh3.googleusercontent.com/aida/AP1WRLuGwB67AK8bzpswewPe_W8PWOra8PN7sRoyMzrlZFJw4iCye-_oud8HsGqwzZ-l9xKqXQpepJj4lv93edOTre6CCsaOSnnUInRHseBTb_A-YAci9rrbtYBZRO3Mk_TaA7GLUcnn46llIYRE-QgMNl9KbnRa4Cee6zPFhJG7ahaHz6sGux9ce9DPCqjmX_p4l8N7iCHvBHYe7oskUYfjTDdmwcJFmOe8EXTWJP2myhQyZinP81JLEhqYyw"/>
+</div>
+<div class="flex-grow space-y-unit">
+<div class="flex items-center justify-between gap-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Ramesh Kumar</h2>
+<div class="flex items-center gap-1.5 px-2 py-0.5 bg-primary-fixed/20 text-on-primary-fixed-variant rounded-full text-sm font-semibold">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+                            Available
+                        </div>
+</div>
+<p class="font-body-md text-body-md text-primary font-semibold">92% positive • 50 ratings</p>
+<div class="flex flex-wrap gap-2 py-unit">
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-wider">Painting</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-wider">Texturing</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md text-secondary">₹800</span>
+<span class="text-on-surface-variant text-body-md">per day</span>
+</div>
+</div>
+<div class="flex flex-row md:flex-col gap-3 w-full md:w-40">
+<button class="flex-1 px-6 h-touch-target-min bg-primary-container text-on-primary-container rounded-full font-button-text text-button-text hover:brightness-110 active:scale-95 transition-all">
+                        Select
+                    </button>
+<button class="flex-1 px-6 h-touch-target-min border-2 border-outline-variant text-on-surface-variant rounded-full font-button-text text-button-text hover:bg-surface-container-low active:scale-95 transition-all">
+                        Reject
+                    </button>
+</div>
+</div>
+<!-- Card 2: Sunil Verma -->
+<div class="worker-card bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center">
+<div class="flex-shrink-0">
+<img class="w-20 h-20 rounded-full object-cover border-2 border-outline-variant" data-alt="A studio portrait of a reliable middle-aged man with short black hair, wearing a professional work uniform. He has a warm, confident expression. The lighting is soft and even, highlighting his friendly features. The background is a clean, neutral gray, fitting for a professional service provider profile. High-quality digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4p2vvI7WZHBAhuP2LdKsdLssOwqeuOXOaJP_wKywk15RcUW3J7YnH3g5ezAhL67PtgonabTNKuBoGYe22zOqDKcwK3b-j_0aN6KcmMOaG6pcOK-WAs5iTDHzwlsla_d2PSIGytJIfYUWhY6oJF2pkWH1_vTucPBev1ECj5OlkL4tchuulUhbdBFHaEUyhYGy2pnzh8yJtKXQ8Q4aTv93QvhL-ErfrGXx_nfN7BIqK9NEy4scpZFPAaocUKcv2XFwkVfGTqjdZprs"/>
+</div>
+<div class="flex-grow space-y-unit">
+<div class="flex items-center justify-between gap-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Sunil Verma</h2>
+<div class="flex items-center gap-1.5 px-2 py-0.5 bg-primary-fixed/20 text-on-primary-fixed-variant rounded-full text-sm font-semibold">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+                            Available
+                        </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">88% positive • 35 ratings</p>
+<div class="flex flex-wrap gap-2 py-unit">
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-wider">Painting</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-wider">Waterproofing</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md text-secondary">₹850</span>
+<span class="text-on-surface-variant text-body-md">per day</span>
+</div>
+</div>
+<div class="flex flex-row md:flex-col gap-3 w-full md:w-40">
+<button class="flex-1 px-6 h-touch-target-min bg-primary-container text-on-primary-container rounded-full font-button-text text-button-text hover:brightness-110 active:scale-95 transition-all">
+                        Select
+                    </button>
+<button class="flex-1 px-6 h-touch-target-min border-2 border-outline-variant text-on-surface-variant rounded-full font-button-text text-button-text hover:bg-surface-container-low active:scale-95 transition-all">
+                        Reject
+                    </button>
+</div>
+</div>
+<!-- Card 3: Amit Singh -->
+<div class="worker-card bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center">
+<div class="flex-shrink-0">
+<img class="w-20 h-20 rounded-full object-cover border-2 border-outline-variant" data-alt="A portrait of a young, approachable Indian professional worker with a neat appearance and a kind smile. He is standing against a warm, sunlit brick wall background. The aesthetic is clean, trustworthy, and modern light-mode compliant. The photo captures a sense of reliability and quiet confidence through soft lighting and sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxdVNUp4dxlLVGt9Xg_DBQuYKqD09WpHbRsCSTO8rPiyJzmtocP1U7QOKKvtcuKwdketJg1k2wU8tFxRKXp9zXKqJEpa5flmJMF0d2SpGe215kOTQAlm46nzsx1jD-ouJ605QQl7H1_2-AQFvONIvv2DfUtnT3FLlrUV8t7H7Z_cMlultnYn_HTWHkT_YRGA9muwLTtoO-P9U31EYEP-XJZ0owwCVCy3Fb4z9Fp2NuC_tLdjfSxwfFmmCGpiFGWdbWcuk5x0GlVss"/>
+</div>
+<div class="flex-grow space-y-unit">
+<div class="flex items-center justify-between gap-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Amit Singh</h2>
+<div class="flex items-center gap-1.5 px-2 py-0.5 bg-primary-fixed/20 text-on-primary-fixed-variant rounded-full text-sm font-semibold">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+                            Available
+                        </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">95% positive • 12 ratings</p>
+<div class="flex flex-wrap gap-2 py-unit">
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-wider">Painting</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold uppercase tracking-wider">Polishing</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md text-secondary">₹750</span>
+<span class="text-on-surface-variant text-body-md">per day</span>
+</div>
+</div>
+<div class="flex flex-row md:flex-col gap-3 w-full md:w-40">
+<button class="flex-1 px-6 h-touch-target-min bg-primary-container text-on-primary-container rounded-full font-button-text text-button-text hover:brightness-110 active:scale-95 transition-all">
+                        Select
+                    </button>
+<button class="flex-1 px-6 h-touch-target-min border-2 border-outline-variant text-on-surface-variant rounded-full font-button-text text-button-text hover:bg-surface-container-low active:scale-95 transition-all">
+                        Reject
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-touch-target-min bg-surface-container-lowest border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work_outline</span>
+<span class="font-label-lg text-label-lg">My Jobs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-lg text-label-lg">Earnings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Scale down on press for all buttons
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('touchstart', () => {
+                elem.classList.add('scale-95');
+            });
+            elem.addEventListener('touchend', () => {
+                elem.classList.remove('scale-95');
+            });
+        });
+
+        // Simple animation logic for showing cards one by one
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.worker-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.4s ease-out';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body></html>

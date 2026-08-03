@@ -1,0 +1,17 @@
+*.tar.gz
+*.tar.xz
+*.zip
+
+# Node
+node_modules/
+dist/
+.env
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.idea/
+*.iml

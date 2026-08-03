@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KaamSetu - Household Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#131e17",
+                    "tertiary-fixed-dim": "#bdcabe",
+                    "surface-variant": "#e5e2e1",
+                    "tertiary-container": "#49554c",
+                    "on-surface": "#1b1c1c",
+                    "tertiary-fixed": "#d9e6da",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f3f0ef",
+                    "inverse-primary": "#91d78a",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#303030",
+                    "primary-fixed": "#acf4a4",
+                    "on-primary-fixed": "#002203",
+                    "surface-bright": "#fcf9f8",
+                    "outline-variant": "#c0c9bb",
+                    "surface-dim": "#dcd9d9",
+                    "on-secondary-fixed": "#2a1800",
+                    "on-secondary-container": "#694300",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e5e2e1",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#fcab28",
+                    "primary-fixed-dim": "#91d78a",
+                    "primary": "#00450d",
+                    "on-tertiary-fixed-variant": "#3e4a41",
+                    "on-surface-variant": "#41493e",
+                    "surface": "#fcf9f8",
+                    "secondary-fixed": "#ffddb5",
+                    "outline": "#717a6d",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-high": "#eae7e7",
+                    "on-primary-container": "#90d689",
+                    "surface-container": "#f0eded",
+                    "background": "#fcf9f8",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#643f00",
+                    "primary-container": "#1b5e20",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb957",
+                    "secondary": "#835400",
+                    "on-tertiary-container": "#bcc9be",
+                    "tertiary": "#323e36",
+                    "on-primary-fixed-variant": "#0c5216",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#2a6b2c",
+                    "on-background": "#1b1c1c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "32px",
+                    "gutter": "16px",
+                    "stack-md": "16px",
+                    "stack-lg": "24px",
+                    "stack-sm": "8px",
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "touch-target-min": "48px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "button-text": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "button-text": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-lg": ["16px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "30px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fcf9f8;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-primary dark:bg-primary-container flex justify-between items-center px-margin-mobile h-touch-target-min">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-md bg-white p-1">
+<img alt="KaamSetu Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLtqBCzSBuWNXdpo5TgSrcmWPAdqXL9u2dsfV_Vz1oiHvivJEx__LWwLt3egmJX8XAfsFV846VjtQSX4HCcAI9tRzAZCQJU3zNSFm6eBJHFiyC4-aN-C59sb2WsruowoC8FBrmbZpbYDLYEnlzbZuq0R7eNHL06DDcUDgOYncvVHm8MlKRzxOb-RkMCBBs2bkiIYk1fbybOzv340aJwY1eUQsFvTYaCvV47c47ySrfIPPlgXW6-B06nBDEE"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">KaamSetu</h1>
+</div>
+<button class="w-touch-target-min h-touch-target-min flex items-center justify-center text-on-primary transition-colors duration-200 hover:bg-on-primary/10 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="pt-20 pb-24 px-margin-mobile max-w-lg mx-auto md:max-w-4xl">
+<!-- Greeting Section -->
+<section class="mb-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-700">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary">Hello Priya</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">What can we help you with today?</p>
+</section>
+<!-- Primary CTA -->
+<section class="mb-stack-lg">
+<button class="w-full h-touch-target-min bg-secondary-container text-on-secondary-container rounded-xl flex items-center justify-center gap-3 font-button-text text-button-text active:scale-95 transition-transform shadow-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 700;">add_circle</span>
+                Post a New Job
+            </button>
+</section>
+<!-- Active Jobs Section -->
+<section class="mb-stack-lg">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant">Active Jobs</h3>
+<span class="font-label-lg text-label-lg text-primary">View All</span>
+</div>
+<!-- Bento-style Card Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card 1: Kitchen Cleaning -->
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex flex-col gap-3 transition-all hover:border-primary">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-md text-headline-md text-on-surface">Kitchen Deep Cleaning</h4>
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant font-label-lg text-[12px] rounded-full uppercase tracking-tighter">OPEN</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="font-body-md text-body-md">3 workers interested</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-body-md text-body-md">Tomorrow, 10 AM</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-surface-variant flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-label-lg text-[12px] text-on-surface-variant">Budget</span>
+<span class="font-headline-md text-headline-md text-primary">₹600</span>
+</div>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-lg text-label-lg">Details</button>
+</div>
+</div>
+<!-- Card 2: Plumbing Repair -->
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex flex-col gap-3 transition-all hover:border-primary">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-md text-headline-md text-on-surface">Plumbing Repair</h4>
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant font-label-lg text-[12px] rounded-full uppercase tracking-tighter">ASSIGNED</span>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low p-2 rounded-lg">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A portrait of a professional Indian worker in his late 30s wearing a neat polo shirt. He has a friendly, trustworthy smile and professional demeanor. The lighting is bright and clear with a soft blurred background of a modern urban setting. High-quality digital photography style with warm, natural tones reflecting dignity and service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlcQuGt60MUe2g94su0KXja06JakVDKet571sbyBEVj07uIcYDfZ3BDIGw84xahZnn51211ufEcNBmslv9BOePxvBoJ-MuKWhgjlasAbXDY6TtIYPBO57Xs-6LoZLNZgYKIj-mIrB8lTwYwibFODEorH5T8LpVj54yyVWaT6gQ1SoP2TIyb6FJ9HN92ILFeBxzln6sv-_xpqjmbED77SI--eeY14DbTYms4LXKapB5mVIdHc5LOE59GBPRrEoB43DHfspJu3F-Ipg"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg">Rajesh Kumar</span>
+<span class="font-body-md text-[12px] text-on-surface-variant">Professional Plumber</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">event</span>
+<span class="font-body-md text-body-md">Today, 2 PM</span>
+</div>
+<div class="mt-auto pt-3 border-t border-surface-variant flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-label-lg text-[12px] text-on-surface-variant">Budget</span>
+<span class="font-headline-md text-headline-md text-primary">₹500</span>
+</div>
+<button class="px-4 py-2 border-2 border-primary text-primary rounded-lg font-label-lg text-label-lg">Message</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Past Jobs Section -->
+<section class="mb-stack-lg">
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant mb-stack-md">Past Jobs</h3>
+<div class="bg-surface-container border border-outline-variant/30 p-4 rounded-xl flex items-center justify-between opacity-80 grayscale-[0.5] hover:grayscale-0 transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h4 class="font-label-lg text-label-lg text-on-surface">Electrician Visit</h4>
+<span class="px-2 py-0.5 bg-outline-variant text-on-surface-variant font-label-lg text-[10px] rounded uppercase">COMPLETED</span>
+</div>
+<span class="font-body-md text-[14px] text-on-surface-variant">Last Week • ₹400</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface dark:bg-surface-container-low border-t border-outline-variant dark:border-outline flex justify-around items-center h-20 pb-safe px-4 shadow-lg">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-lg text-[12px]">Home</span>
+</a>
+<!-- Post Job -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full p-2 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-lg text-[12px]">Post Job</span>
+</a>
+<!-- My Jobs -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full p-2 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="font-label-lg text-[12px]">My Jobs</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full p-2 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-[12px]">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple Micro-interaction for feedback
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', function(e) {
+                if (this.tagName === 'A') {
+                    // Just visual feedback for the demo
+                    const ripple = document.createElement('div');
+                    ripple.className = 'ripple';
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,16 @@
+{
+  "@@locale": "hi",
+  "appTitle": "कामसेतु",
+  "loginTitle": "कामसेतु में आपका स्वागत है",
+  "loginSubtitle": "आगे बढ़ने के लिए अपना फ़ोन नंबर दर्ज करें",
+  "phoneLabel": "फ़ोन नंबर",
+  "sendOtp": "OTP भेजें",
+  "verifyOtp": "OTP सत्यापित करें",
+  "homeTab": "होम",
+  "jobsTab": "नौकरियां",
+  "profileTab": "प्रोफ़ाइल",
+  "findWork": "काम खोजें",
+  "postJob": "नौकरी पोस्ट करें",
+  "language": "भाषा",
+  "logout": "लॉग आउट"
+}

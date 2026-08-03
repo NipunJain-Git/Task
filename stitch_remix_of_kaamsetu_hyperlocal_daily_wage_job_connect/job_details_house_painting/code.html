@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Details | KaamSetu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#fcab28",
+                    "surface-container-low": "#f6f3f2",
+                    "surface": "#fcf9f8",
+                    "on-surface": "#1b1c1c",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-tertiary-fixed": "#131e17",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-container": "#1b5e20",
+                    "outline": "#717a6d",
+                    "primary": "#00450d",
+                    "on-tertiary-fixed-variant": "#3e4a41",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#91d78a",
+                    "secondary": "#835400",
+                    "inverse-surface": "#303030",
+                    "on-primary-fixed": "#002203",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#c0c9bb",
+                    "on-surface-variant": "#41493e",
+                    "surface-tint": "#2a6b2c",
+                    "on-primary-container": "#90d689",
+                    "surface-variant": "#e5e2e1",
+                    "on-secondary-container": "#694300",
+                    "surface-bright": "#fcf9f8",
+                    "on-secondary-fixed-variant": "#643f00",
+                    "tertiary-container": "#49554c",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#2a1800",
+                    "tertiary-fixed-dim": "#bdcabe",
+                    "surface-container": "#f0eded",
+                    "secondary-fixed-dim": "#ffb957",
+                    "surface-container-high": "#eae7e7",
+                    "primary-fixed": "#acf4a4",
+                    "inverse-primary": "#91d78a",
+                    "on-tertiary-container": "#bcc9be",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#ffddb5",
+                    "on-background": "#1b1c1c",
+                    "error": "#ba1a1a",
+                    "tertiary": "#323e36",
+                    "background": "#fcf9f8",
+                    "on-primary-fixed-variant": "#0c5216",
+                    "surface-dim": "#dcd9d9",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed": "#d9e6da"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "margin-desktop": "32px",
+                    "gutter": "16px",
+                    "stack-md": "16px",
+                    "stack-lg": "24px",
+                    "touch-target-min": "48px",
+                    "unit": "8px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "button-text": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "button-text": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "30px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-lg": ["16px", {"lineHeight": "20px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .flat-tactile {
+            border: 1px solid #E0E0E0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col pb-24">
+<!-- Top App Bar -->
+<header class="bg-background sticky top-0 z-40 w-full">
+<div class="flex items-center h-16 px-margin-mobile w-full">
+<button aria-label="Back" class="w-touch-target-min h-touch-target-min flex items-center justify-center hover:bg-surface-container-low transition-colors rounded-full active:scale-95 duration-100 mr-2">
+<span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Verify OTP</h1>
+</div>
+</header>
+<main class="flex-grow px-margin-mobile pt-stack-md space-y-stack-lg">
+<!-- Job Header Section -->
+<section class="space-y-stack-sm">
+<div class="flex items-start justify-between gap-gutter">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface leading-tight">House Painting (2 Rooms)</h2>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-lg text-sm uppercase tracking-wider font-bold">
+                    OPEN
+                </span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 bg-surface-container rounded-lg border border-outline-variant font-label-lg text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">format_paint</span>
+                    Painting
+                </span>
+</div>
+</section>
+<!-- Posted By Section -->
+<section class="p-stack-md bg-surface-container-lowest rounded-xl flat-tactile flex items-center gap-4">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="A warm, approachable circular portrait of a smiling Indian family, mother, father and child, in a bright modern home setting with soft lighting. The image has a professional humanist feel, conveying reliability and community trust, with high contrast and vibrant natural colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUZsAL935Myj5IpdGBqq7YRGwyQYk5CoL-p4w7imhg_RP2sJjBryptkI0RRSxC854zHxp7bFxWRVFvGFh3RURbGNR7yM-Eiy9GB51ON9z3dH0b1-jlUynFY1lItUSlyHfkaxzLqJGNznWa3IBZLFaJ8Av9TfxMzjsN9mAUhKieDOxvDZMR9nrq57sXE6XpTa_hluqF0oRRiP6_seA1fCoFVciXjuhCHMMflMPNfdtX-3le8ox-0I9b5saaVi_qRsCLio3zOP_YZG8"/>
+<div class="absolute -bottom-1 -right-1 bg-primary text-white p-0.5 rounded-full border-2 border-surface">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="flex-grow">
+<p class="font-label-lg text-on-surface text-lg">Sharma Family</p>
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-lg text-primary">95% positive</span>
+<span class="text-sm opacity-60">• 23 ratings</span>
+</div>
+</div>
+<button class="w-touch-target-min h-touch-target-min flex items-center justify-center hover:bg-surface-container-high transition-colors rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</button>
+</section>
+<!-- Details Section -->
+<section class="space-y-stack-md">
+<h3 class="font-label-lg text-on-surface-variant uppercase tracking-widest text-xs">Job Details</h3>
+<div class="bg-surface-container-lowest rounded-xl flat-tactile overflow-hidden">
+<div class="p-stack-md space-y-4">
+<!-- Date -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant">Date</p>
+<p class="font-label-lg text-on-surface">Aug 5, 2026 (Tuesday)</p>
+</div>
+</div>
+<!-- Time -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant">Time</p>
+<p class="font-label-lg text-on-surface">9 AM to 5 PM</p>
+</div>
+</div>
+<!-- Location -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div class="flex-grow">
+<p class="text-xs text-on-surface-variant">Location</p>
+<p class="font-label-lg text-on-surface">Sector 15, Noida, UP</p>
+</div>
+</div>
+<!-- Map Preview -->
+<div class="mt-2 rounded-lg overflow-hidden border border-outline-variant aspect-[21/9]">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist map interface showing a suburban neighborhood in Noida, Uttar Pradesh. The map uses a soft palette of light grays and greens, featuring a prominent green pin marker to indicate the location. The style is modern, professional, and high-contrast for clear legibility." data-location="Sector 15, Noida, UP" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw5BD9HCYnpYxnHRfi25mZ8aoRegAc3DoY5o4UrsveKjq2DuSHeXwF2K2G8kFbNqzCzKyKQxsFrH-OxmXZeuXs3OmN2m3fHpaEOjbGfFKenStrpV99J1LU2ZPT0sZdxia6l5Qf5OUJVnINotrT7qunz-Tx12YgF4-lSG21MikTxVMoE7Sr9ElslFy2jteD8HKur5F7sHSuX1sNzCmd28wluWGzBHTnGgTxHcOUg1DOyErM23CXh0Ap8yjcUC4ZxzoNphipdRrviGM"/>
+</div>
+<!-- Budget -->
+<div class="pt-4 border-t border-outline-variant flex justify-between items-center">
+<p class="font-label-lg text-on-surface">Total Budget</p>
+<p class="font-headline-md text-headline-md text-primary-container font-bold">₹800 per day</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Description Section -->
+<section class="space-y-stack-sm">
+<h3 class="font-label-lg text-on-surface-variant uppercase tracking-widest text-xs">Description</h3>
+<div class="bg-surface-container-lowest p-stack-md rounded-xl flat-tactile">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Needing an experienced painter to handle two rooms. Walls need minor prep and two coats of emulsion. Materials provided.
+                </p>
+</div>
+</section>
+<!-- Additional Safety Tip -->
+<section class="p-stack-md bg-tertiary-fixed rounded-xl flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]">shield</span>
+<p class="text-xs text-on-tertiary-fixed-variant leading-tight">
+<strong>Safety Tip:</strong> Always confirm the worker's ID upon arrival and avoid advance payments for materials.
+            </p>
+</section>
+</main>
+<!-- Sticky Footer CTA -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface px-margin-mobile py-stack-md border-t border-outline-variant z-50">
+<button class="w-full h-touch-target-min bg-secondary-container text-on-secondary-container font-button-text text-button-text rounded-xl shadow-lg active:scale-[0.98] transition-transform flex items-center justify-center gap-2 hover:brightness-105">
+<span>I am Interested</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</footer>
+<!-- Bottom Navigation (Hidden for Task-Focused Job Detail) -->
+<!-- Suppressed as per "The Shell Visibility & Relevance (THE FILTER)" rule -->
+<script>
+        // Micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Horizontal scroll animation for chips could be added here if needed
+    </script>
+</body></html>

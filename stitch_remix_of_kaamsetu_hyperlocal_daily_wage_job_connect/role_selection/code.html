@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KaamSetu - Role Selection</title>
+<!-- Font and Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-dim": "#dcd9d9",
+                "primary": "#00450d",
+                "surface-container-high": "#eae7e7",
+                "surface-tint": "#2a6b2c",
+                "primary-container": "#1b5e20",
+                "tertiary-fixed-dim": "#bdcabe",
+                "inverse-surface": "#303030",
+                "tertiary-fixed": "#d9e6da",
+                "tertiary-container": "#49554c",
+                "surface-container-highest": "#e5e2e1",
+                "on-tertiary": "#ffffff",
+                "inverse-on-surface": "#f3f0ef",
+                "surface-container": "#f0eded",
+                "on-tertiary-fixed-variant": "#3e4a41",
+                "inverse-primary": "#91d78a",
+                "surface-container-low": "#f6f3f2",
+                "tertiary": "#323e36",
+                "primary-fixed-dim": "#91d78a",
+                "on-primary": "#ffffff",
+                "on-secondary-fixed": "#2a1800",
+                "background": "#fcf9f8",
+                "outline-variant": "#c0c9bb",
+                "secondary-fixed": "#ffddb5",
+                "error-container": "#ffdad6",
+                "secondary-fixed-dim": "#ffb957",
+                "on-secondary": "#ffffff",
+                "error": "#ba1a1a",
+                "surface-variant": "#e5e2e1",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-container": "#694300",
+                "outline": "#717a6d",
+                "on-surface": "#1b1c1c",
+                "on-background": "#1b1c1c",
+                "on-secondary-fixed-variant": "#643f00",
+                "on-primary-fixed": "#002203",
+                "on-error-container": "#93000a",
+                "on-primary-container": "#90d689",
+                "on-tertiary-fixed": "#131e17",
+                "surface": "#fcf9f8",
+                "secondary": "#835400",
+                "on-primary-fixed-variant": "#0c5216",
+                "on-error": "#ffffff",
+                "on-surface-variant": "#41493e",
+                "surface-bright": "#fcf9f8",
+                "secondary-container": "#fcab28",
+                "on-tertiary-container": "#bcc9be",
+                "primary-fixed": "#acf4a4"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "8px",
+                "stack-md": "16px",
+                "unit": "8px",
+                "margin-desktop": "32px",
+                "stack-lg": "24px",
+                "gutter": "16px",
+                "touch-target-min": "48px",
+                "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                "label-lg": ["Plus Jakarta Sans"],
+                "headline-md": ["Plus Jakarta Sans"],
+                "body-md": ["Plus Jakarta Sans"],
+                "headline-lg-mobile": ["Plus Jakarta Sans"],
+                "headline-lg": ["Plus Jakarta Sans"],
+                "button-text": ["Plus Jakarta Sans"],
+                "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                "label-lg": ["16px", {"lineHeight": "20px", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "30px", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "button-text": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+      }
+      .role-card-active {
+        background-color: #f0fdf4 !important; /* Subtle green shift */
+        border-width: 3px !important;
+        border-color: #1b5e20 !important;
+      }
+      .radio-hidden {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Top Navigation Shell (Limited for Role Selection Focus) -->
+<header class="bg-surface sticky top-0 z-50 flex items-center justify-between px-margin-mobile w-full h-touch-target-min">
+<div class="font-headline-md text-headline-md font-bold text-primary">KaamSetu</div>
+<button class="material-symbols-outlined text-primary p-2 active:scale-95 transition-transform" data-icon="help_outline">help_outline</button>
+</header>
+<main class="max-w-[600px] mx-auto px-margin-mobile pt-stack-lg pb-32 flex flex-col min-h-screen">
+<!-- Header Section -->
+<section class="mb-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-700">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-stack-sm">
+                I want to
+            </h1>
+<p class="text-on-surface-variant font-body-lg text-body-lg">Select how you want to use KaamSetu today.</p>
+</section>
+<!-- Role Selection Cards -->
+<div class="flex flex-col gap-stack-md flex-grow">
+<!-- Worker Role -->
+<label class="group relative block cursor-pointer transition-all active:scale-[0.98]">
+<input class="radio-hidden peer" name="role" onchange="updateSelection(this)" type="radio" value="worker"/>
+<div class="flex flex-col p-stack-lg border-2 border-primary-container bg-surface rounded-xl transition-all peer-checked:role-card-active hover:bg-surface-container-low h-full min-h-[160px] justify-center">
+<div class="flex items-start gap-stack-md">
+<div class="bg-primary-container text-white p-3 rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[32px]" data-icon="engineering">engineering</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-primary mb-1">Find Work</h2>
+<p class="text-on-surface-variant font-body-md text-body-md leading-snug">
+                                I am a skilled worker looking for daily jobs nearby
+                            </p>
+</div>
+</div>
+<div class="absolute right-stack-md top-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Employer Role -->
+<label class="group relative block cursor-pointer transition-all active:scale-[0.98]">
+<input class="radio-hidden peer" name="role" onchange="updateSelection(this)" type="radio" value="employer"/>
+<div class="flex flex-col p-stack-lg border-2 border-primary-container bg-surface rounded-xl transition-all peer-checked:role-card-active hover:bg-surface-container-low h-full min-h-[160px] justify-center">
+<div class="flex items-start gap-stack-md">
+<div class="bg-primary-container text-white p-3 rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[32px]" data-icon="home">home</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-primary mb-1">Hire Help</h2>
+<p class="text-on-surface-variant font-body-md text-body-md leading-snug">
+                                I need to hire workers for tasks at my home
+                            </p>
+</div>
+</div>
+<div class="absolute right-stack-md top-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Atmospheric Image / Graphic -->
+<div class="mt-stack-lg opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000">
+<div class="w-full h-40 rounded-xl overflow-hidden" data-alt="A warm, humanist photograph of diverse Indian workers and homeowners interacting in a bright, minimalist outdoor setting. The image captures a sense of dignity, community, and professionalism with high-key lighting and a soft focus on the background. The color palette emphasizes clean whites and deep forest greens to match the KaamSetu brand identity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLGavhicgwPrMYrSQ9myZVSdMP65peo4Gf0uxoFDrsRhQH41K1xg_7DhlVjloyEAi1EqDMpLRRbBdfwpz95WrTyUCw4mu1Jn0oOLqVV0YTZUR0Y6KA-iEAUJhb6_mdAcNISa5cSjT5kQBTCWj8rv2CG_vwUAu6ygdA6EcfEDdLMrirEqFigNezxACc90wkiBWTTxjsQ2ftgOB3k3YeqhlT3cYNmgV76xRwnGIdk-Gu8fG9ilMT3yqwXMf8MMCY4szCzaVrppaRebA')"></div>
+</div>
+</main>
+<!-- Bottom Actions Area (Fixed) -->
+<div class="fixed bottom-0 left-0 right-0 p-margin-mobile bg-gradient-to-t from-surface via-surface to-transparent pt-stack-lg">
+<div class="max-w-[600px] mx-auto">
+<button class="w-full h-touch-target-min bg-primary-container text-white font-button-text text-button-text rounded-lg disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all shadow-lg shadow-primary/10" disabled="" id="continueBtn">
+                Continue
+            </button>
+<!-- Minimal Footer -->
+<footer class="mt-stack-md flex flex-col items-center gap-2">
+<p class="text-on-surface-variant font-label-lg text-label-lg">
+                    © 2024 KaamSetu. काम का पुल
+                </p>
+<div class="flex gap-stack-md">
+<a class="text-on-surface-variant text-label-lg underline opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-on-surface-variant text-label-lg underline opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+</div>
+</footer>
+</div>
+</div>
+<script>
+        function updateSelection(radio) {
+            const btn = document.getElementById('continueBtn');
+            if (radio.checked) {
+                btn.disabled = false;
+                // Add a small haptic-like animation to the button
+                btn.classList.add('scale-105');
+                setTimeout(() => btn.classList.remove('scale-105'), 200);
+            }
+        }
+
+        // Handle button click
+        document.getElementById('continueBtn').addEventListener('click', () => {
+            const selectedRole = document.querySelector('input[name="role"]:checked').value;
+            console.log('Navigating to', selectedRole, 'onboarding flow...');
+            
+            // Visual feedback
+            const btn = document.getElementById('continueBtn');
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span>`;
+            
+            setTimeout(() => {
+                alert('Role selected: ' + selectedRole + '. Proceeding to authentication...');
+                btn.innerText = 'Continue';
+            }, 800);
+        });
+    </script>
+</body></html>

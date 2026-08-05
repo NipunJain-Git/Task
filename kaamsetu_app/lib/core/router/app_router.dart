@@ -4,9 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/auth/providers/auth_provider.dart';
 import '../../features/auth/providers/auth_state.dart';
 import '../../features/auth/ui/login_screen.dart';
+import '../../features/auth/ui/role_selection_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/jobs/ui/jobs_screen.dart';
+import '../../features/jobs/ui/job_detail_screen.dart';
 import '../../features/profile/ui/profile_screen.dart';
+import '../../features/wallet/ui/wallet_dashboard_screen.dart';
+import '../../features/wallet/ui/setup_pin_screen.dart';
+import '../../features/support/ui/support_screen.dart';
+import '../../features/support/ui/chatbot_screen.dart';
 import 'main_shell.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -20,9 +26,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         orElse: () => false,
       );
       
-      final isLoggingIn = state.uri.path == '/login';
+      final needsRoleSelection = authState.maybeWhen(
+        roleSelection: (_) => true,
+        orElse: () => false,
+      );
       
-      if (!isAuth && !isLoggingIn) return '/login';
+      final isLoggingIn = state.uri.path == '/login';
+      final isRoleSelectionRoute = state.uri.path == '/role-selection';
+      
+      if (needsRoleSelection && !isRoleSelectionRoute) return '/role-selection';
+      if (!isAuth && !isLoggingIn && !isRoleSelectionRoute) return '/login';
       if (isAuth && isLoggingIn) return '/home';
       
       return null;
@@ -31,6 +44,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/role-selection',
+        builder: (context, state) => const RoleSelectionScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => MainShell(child: child),
@@ -44,10 +61,33 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const JobsScreen(),
           ),
           GoRoute(
+            path: '/jobs/:jobId',
+            builder: (context, state) {
+              final jobId = state.pathParameters['jobId']!;
+              return JobDetailScreen(jobId: jobId);
+            },
+          ),
+          GoRoute(
             path: '/profile',
             builder: (context, state) => const ProfileScreen(),
           ),
+          GoRoute(
+            path: '/wallet',
+            builder: (context, state) => const WalletDashboardScreen(),
+          ),
         ],
+      ),
+      GoRoute(
+        path: '/setup-pin',
+        builder: (context, state) => const SetupPinScreen(),
+      ),
+      GoRoute(
+        path: '/support',
+        builder: (context, state) => const SupportScreen(),
+      ),
+      GoRoute(
+        path: '/support/chatbot',
+        builder: (context, state) => const ChatbotScreen(),
       ),
     ],
   );

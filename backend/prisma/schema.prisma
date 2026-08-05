@@ -3,31 +3,57 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id               String            @id @default(uuid())
-  phone            String            @unique
-  role             String?           // WORKER | HOUSEHOLD
-  name             String?
-  photoUrl         String?
-  language         String            @default("en")
-  latitude         Float?
-  longitude        Float?
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  deletedAt        DateTime?
+  id                   String            @id @default(uuid())
+  phone                String            @unique
+  role                 String?           // WORKER | HOUSEHOLD
+  name                 String?
+  photoUrl             String?
+  language             String            @default("en")
+  latitude             Float?
+  longitude            Float?
+  familyMemberContact  String?
+  familyMemberRelation String?
+  walletPin            String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  deletedAt            DateTime?
 
   workerProfile    WorkerProfile?
   householdProfile HouseholdProfile?
+  wallet           Wallet?
   postedJobs       Job[]             @relation("PostedJobs")
   assignedJobs     Job[]             @relation("AssignedJobs")
   jobInterests     JobInterest[]
   ratingsGiven     Rating[]          @relation("RatingsGiven")
   ratingsReceived  Rating[]          @relation("RatingsReceived")
   notifications    Notification[]
+}
+
+model Wallet {
+  id           String        @id @default(uuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id])
+  balance      Float         @default(0.0)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  walletId      String
+  wallet        Wallet   @relation(fields: [walletId], references: [id])
+  amount        Float
+  type          String   // CREDIT | DEBIT
+  description   String?
+  receiptNumber String   @unique
+  referenceId   String?  // Can be jobId or other reference
+  createdAt     DateTime @default(now())
 }
 
 model WorkerProfile {

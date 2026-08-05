@@ -9,9 +9,14 @@ import jobsRoutes from './modules/jobs/jobs.routes';
 import interestsRoutes from './modules/interests/interests.routes';
 import ratingsRoutes from './modules/ratings/ratings.routes';
 import notificationsRoutes from './modules/notifications/notifications.routes';
+import walletRoutes from './modules/wallet/wallet.routes';
 import logger from './utils/logger';
+import { initFirebase } from './config/firebase';
 
 const app = express();
+
+// Initialize Firebase Admin
+initFirebase();
 
 // Middleware
 app.use(helmet());
@@ -31,6 +36,7 @@ app.use('/api/jobs', jobsRoutes);
 app.use('/api/jobs', interestsRoutes);  // /api/jobs/:id/interest, /api/jobs/:id/interests
 app.use('/api/jobs', ratingsRoutes);    // /api/jobs/:id/rate
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/wallet', walletRoutes);
 
 // Error handler (must be last)
 app.use(errorMiddleware);

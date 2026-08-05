@@ -46,4 +46,61 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get logout => 'लॉग आउट';
+
+  @override
+  String get roleSelectionTitle => 'आप कौन हैं?';
+
+  @override
+  String get roleSelectionSubtitle => 'जारी रखने के लिए अपनी भूमिका चुनें';
+
+  @override
+  String get workerRole => 'मज़दूर';
+
+  @override
+  String get workerRoleDescription => 'मुझे काम खोजना है';
+
+  @override
+  String get householdRole => 'परिवार (घर)';
+
+  @override
+  String get householdRoleDescription => 'मुझे कामगारों को काम पर रखना है';
+
+  @override
+  String get wallet => 'बटुआ (Wallet)';
+
+  @override
+  String get addMoney => 'पैसे डालें';
+
+  @override
+  String get sendToFamily => 'परिवार को भेजें';
+
+  @override
+  String get jobPayout => 'काम का भुगतान';
+
+  @override
+  String get balance => 'बैलेंस';
+
+  @override
+  String get setupPin => 'पिन सेट करें';
+
+  @override
+  String get support => 'सहायता';
+
+  @override
+  String get aiChatbot => 'AI चैटबॉट';
+
+  @override
+  String get customerCare => 'ग्राहक सेवा';
+
+  @override
+  String get familyContactNo => 'परिवार का संपर्क नंबर';
+
+  @override
+  String get familyRelation => 'रिश्ता';
+
+  @override
+  String get availableToday => 'आज काम के लिए उपलब्ध';
+
+  @override
+  String get trustScore => 'भरोसा स्कोर';
 }

@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'mock_interceptor.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      // For local development on Android emulator, use 10.0.2.2.
-      // For a real device on the same WiFi, use your machine's local IP.
-      baseUrl: 'http://10.0.2.2:3001/api',
+      baseUrl: 'https://kopqv-2401-4900-1c8e-feac-d4f1-bc0-9a24-dc5e.run.pinggy-free.link/api',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       headers: {
@@ -27,7 +26,6 @@ final dioProvider = Provider<Dio>((ref) {
         return handler.next(options);
       },
       onError: (DioException e, handler) async {
-        // Token expired or invalid - will be handled in AuthNotifier
         return handler.next(e);
       },
     ),

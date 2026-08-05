@@ -1,4 +1,4 @@
-package com.kaamsetu.kaamsetu_app
+package com.kaamsetu.app
 
 import io.flutter.embedding.android.FlutterActivity
 

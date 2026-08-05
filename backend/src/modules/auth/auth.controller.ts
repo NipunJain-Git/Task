@@ -22,6 +22,15 @@ export class AuthController {
     }
   }
 
+  static async verifyFirebase(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await AuthService.verifyFirebase(req.body.idToken);
+      sendSuccess(res, result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async refresh(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const result = await AuthService.refreshToken(req.body.refreshToken);
@@ -33,7 +42,8 @@ export class AuthController {
 
   static async selectRole(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await AuthService.selectRole(req.userId!, req.body.role);
+      const { role, familyMemberContact, familyMemberRelation } = req.body;
+      const result = await AuthService.selectRole(req.userId!, role, familyMemberContact, familyMemberRelation);
       sendSuccess(res, result);
     } catch (err) {
       next(err);

@@ -3,6 +3,7 @@ import prisma from '../../config/database';
 import { env } from '../../config/env';
 import { ApiError } from '../../utils/api-error';
 import logger from '../../utils/logger';
+import * as admin from 'firebase-admin';
 
 // In-memory OTP store (for demo — production would use Redis)
 const otpStore: Map<string, { otp: string; attempts: number; expiresAt: number }> = new Map();
@@ -108,10 +109,54 @@ export class AuthService {
     }
   }
 
-  static async selectRole(userId: string, role: 'WORKER' | 'HOUSEHOLD'): Promise<unknown> {
+  static async verifyFirebase(idToken: string): Promise<{
+    accessToken: string;
+    refreshToken: string;
+    user: { id: string; phone: string; role: string | null; name: string | null; isNewUser: boolean };
+  }> {
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      const phone = decodedToken.phone_number;
+      
+      if (!phone) {
+        throw new ApiError(400, 'NO_PHONE_NUMBER', 'Firebase token does not contain a phone number.');
+      }
+
+      let user = await prisma.user.findUnique({ where: { phone } });
+      let isNewUser = false;
+
+      if (!user) {
+        user = await prisma.user.create({ data: { phone } });
+        isNewUser = true;
+      }
+
+      const accessToken = jwt.sign(
+        { userId: user.id, role: user.role },
+        env.JWT_SECRET,
+        { expiresIn: env.JWT_EXPIRY as string }
+      );
+
+      const refreshToken = jwt.sign(
+        { userId: user.id },
+        env.JWT_REFRESH_SECRET,
+        { expiresIn: env.JWT_REFRESH_EXPIRY as string }
+      );
+
+      return {
+        accessToken,
+        refreshToken,
+        user: { id: user.id, phone: user.phone, role: user.role, name: user.name, isNewUser },
+      };
+    } catch (error) {
+      logger.error('Firebase token verification failed', { error });
+      throw new ApiError(401, 'INVALID_FIREBASE_TOKEN', 'Invalid Firebase ID token.');
+    }
+  }
+
+  static async selectRole(userId: string, role: 'WORKER' | 'HOUSEHOLD', familyMemberContact?: string, familyMemberRelation?: string): Promise<unknown> {
     const user = await prisma.user.update({
       where: { id: userId },
-      data: { role },
+      data: { role, familyMemberContact, familyMemberRelation },
     });
 
     // Create profile based on role

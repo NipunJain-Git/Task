@@ -15,3 +15,8 @@ dist/
 build/
 .idea/
 *.iml
+
+# Secrets and Large Files
+*.apk
+*firebase*.json
+google-services.json

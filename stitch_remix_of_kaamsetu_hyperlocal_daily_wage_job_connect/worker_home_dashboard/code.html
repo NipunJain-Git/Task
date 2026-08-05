@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Worker Dashboard - KaamSetu</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <!-- Tailwind Configuration -->
 <script id="tailwind-config">
       tailwind.config = {
@@ -131,10 +129,10 @@
 <!-- Top App Bar -->
 <header class="bg-primary-container text-on-primary-container fixed top-0 left-0 w-full z-50 h-16 flex items-center justify-between px-margin-mobile shadow-md">
 <div class="flex items-center gap-3">
-<img alt="KaamSetu Logo" class="h-10 w-10 object-contain brightness-0 invert" src="https://lh3.googleusercontent.com/aida/AP1WRLtqBCzSBuWNXdpo5TgSrcmWPAdqXL9u2dsfV_Vz1oiHvivJEx__LWwLt3egmJX8XAfsFV846VjtQSX4HCcAI9tRzAZCQJU3zNSFm6eBJHFiyC4-aN-C59sb2WsruowoC8FBrmbZpbYDLYEnlzbZuq0R7eNHL06DDcUDgOYncvVHm8MlKRzxOb-RkMCBBs2bkiIYk1fbybOzv340aJwY1eUQsFvTYaCvV47c47ySrfIPPlgXW6-B06nBDEE"/>
+<img alt="KaamSetu Logo" class="h-10 w-10 object-contain brightness-0 invert" src="https://lh3.googleusercontent.com/aida/AP1WRLtqBCzSBuWNXdpo5TgSrcmWPAdqXL9u2dsfV_Vz1oiHvivJEx__LWwLt3egmJX8XAfsFV846VjtQSX4HCcAI9tRzAZCQJU3zNSFm6eBJHFiyC4-aN-C59sb2WsruowoC8FBrmbZpbYDLYEnlzbZuq0R7eNHL06DDcUDgOYncvVHm8MlKRzxOb-RkMCBBs2bkiIYk1fbybOzv340aJwY1eUQsFvTYaCvV47c47ySrfIPPlgXW6-B06nBDEE">
 <h1 class="font-headline-lg-mobile text-headline-lg-mobile font-extrabold tracking-tight">KaamSetu</h1>
 </div>
-<div class="relative active:scale-95 transition-transform duration-100 flex items-center justify-center h-12 w-12 hover:bg-surface-container-highest/20 rounded-full cursor-pointer">
+<div class="flex items-center gap-1 px-2 py-1 rounded-lg border border-on-primary-container/30 cursor-pointer hover:bg-surface-container-highest/20 transition-colors mr-2"><span class="material-symbols-outlined text-lg">language</span><span class="font-label-lg text-[12px]">EN</span><span class="material-symbols-outlined text-sm">expand_more</span></div><div class="relative active:scale-95 transition-transform duration-100 flex items-center justify-center h-12 w-12 hover:bg-surface-container-highest/20 rounded-full cursor-pointer">
 <span class="material-symbols-outlined text-on-primary-container text-2xl">notifications</span>
 <span class="absolute top-2 right-2 bg-error text-white text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full border-2 border-primary-container">3</span>
 </div>
@@ -148,7 +146,7 @@
 </div>
 <div class="flex flex-col items-center gap-1">
 <label class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer toggle-switch" type="checkbox"/>
+<input checked="" class="sr-only peer toggle-switch" type="checkbox">
 <div class="w-12 h-7 bg-surface-container-highest rounded-full transition-colors toggle-bg peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20">
 <div class="absolute left-1 top-1 bg-white h-5 w-5 rounded-full transition-transform toggle-dot"></div>
 </div>
@@ -254,28 +252,7 @@
 </section>
 </main>
 <!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-touch-target-min bg-surface px-margin-mobile pb-safe border-t border-outline-variant">
-<!-- Home (Active) -->
-<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1 transition-all" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-<span class="font-label-lg text-[10px] mt-0.5">Home</span>
-</a>
-<!-- Jobs -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full px-4 py-1 active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">work</span>
-<span class="font-label-lg text-[10px] mt-0.5">Jobs</span>
-</a>
-<!-- Profile -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full px-4 py-1 active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="font-label-lg text-[10px] mt-0.5">Profile</span>
-</a>
-<!-- Notifications -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full px-4 py-1 active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">notifications</span>
-<span class="font-label-lg text-[10px] mt-0.5">Alerts</span>
-</a>
-</nav>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-touch-target-min bg-surface px-margin-mobile pb-safe border-t border-outline-variant"><!-- Home (Active) --><a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-all" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span><span class="font-label-lg text-[10px] mt-0.5">Home</span></a><!-- Jobs --><a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full px-3 py-1 active:scale-90 duration-150" href="#"><span class="material-symbols-outlined">work</span><span class="font-label-lg text-[10px] mt-0.5">Jobs</span></a><!-- Wallet --><a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full px-3 py-1 active:scale-90 duration-150" href="#"><span class="material-symbols-outlined">account_balance_wallet</span><span class="font-label-lg text-[10px] mt-0.5">Wallet</span></a><!-- Alerts --><a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full px-3 py-1 active:scale-90 duration-150" href="#"><span class="material-symbols-outlined">notifications</span><span class="font-label-lg text-[10px] mt-0.5">Alerts</span></a><!-- Profile --><a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full px-3 py-1 active:scale-90 duration-150" href="#"><span class="material-symbols-outlined">person</span><span class="font-label-lg text-[10px] mt-0.5">Profile</span></a></nav>
 <script>
         // Interactive Toggle Simulation
         document.querySelector('.toggle-switch').addEventListener('change', function(e) {
@@ -304,4 +281,6 @@
             });
         });
     </script>
-</body></html>
+
+
+<button class="fixed bottom-24 right-4 bg-primary text-on-primary p-4 rounded-full shadow-lg flex items-center gap-2 active:scale-95 transition-transform z-40"><span class="material-symbols-outlined">support_agent</span><span class="font-button-text text-sm">Chat with Parth</span></button></body></html>

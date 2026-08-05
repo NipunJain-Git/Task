@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_hi.dart';
+import 'app_localizations_mr.dart';
 
 // ignore_for_file: type=lint
 
@@ -96,6 +97,7 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('hi'),
+    Locale('mr'),
   ];
 
   /// No description provided for @appTitle.
@@ -175,6 +177,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
+
+  /// No description provided for @roleSelectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who are you?'**
+  String get roleSelectionTitle;
+
+  /// No description provided for @roleSelectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your role to continue'**
+  String get roleSelectionSubtitle;
+
+  /// No description provided for @workerRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Worker'**
+  String get workerRole;
+
+  /// No description provided for @workerRoleDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'I want to find work'**
+  String get workerRoleDescription;
+
+  /// No description provided for @householdRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get householdRole;
+
+  /// No description provided for @householdRoleDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'I want to hire workers'**
+  String get householdRoleDescription;
+
+  /// No description provided for @wallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get wallet;
+
+  /// No description provided for @addMoney.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Money'**
+  String get addMoney;
+
+  /// No description provided for @sendToFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to Family'**
+  String get sendToFamily;
+
+  /// No description provided for @jobPayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Payout'**
+  String get jobPayout;
+
+  /// No description provided for @balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balance;
+
+  /// No description provided for @setupPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup PIN'**
+  String get setupPin;
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @aiChatbot.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chatbot'**
+  String get aiChatbot;
+
+  /// No description provided for @customerCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Care'**
+  String get customerCare;
+
+  /// No description provided for @familyContactNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Contact Number'**
+  String get familyContactNo;
+
+  /// No description provided for @familyRelation.
+  ///
+  /// In en, this message translates to:
+  /// **'Relation'**
+  String get familyRelation;
+
+  /// No description provided for @availableToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Available for work today'**
+  String get availableToday;
+
+  /// No description provided for @trustScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Trust Score'**
+  String get trustScore;
 }
 
 class _AppLocalizationsDelegate
@@ -188,7 +304,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'hi'].contains(locale.languageCode);
+      <String>['en', 'hi', 'mr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -201,6 +317,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'hi':
       return AppLocalizationsHi();
+    case 'mr':
+      return AppLocalizationsMr();
   }
 
   throw FlutterError(

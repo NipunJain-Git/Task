@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>KaamSetu - Household Dashboard</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -123,17 +121,31 @@
 </head>
 <body class="bg-background text-on-surface">
 <!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-primary dark:bg-primary-container flex justify-between items-center px-margin-mobile h-touch-target-min">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-md bg-white p-1">
-<img alt="KaamSetu Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLtqBCzSBuWNXdpo5TgSrcmWPAdqXL9u2dsfV_Vz1oiHvivJEx__LWwLt3egmJX8XAfsFV846VjtQSX4HCcAI9tRzAZCQJU3zNSFm6eBJHFiyC4-aN-C59sb2WsruowoC8FBrmbZpbYDLYEnlzbZuq0R7eNHL06DDcUDgOYncvVHm8MlKRzxOb-RkMCBBs2bkiIYk1fbybOzv340aJwY1eUQsFvTYaCvV47c47ySrfIPPlgXW6-B06nBDEE"/>
+<header class="fixed top-0 w-full z-50 bg-primary dark:bg-primary-container flex justify-between items-center px-margin-mobile h-touch-target-min"><div class="flex items-center gap-3">
+  <div class="w-8 h-8 rounded-md bg-white p-1">
+    <img alt="KaamSetu Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLtqBCzSBuWNXdpo5TgSrcmWPAdqXL9u2dsfV_Vz1oiHvivJEx__LWwLt3egmJX8XAfsFV846VjtQSX4HCcAI9tRzAZCQJU3zNSFm6eBJHFiyC4-aN-C59sb2WsruowoC8FBrmbZpbYDLYEnlzbZuq0R7eNHL06DDcUDgOYncvVHm8MlKRzxOb-RkMCBBs2bkiIYk1fbybOzv340aJwY1eUQsFvTYaCvV47c47ySrfIPPlgXW6-B06nBDEE">
+  </div>
+  <h1 class="font-headline-md text-headline-md font-bold text-on-primary">KaamSetu</h1>
 </div>
-<h1 class="font-headline-md text-headline-md font-bold text-on-primary">KaamSetu</h1>
-</div>
-<button class="w-touch-target-min h-touch-target-min flex items-center justify-center text-on-primary transition-colors duration-200 hover:bg-on-primary/10 rounded-full">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-</header>
+<div class="flex items-center gap-2">
+  <div class="relative group">
+    <button class="flex items-center gap-1 px-2 py-1 rounded-lg bg-on-primary/10 text-on-primary font-label-lg text-[14px] transition-colors hover:bg-on-primary/20">
+      <span class="material-symbols-outlined text-[18px]">language</span>
+      <span class="">EN</span>
+      <span class="material-symbols-outlined text-[16px]">expand_more</span>
+    </button>
+    <div class="absolute right-0 mt-2 w-32 bg-surface rounded-lg shadow-lg border border-outline-variant hidden group-hover:block z-50">
+      <div class="p-1">
+        <button class="w-full text-left px-3 py-2 text-on-surface font-label-lg text-[14px] hover:bg-surface-container-high rounded-md flex items-center gap-2"><span class="">🇺🇸</span> English</button>
+        <button class="w-full text-left px-3 py-2 text-on-surface font-label-lg text-[14px] hover:bg-surface-container-high rounded-md flex items-center gap-2"><span class="">🇮🇳</span> हिन्दी</button>
+        <button class="w-full text-left px-3 py-2 text-on-surface font-label-lg text-[14px] hover:bg-surface-container-high rounded-md flex items-center gap-2"><span class="">🇮🇳</span> ગુજરાતી</button>
+      </div>
+    </div>
+  </div>
+  <button class="w-touch-target-min h-touch-target-min flex items-center justify-center text-on-primary transition-colors duration-200 hover:bg-on-primary/10 rounded-full">
+    <span class="material-symbols-outlined">notifications</span>
+  </button>
+</div></header>
 <main class="pt-20 pb-24 px-margin-mobile max-w-lg mx-auto md:max-w-4xl">
 <!-- Greeting Section -->
 <section class="mb-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -187,7 +199,7 @@
 </div>
 <div class="flex items-center gap-3 bg-surface-container-low p-2 rounded-lg">
 <div class="w-10 h-10 rounded-full overflow-hidden bg-outline-variant">
-<img class="w-full h-full object-cover" data-alt="A portrait of a professional Indian worker in his late 30s wearing a neat polo shirt. He has a friendly, trustworthy smile and professional demeanor. The lighting is bright and clear with a soft blurred background of a modern urban setting. High-quality digital photography style with warm, natural tones reflecting dignity and service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlcQuGt60MUe2g94su0KXja06JakVDKet571sbyBEVj07uIcYDfZ3BDIGw84xahZnn51211ufEcNBmslv9BOePxvBoJ-MuKWhgjlasAbXDY6TtIYPBO57Xs-6LoZLNZgYKIj-mIrB8lTwYwibFODEorH5T8LpVj54yyVWaT6gQ1SoP2TIyb6FJ9HN92ILFeBxzln6sv-_xpqjmbED77SI--eeY14DbTYms4LXKapB5mVIdHc5LOE59GBPRrEoB43DHfspJu3F-Ipg"/>
+<img class="w-full h-full object-cover" data-alt="A portrait of a professional Indian worker in his late 30s wearing a neat polo shirt. He has a friendly, trustworthy smile and professional demeanor. The lighting is bright and clear with a soft blurred background of a modern urban setting. High-quality digital photography style with warm, natural tones reflecting dignity and service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlcQuGt60MUe2g94su0KXja06JakVDKet571sbyBEVj07uIcYDfZ3BDIGw84xahZnn51211ufEcNBmslv9BOePxvBoJ-MuKWhgjlasAbXDY6TtIYPBO57Xs-6LoZLNZgYKIj-mIrB8lTwYwibFODEorH5T8LpVj54yyVWaT6gQ1SoP2TIyb6FJ9HN92ILFeBxzln6sv-_xpqjmbED77SI--eeY14DbTYms4LXKapB5mVIdHc5LOE59GBPRrEoB43DHfspJu3F-Ipg">
 </div>
 <div class="flex flex-col">
 <span class="font-label-lg text-label-lg">Rajesh Kumar</span>
@@ -224,28 +236,26 @@
 </section>
 </main>
 <!-- BottomNavBar -->
-<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface dark:bg-surface-container-low border-t border-outline-variant dark:border-outline flex justify-around items-center h-20 pb-safe px-4 shadow-lg">
-<!-- Home (Active) -->
-<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-<span class="font-label-lg text-[12px]">Home</span>
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface dark:bg-surface-container-low border-t border-outline-variant dark:border-outline flex justify-around items-center h-20 pb-safe px-4 shadow-lg"><!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-xl px-4 py-1 active:scale-95 transition-transform" href="#">
+  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+  <span class="font-label-lg text-[12px]">Home</span>
 </a>
-<!-- Post Job -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full p-2 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">add_circle</span>
-<span class="font-label-lg text-[12px]">Post Job</span>
+<!-- Jobs -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full p-2 active:scale-95 transition-transform" href="#">
+  <span class="material-symbols-outlined">work</span>
+  <span class="font-label-lg text-[12px]">Jobs</span>
 </a>
-<!-- My Jobs -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full p-2 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">work</span>
-<span class="font-label-lg text-[12px]">My Jobs</span>
+<!-- Wallet -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full p-2 active:scale-95 transition-transform" href="#">
+  <span class="material-symbols-outlined">account_balance_wallet</span>
+  <span class="font-label-lg text-[12px]">Wallet</span>
 </a>
 <!-- Profile -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full p-2 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="font-label-lg text-[12px]">Profile</span>
-</a>
-</nav>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full p-2 active:scale-95 transition-transform" href="#">
+  <span class="material-symbols-outlined">person</span>
+  <span class="font-label-lg text-[12px]">Profile</span>
+</a></nav>
 <script>
         // Simple Micro-interaction for feedback
         document.querySelectorAll('button, a').forEach(el => {
@@ -260,4 +270,6 @@
             });
         });
     </script>
+
+
 </body></html>

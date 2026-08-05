@@ -11,4 +11,6 @@ export const verifyOtpSchema = z.object({
 
 export const selectRoleSchema = z.object({
   role: z.enum(['WORKER', 'HOUSEHOLD'], { message: 'Role must be WORKER or HOUSEHOLD' }),
+  familyMemberContact: z.string().min(10).max(15).optional(),
+  familyMemberRelation: z.string().optional(),
 });

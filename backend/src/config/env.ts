@@ -10,4 +10,5 @@ export const env = {
   JWT_REFRESH_EXPIRY: process.env.JWT_REFRESH_EXPIRY || '30d',
   MOCK_OTP: process.env.MOCK_OTP || '123456',
   DATABASE_URL: process.env.DATABASE_URL || 'file:./dev.db',
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY,
 };

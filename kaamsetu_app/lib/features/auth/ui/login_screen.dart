@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kaamsetu_app/l10n/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../providers/auth_provider.dart';
+import '../providers/auth_state.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -24,6 +26,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthState>(authNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        error: (message) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message), backgroundColor: Colors.red),
+          );
+        },
+        orElse: () {},
+      );
+    });
+
     final authState = ref.watch(authNotifierProvider);
     final l10n = AppLocalizations.of(context)!;
 
@@ -71,6 +84,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         );
                       },
                       child: Text(l10n.verifyOtp),
+                    ),
+                  ],
+                ),
+                roleSelection: (phone) => Column(
+                  children: [
+                    const Icon(Icons.check_circle, size: 64, color: Colors.green),
+                    const SizedBox(height: 16),
+                    const Text('OTP Verified!'),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.go('/role-selection');
+                      },
+                      child: const Text('Continue'),
                     ),
                   ],
                 ),

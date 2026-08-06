@@ -1,0 +1,28 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    missing_required_param: error
+    missing_return: error
+    parameter_assignments: warning
+    unused_local_variable: warning
+    unused_import: warning
+
+linter:
+  rules:
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - require_trailing_commas
+    - avoid_print
+    - use_key_in_widget_constructors
+    - always_declare_return_types
+    - camel_case_types
+    - file_names
+    - non_constant_identifier_names
+    - prefer_single_quotes

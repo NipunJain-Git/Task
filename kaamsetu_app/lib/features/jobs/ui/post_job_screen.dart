@@ -76,7 +76,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
 
       String? fetchedAddress;
       try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(
+        List<Placemark> placemarks = await Geocoding().placemarkFromCoordinates(
           position.latitude,
           position.longitude,
         );
@@ -322,7 +322,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
     if (lat == 0.0 || lng == 0.0) {
       if (_addressController.text.isNotEmpty) {
         try {
-          List<Location> locations = await locationFromAddress(_addressController.text);
+          List<Location> locations = await Geocoding().locationFromAddress(_addressController.text);
           if (locations.isNotEmpty) {
             lat = locations.first.latitude;
             lng = locations.first.longitude;

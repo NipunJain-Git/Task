@@ -43,9 +43,11 @@ app.use('/api/wallet', walletRoutes);
 // Error handler (must be last)
 app.use(errorMiddleware);
 
-// Start server
-app.listen(env.PORT, '0.0.0.0', () => {
-  logger.info(`KaamSetu API server running on port ${env.PORT}`, { port: env.PORT, env: env.NODE_ENV });
-});
+// Start server only if not running on Vercel
+if (!process.env.VERCEL) {
+  app.listen(env.PORT, '0.0.0.0', () => {
+    logger.info(`KaamSetu API server running on port ${env.PORT}`, { port: env.PORT, env: env.NODE_ENV });
+  });
+}
 
 export default app;

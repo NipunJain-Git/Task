@@ -6,7 +6,7 @@ import 'mock_interceptor.dart';
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'https://kaamsetu-backend.onrender.com/api',
+      baseUrl: 'https://task-two-beige.vercel.app/api',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       headers: {

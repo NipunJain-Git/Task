@@ -15,8 +15,11 @@ class JobFeedScreen extends ConsumerStatefulWidget {
 
 class _JobFeedScreenState extends ConsumerState<JobFeedScreen> {
   String? _selectedCategory;
+  String _selectedCity = 'Delhi';
   double _currentLatitude = 0.0;
   double _currentLongitude = 0.0;
+
+  final List<String> _cities = ['Delhi', 'Mumbai', 'Bangalore'];
 
   final List<String> _categories = [
     'All',
@@ -93,7 +96,9 @@ class _JobFeedScreenState extends ConsumerState<JobFeedScreen> {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _buildCitySelector(),
           _buildCategoryFilter(),
           Expanded(
             child: jobsState.status == JobsStatus.loading
@@ -101,6 +106,56 @@ class _JobFeedScreenState extends ConsumerState<JobFeedScreen> {
                 : jobsState.jobs.isEmpty
                     ? _buildEmptyState()
                     : _buildJobList(jobsState.jobs),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCitySelector() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Nearby Jobs',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textDark,
+                ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppTheme.primaryGreen.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: _selectedCity,
+                icon: const Icon(Icons.arrow_drop_down, color: AppTheme.primaryGreen),
+                isDense: true,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppTheme.primaryGreen,
+                      fontWeight: FontWeight.bold,
+                    ),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedCity = newValue;
+                    });
+                    _loadJobs();
+                  }
+                },
+                items: _cities.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
           ),
         ],
       ),

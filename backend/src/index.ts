@@ -10,6 +10,8 @@ import interestsRoutes from './modules/interests/interests.routes';
 import ratingsRoutes from './modules/ratings/ratings.routes';
 import notificationsRoutes from './modules/notifications/notifications.routes';
 import walletRoutes from './modules/wallet/wallet.routes';
+import kycRoutes from './modules/kyc/kyc.routes';
+import adminRoutes from './modules/admin/admin.routes';
 import logger from './utils/logger';
 import { initFirebase } from './config/firebase';
 
@@ -37,6 +39,8 @@ app.use('/api/jobs', interestsRoutes);  // /api/jobs/:id/interest, /api/jobs/:id
 app.use('/api/jobs', ratingsRoutes);    // /api/jobs/:id/rate
 app.use('/api/notifications', notificationsRoutes);
 app.use('/api/wallet', walletRoutes);
+app.use('/api/kyc', kycRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Error handler (must be last)
 app.use(errorMiddleware);

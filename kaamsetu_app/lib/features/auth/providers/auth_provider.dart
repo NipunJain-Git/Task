@@ -43,27 +43,10 @@ class AuthNotifier extends Notifier<AuthState> {
   Future<void> sendOtp(String phone) async {
     try {
       state = const AuthState.loading();
-      
-      // Formatting phone for Firebase (assuming India +91)
       final formattedPhone = phone.startsWith('+') ? phone : '+91$phone';
-
-      await _auth.verifyPhoneNumber(
-        phoneNumber: formattedPhone,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          // Auto-resolution on Android
-          await _signInWithCredential(credential);
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          state = AuthState.error(e.message ?? 'Verification failed');
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          _verificationId = verificationId;
-          state = AuthState.otpSent(phone);
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          _verificationId = verificationId;
-        },
-      );
+      
+      await _dio.post('/auth/send-otp', data: {'phone': formattedPhone});
+      state = AuthState.otpSent(formattedPhone);
     } catch (e) {
       state = AuthState.error(e.toString());
     }
@@ -72,36 +55,10 @@ class AuthNotifier extends Notifier<AuthState> {
   Future<void> verifyOtp(String phone, String otp) async {
     try {
       state = const AuthState.loading();
-      if (_verificationId == null) {
-        throw Exception('Verification ID is null. Request OTP again.');
-      }
       
-      final credential = PhoneAuthProvider.credential(
-        verificationId: _verificationId!,
-        smsCode: otp,
-      );
-      
-      await _signInWithCredential(credential);
-    } catch (e) {
-      state = AuthState.error(e.toString());
-      state = AuthState.otpSent(phone); // fallback if it fails
-    }
-  }
-  
-  Future<void> _signInWithCredential(PhoneAuthCredential credential) async {
-    try {
-      final userCredential = await _auth.signInWithCredential(credential);
-      final firebaseUser = userCredential.user;
-      
-      if (firebaseUser == null) {
-        throw Exception('Failed to sign in with Firebase.');
-      }
-      
-      final idToken = await firebaseUser.getIdToken();
-      
-      // Send Firebase token to our Node.js backend
-      final response = await _dio.post('/auth/verify-firebase', data: {
-        'idToken': idToken,
+      final response = await _dio.post('/auth/verify-otp', data: {
+        'phone': phone,
+        'otp': otp,
       });
 
       final data = response.data['data'] as Map<String, dynamic>;
@@ -112,12 +69,13 @@ class AuthNotifier extends Notifier<AuthState> {
       await prefs.setString('refreshToken', data['refreshToken'] as String);
       
       if (data['user']['isNewUser'] == true) {
-        state = AuthState.roleSelection(firebaseUser.phoneNumber ?? '');
+        state = AuthState.roleSelection(phone);
       } else {
         state = AuthState.authenticated(user);
       }
     } catch (e) {
       state = AuthState.error(e.toString());
+      state = AuthState.otpSent(phone);
     }
   }
 

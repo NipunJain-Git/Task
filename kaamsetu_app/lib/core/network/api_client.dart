@@ -6,7 +6,7 @@ import 'mock_interceptor.dart';
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'https://kopqv-2401-4900-1c8e-feac-d4f1-bc0-9a24-dc5e.run.pinggy-free.link/api',
+      baseUrl: 'http://10.15.104.97:5000/api',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       headers: {

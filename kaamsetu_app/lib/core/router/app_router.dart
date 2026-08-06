@@ -13,6 +13,8 @@ import '../../features/wallet/ui/wallet_dashboard_screen.dart';
 import '../../features/wallet/ui/setup_pin_screen.dart';
 import '../../features/support/ui/support_screen.dart';
 import '../../features/support/ui/chatbot_screen.dart';
+import '../../features/kyc/presentation/screens/kyc_screen.dart';
+import '../../features/admin/presentation/screens/admin_dashboard.dart';
 import 'main_shell.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -33,9 +35,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       
       final isLoggingIn = state.uri.path == '/login';
       final isRoleSelectionRoute = state.uri.path == '/role-selection';
+      final isAdminRoute = state.uri.path == '/admin';
       
-      if (needsRoleSelection && !isRoleSelectionRoute) return '/role-selection';
-      if (!isAuth && !isLoggingIn && !isRoleSelectionRoute) return '/login';
+      if (needsRoleSelection && !isRoleSelectionRoute && !isAdminRoute) return '/role-selection';
+      if (!isAuth && !isLoggingIn && !isRoleSelectionRoute && !isAdminRoute) return '/login';
       if (isAuth && isLoggingIn) return '/home';
       
       return null;
@@ -82,12 +85,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const SetupPinScreen(),
       ),
       GoRoute(
+        path: '/kyc',
+        builder: (context, state) => const KycScreen(),
+      ),
+      GoRoute(
         path: '/support',
         builder: (context, state) => const SupportScreen(),
       ),
       GoRoute(
         path: '/support/chatbot',
         builder: (context, state) => const ChatbotScreen(),
+      ),
+      GoRoute(
+        path: '/admin',
+        builder: (context, state) => const AdminDashboard(),
       ),
     ],
   );

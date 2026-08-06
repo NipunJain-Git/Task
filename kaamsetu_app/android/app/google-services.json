@@ -1,0 +1,23 @@
+{
+  "project_info": {
+    "project_number": "920784767903",
+    "project_id": "kaamsetu-f7b3b",
+    "storage_bucket": "kaamsetu-f7b3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920784767903:android:9da2aeea8987c0fe2ecbaa",
+        "android_client_info": {
+          "package_name": "com.kaamsetu.app"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyDovLKo3djdRbs963vqKdbj-geRWyzMTrg"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}

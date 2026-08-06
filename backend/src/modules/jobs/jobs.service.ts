@@ -37,7 +37,7 @@ export class JobsService {
 
   static async listJobs(filters: {
     latitude?: number; longitude?: number; radius?: number;
-    category?: string; status?: string; page?: number; limit?: number;
+    category?: string; status?: string; page?: number; limit?: number; cityId?: string;
   }) {
     const page = filters.page || 1;
     const limit = filters.limit || 20;
@@ -48,6 +48,7 @@ export class JobsService {
       status: filters.status || 'OPEN',
     };
     if (filters.category) where.category = filters.category;
+    if (filters.cityId) where.cityId = filters.cityId;
 
     const [jobs, total] = await Promise.all([
       prisma.job.findMany({

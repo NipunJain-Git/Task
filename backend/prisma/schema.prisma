@@ -10,7 +10,7 @@ datasource db {
 model User {
   id                   String            @id @default(uuid())
   phone                String            @unique
-  role                 String?           // WORKER | HOUSEHOLD
+  role                 String?           // WORKER | HOUSEHOLD | ADMIN
   name                 String?
   photoUrl             String?
   language             String            @default("en")
@@ -19,6 +19,10 @@ model User {
   familyMemberContact  String?
   familyMemberRelation String?
   walletPin            String?
+  cityId               String?
+  city                 City?             @relation(fields: [cityId], references: [id])
+  kycStatus            String            @default("PENDING") // PENDING | APPROVED | REJECTED
+  kycDocumentUrl       String?           
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
   deletedAt            DateTime?
@@ -32,6 +36,17 @@ model User {
   ratingsGiven     Rating[]          @relation("RatingsGiven")
   ratingsReceived  Rating[]          @relation("RatingsReceived")
   notifications    Notification[]
+}
+
+model City {
+  id        String   @id @default(uuid())
+  name      String
+  state     String
+  isActive  Boolean  @default(true)
+  users     User[]
+  jobs      Job[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Wallet {
@@ -57,18 +72,20 @@ model Transaction {
 }
 
 model WorkerProfile {
-  id           String   @id @default(uuid())
-  userId       String   @unique
-  user         User     @relation(fields: [userId], references: [id])
-  skills       String   @default("[]")
-  expectedWage Float?
-  wageType     String   @default("DAILY")
-  isAvailable  Boolean  @default(true)
-  workRadius   Float    @default(5.0)
-  thumbsUp     Int      @default(0)
-  thumbsDown   Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  skills          String   @default("[]")
+  expectedWage    Float?
+  wageType        String   @default("DAILY")
+  isAvailable     Boolean  @default(true)
+  workRadius      Float    @default(5.0)
+  thumbsUp        Int      @default(0)
+  thumbsDown      Int      @default(0)
+  videoProfileUrl String?
+  portfolioUrls   String   @default("[]") // JSON array of image URLs
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model HouseholdProfile {
@@ -94,6 +111,8 @@ model Job {
   latitude         Float
   longitude        Float
   address          String?
+  cityId           String?
+  city             City?         @relation(fields: [cityId], references: [id])
   budgetAmount     Float
   budgetType       String        @default("FIXED")
   status           String        @default("OPEN")

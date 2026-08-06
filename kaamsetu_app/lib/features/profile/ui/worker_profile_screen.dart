@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaamsetu_app/core/theme/app_theme.dart';
 import 'package:kaamsetu_app/features/profile/providers/profile_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kaamsetu_app/features/profile/models/worker_profile_model.dart';
 
 class WorkerProfileScreen extends ConsumerStatefulWidget {
@@ -73,6 +74,17 @@ class _WorkerProfileScreenState extends ConsumerState<WorkerProfileScreen> {
                       prefixIcon: Icon(Icons.person),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        context.push('/kyc');
+                      },
+                      icon: const Icon(Icons.verified_user),
+                      label: const Text('Complete KYC'),
+                    ),
+                  ),
                   const SizedBox(height: 24),
 
                   _buildSectionHeader('Skills'),
@@ -97,6 +109,48 @@ class _WorkerProfileScreenState extends ConsumerState<WorkerProfileScreen> {
                         checkmarkColor: AppTheme.primaryGreen,
                       );
                     }).toList(),
+                  ),
+                  const SizedBox(height: 24),
+
+                  _buildSectionHeader('Video Portfolio'),
+                  Container(
+                    width: double.infinity,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.play_circle_fill,
+                            size: 48,
+                            color: AppTheme.primaryGreen.withOpacity(0.5),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'No video uploaded',
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        // TODO: Implement video upload
+                      },
+                      icon: const Icon(Icons.upload_file),
+                      label: const Text('Upload New Video'),
+                    ),
                   ),
                   const SizedBox(height: 24),
 

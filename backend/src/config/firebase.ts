@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import * as path from 'path';
+import * as fs from 'fs';
 import logger from '../utils/logger';
 
 export const initFirebase = () => {
@@ -12,10 +13,14 @@ export const initFirebase = () => {
       logger.info('Firebase Admin SDK initialized successfully from environment variable');
     } else {
       const serviceAccountPath = path.resolve(__dirname, '../../firebase-service-account.json');
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccountPath),
-      });
-      logger.info('Firebase Admin SDK initialized successfully from file');
+      if (fs.existsSync(serviceAccountPath)) {
+        admin.initializeApp({
+          credential: admin.credential.cert(serviceAccountPath),
+        });
+        logger.info('Firebase Admin SDK initialized successfully from file');
+      } else {
+        logger.warn('Firebase Admin SDK not initialized: No config found');
+      }
     }
   } catch (error) {
     logger.error('Failed to initialize Firebase Admin SDK', { error });

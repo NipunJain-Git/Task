@@ -15,6 +15,21 @@ build/
 .env.production
 .env.staging
 
+# Secrets and credentials
+firebase-service-account.json
+google-services.json
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!vercel.json
+!kaamsetu_app/pubspec.lock
+
+# Large files
+*.tar.xz
+*.tar.gz
+*.zip
+
 # Flutter / Dart
 .dart_tool/
 .flutter-plugins
@@ -28,6 +43,7 @@ build/
 # IDE & OS files
 .idea/
 .vscode/
+.codex/
 *.swp
 .DS_Store
 Thumbs.db

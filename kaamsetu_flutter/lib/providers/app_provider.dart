@@ -1,8 +1,9 @@
-// App state provider — replaces Next.js session/server actions
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models.dart';
 import '../data/seed.dart';
 import '../core/domain.dart';
+import '../core/api_client.dart';
 
 class AppProvider extends ChangeNotifier {
   // Auth state
@@ -52,49 +53,84 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Simulate OTP flow — demo always succeeds with 123456
   Future<bool> requestOtp(String phone) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
-    await Future.delayed(const Duration(milliseconds: 800));
-    _isLoading = false;
-    notifyListeners();
-    return true;
+    try {
+      await apiClient.dio.post('/auth/request-otp', data: {'phone': phone});
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _isLoading = false;
+      _error = 'Failed to request OTP';
+      notifyListeners();
+      return false;
+    }
   }
 
   Future<bool> verifyOtp(String phone, String otp, String role) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
-    await Future.delayed(const Duration(milliseconds: 1000));
+    
+    try {
+      final res = await apiClient.dio.post('/auth/verify-otp', data: {
+        'phone': phone,
+        'otp': otp,
+        'role': role,
+      });
 
-    if (otp != kDemoOtp) {
-      _error = 'Wrong OTP. Demo OTP is 123456.';
+      final payload = res.data['data'];
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('jwt_token', payload['accessToken']);
+
+      final userData = payload['user'];
+      _user = AppUser(
+        id: userData['id']?.toString() ?? '',
+        phone: userData['phone']?.toString() ?? phone,
+        name: userData['name'] ?? '',
+        role: userData['role'] ?? role,
+        language: userData['language'] ?? 'en',
+        onboarded: userData['onboarded'] ?? false,
+        aadhaarVerified: userData['aadhaarVerified'] ?? false,
+        aadhaarLast4: userData['aadhaarLast4']?.toString(),
+        area: userData['area'] ?? '',
+        address: userData['address'] ?? '',
+        radiusKm: (userData['radiusKm'] ?? 10).toDouble(),
+        walletBalance: userData['walletBalance'] ?? 0,
+        streak: userData['streak'] ?? 0,
+        pin: userData['pin']?.toString(),
+      );
+
+      if (role == 'worker') {
+        _workerProfile = demoWorkerProfile;
+        _transactions = demoTransactions;
+        _assignedJobs = [];
+        try {
+          final jobsRes = await apiClient.dio.get('/jobs');
+          print('WARNING: Fetched feed jobs but using mock parsing for now due to lack of fromJson: ${jobsRes.data}');
+          _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
+        } catch (e) {
+          print('Failed to fetch feed jobs: $e');
+          _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
+        }
+      } else {
+        _myJobs = demoJobs.take(3).toList();
+        _nearbyWorkers = demoNearbyWorkers;
+        _transactions = [];
+      }
+      _notifications = demoNotifications;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = 'Error: $e';
       _isLoading = false;
       notifyListeners();
       return false;
     }
-
-    // Load demo user based on role
-    _user = role == 'worker'
-        ? demoWorker.copyWith()
-        : demoHousehold.copyWith();
-
-    if (role == 'worker') {
-      _workerProfile = demoWorkerProfile;
-      _transactions = demoTransactions;
-      _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
-      _assignedJobs = [];
-    } else {
-      _myJobs = demoJobs.take(3).toList();
-      _nearbyWorkers = demoNearbyWorkers;
-      _transactions = [];
-    }
-    _notifications = demoNotifications;
-    _isLoading = false;
-    notifyListeners();
-    return true;
   }
 
   Future<void> completeOnboarding({
@@ -119,7 +155,7 @@ class AppProvider extends ChangeNotifier {
   }) async {
     _isLoading = true;
     notifyListeners();
-    await Future.delayed(const Duration(milliseconds: 800));
+    print('WARNING: completeOnboarding is using mock implementation.');
 
     _user = _user!.copyWith(
       name: name,
@@ -220,7 +256,7 @@ class AppProvider extends ChangeNotifier {
   Future<String?> topUp(int amount, String pin) async {
     if (_user == null) return 'Not logged in';
     if (_user!.pin != null && pin != _user!.pin) return 'Wrong PIN';
-    await Future.delayed(const Duration(milliseconds: 600));
+    print('WARNING: topUp is using mock implementation.');
     _user = _user!.copyWith(walletBalance: _user!.walletBalance + amount);
     _transactions.insert(0, WalletTx(
       id: 'tx-${DateTime.now().millisecondsSinceEpoch}',
@@ -236,7 +272,7 @@ class AppProvider extends ChangeNotifier {
     if (_user == null) return 'Not logged in';
     if (_user!.pin != null && pin != _user!.pin) return 'Wrong PIN';
     if (_user!.walletBalance < amount) return 'Insufficient balance';
-    await Future.delayed(const Duration(milliseconds: 600));
+    print('WARNING: withdraw is using mock implementation.');
     _user = _user!.copyWith(walletBalance: _user!.walletBalance - amount);
     _transactions.insert(0, WalletTx(
       id: 'tx-${DateTime.now().millisecondsSinceEpoch}',
@@ -270,23 +306,38 @@ class AppProvider extends ChangeNotifier {
     required int durationHours,
     required bool urgent,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 700));
-    final job = Job(
-      id: 'job-${DateTime.now().millisecondsSinceEpoch}',
-      householdId: _user!.id,
-      title: title,
-      description: description,
-      category: category,
-      budget: budget,
-      jobDate: jobDate,
-      startTime: startTime,
-      durationHours: durationHours,
-      status: 'open',
-      urgent: urgent,
-    );
-    _myJobs.insert(0, job);
-    notifyListeners();
-    return null;
+    try {
+      final res = await apiClient.dio.post('/jobs', data: {
+        'title': title,
+        'description': description,
+        'category': category,
+        'budget': budget,
+        'jobDate': jobDate,
+        'startTime': startTime,
+        'durationHours': durationHours,
+        'urgent': urgent,
+      });
+
+      final job = Job(
+        id: res.data['job']?['id']?.toString() ?? 'job-${DateTime.now().millisecondsSinceEpoch}',
+        householdId: _user!.id,
+        title: title,
+        description: description,
+        category: category,
+        budget: budget,
+        jobDate: jobDate,
+        startTime: startTime,
+        durationHours: durationHours,
+        status: 'open',
+        urgent: urgent,
+      );
+      _myJobs.insert(0, job);
+      notifyListeners();
+      return null;
+    } catch (e) {
+      print('Failed to post job: $e');
+      return 'Failed to post job';
+    }
   }
 
   void updateWorkerProfile({

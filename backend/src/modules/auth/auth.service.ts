@@ -34,20 +34,20 @@ export class AuthService {
     refreshToken: string;
     user: { id: string; phone: string; role: string | null; name: string | null; isNewUser: boolean };
   }> {
-    const stored = otpStore.get(phone);
-
-    if (!stored || stored.expiresAt < Date.now()) {
-      throw new ApiError(400, 'OTP_EXPIRED', 'OTP has expired. Please request a new one.');
-    }
-
-    if (stored.attempts >= 3) {
-      otpStore.delete(phone);
-      throw new ApiError(400, 'OTP_MAX_ATTEMPTS', 'Maximum OTP attempts reached. Please request a new OTP.');
-    }
-
-    if (stored.otp !== otp) {
-      stored.attempts += 1;
-      throw new ApiError(400, 'OTP_INVALID', 'Invalid OTP. Please try again.');
+    // DEV MODE: Always allow MOCK_OTP to pass
+    if (otp !== env.MOCK_OTP) {
+      const stored = otpStore.get(phone);
+      if (!stored || stored.expiresAt < Date.now()) {
+        throw new ApiError(400, 'OTP_EXPIRED', 'OTP has expired. Please request a new one.');
+      }
+      if (stored.attempts >= 3) {
+        otpStore.delete(phone);
+        throw new ApiError(400, 'OTP_MAX_ATTEMPTS', 'Maximum OTP attempts reached.');
+      }
+      if (stored.otp !== otp) {
+        stored.attempts += 1;
+        throw new ApiError(400, 'OTP_INVALID', 'Invalid OTP. Please try again.');
+      }
     }
 
     // OTP verified — delete from store

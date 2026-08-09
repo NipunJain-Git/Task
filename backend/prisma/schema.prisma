@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   String            @id @default(uuid())
+  phone                String            @unique
+  role                 String?           // WORKER | HOUSEHOLD
+  name                 String?
+  photoUrl             String?
+  language             String            @default("en")
+  latitude             Float?
+  longitude            Float?
+  familyMemberContact  String?
+  familyMemberRelation String?
+  walletPin            String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  deletedAt            DateTime?
+
+  workerProfile    WorkerProfile?
+  householdProfile HouseholdProfile?
+  wallet           Wallet?
+  postedJobs       Job[]             @relation("PostedJobs")
+  assignedJobs     Job[]             @relation("AssignedJobs")
+  jobInterests     JobInterest[]
+  ratingsGiven     Rating[]          @relation("RatingsGiven")
+  ratingsReceived  Rating[]          @relation("RatingsReceived")
+  notifications    Notification[]
+}
+
+model Wallet {
+  id           String        @id @default(uuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id])
+  balance      Float         @default(0.0)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  walletId      String
+  wallet        Wallet   @relation(fields: [walletId], references: [id])
+  amount        Float
+  type          String   // CREDIT | DEBIT
+  description   String?
+  receiptNumber String   @unique
+  referenceId   String?  // Can be jobId or other reference
+  createdAt     DateTime @default(now())
+}
+
+model WorkerProfile {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id])
+  skills       String   @default("[]")
+  expectedWage Float?
+  wageType     String   @default("DAILY")
+  isAvailable  Boolean  @default(true)
+  workRadius   Float    @default(5.0)
+  thumbsUp     Int      @default(0)
+  thumbsDown   Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model HouseholdProfile {
+  id         String   @id @default(uuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+  address    String?
+  thumbsUp   Int      @default(0)
+  thumbsDown Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Job {
+  id               String        @id @default(uuid())
+  householdId      String
+  household        User          @relation("PostedJobs", fields: [householdId], references: [id])
+  title            String
+  description      String
+  category         String
+  jobDate          DateTime
+  jobTime          String?
+  latitude         Float
+  longitude        Float
+  address          String?
+  budgetAmount     Float
+  budgetType       String        @default("FIXED")
+  status           String        @default("OPEN")
+  assignedWorkerId String?
+  assignedWorker   User?         @relation("AssignedJobs", fields: [assignedWorkerId], references: [id])
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  deletedAt        DateTime?
+
+  interests        JobInterest[]
+  ratings          Rating[]
+}
+
+model JobInterest {
+  id        String   @id @default(uuid())
+  jobId     String
+  job       Job      @relation(fields: [jobId], references: [id])
+  workerId  String
+  worker    User     @relation(fields: [workerId], references: [id])
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([jobId, workerId])
+}
+
+model Rating {
+  id          String   @id @default(uuid())
+  jobId       String
+  job         Job      @relation(fields: [jobId], references: [id])
+  raterId     String
+  rater       User     @relation("RatingsGiven", fields: [raterId], references: [id])
+  ratedUserId String
+  ratedUser   User     @relation("RatingsReceived", fields: [ratedUserId], references: [id])
+  value       String   // THUMBS_UP | THUMBS_DOWN
+  comment     String?
+  createdAt   DateTime @default(now())
+
+  @@unique([jobId, raterId])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  type      String
+  title     String
+  body      String
+  data      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

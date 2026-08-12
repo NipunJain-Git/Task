@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kaamsetu_flutter/core/theme/app_theme.dart';
+import 'package:kaamsetu_flutter/core/theme.dart';
 
 class KycScreen extends StatefulWidget {
   const KycScreen({super.key});
@@ -65,7 +65,7 @@ class _KycScreenState extends State<KycScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.file_present, color: AppTheme.primary),
+                    Icon(Icons.file_present, color: AppTheme.primary),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(

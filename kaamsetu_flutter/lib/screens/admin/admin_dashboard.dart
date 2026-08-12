@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kaamsetu_flutter/core/theme/app_theme.dart';
+import 'package:kaamsetu_flutter/core/theme.dart';
 
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});

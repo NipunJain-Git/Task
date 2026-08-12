@@ -502,11 +502,19 @@ class AppProvider extends ChangeNotifier {
       final idx = _myJobs.indexWhere((j) => j.id == jobId);
       if (idx >= 0) {
         _myJobs[idx] = Job(
-          id: _myJobs[idx].id, title: _myJobs[idx].title, description: _myJobs[idx].description,
-          category: _myJobs[idx].category, jobDate: _myJobs[idx].jobDate, jobTime: _myJobs[idx].jobTime,
-          address: _myJobs[idx].address, latitude: _myJobs[idx].latitude, longitude: _myJobs[idx].longitude,
-          budgetAmount: _myJobs[idx].budgetAmount, budgetType: _myJobs[idx].budgetType, status: status,
-          createdAt: _myJobs[idx].createdAt, household: _myJobs[idx].household, distance: _myJobs[idx].distance,
+          id: _myJobs[idx].id,
+          householdId: _myJobs[idx].householdId,
+          title: _myJobs[idx].title,
+          description: _myJobs[idx].description,
+          category: _myJobs[idx].category,
+          budget: _myJobs[idx].budget,
+          jobDate: _myJobs[idx].jobDate,
+          startTime: _myJobs[idx].startTime,
+          durationHours: _myJobs[idx].durationHours,
+          status: status,
+          urgent: _myJobs[idx].urgent,
+          assignedWorkerId: _myJobs[idx].assignedWorkerId,
+          assignedWorkerName: _myJobs[idx].assignedWorkerName,
           interestsCount: _myJobs[idx].interestsCount,
         );
         notifyListeners();

@@ -140,7 +140,6 @@ class AppProvider extends ChangeNotifier {
           final jobsList = (jobsRes.data['data'] as List? ?? []);
           _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
         } catch (e) {
-          print('Failed to fetch feed jobs: $e');
           _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
         }
       } else {
@@ -626,10 +625,8 @@ class AppProvider extends ChangeNotifier {
       final token = await messaging.getToken();
       if (token != null) {
         await apiClient.dio.patch('/users/me/fcm-token', data: {'fcmToken': token});
-        print('FCM token uploaded successfully');
       }
     } catch (e) {
-      print('Failed to upload FCM token: $e');
       // silently fail
     }
   }

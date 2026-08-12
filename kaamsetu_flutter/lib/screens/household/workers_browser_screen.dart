@@ -107,15 +107,37 @@ class _WorkersBrowserScreenState extends State<WorkersBrowserScreen> {
                                 ]),
                               )).toList()),
                           const SizedBox(height: 12),
-                          SizedBox(width: double.infinity, height: 40, child: ElevatedButton(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: KsText('Hiring flow initiated for ${w.name}')),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                            child: const KsText('Hire now'),
-                          )),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SizedBox(height: 40, child: OutlinedButton.icon(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed('/chat', arguments: {
+                                      'jobId': 'direct', // Generic direct message ID since it's from browser
+                                      'otherUserId': w.id,
+                                      'otherUserName': w.name,
+                                      'jobTitle': 'General Inquiry',
+                                    });
+                                  },
+                                  icon: const Icon(Icons.chat_bubble_outline, size: 18),
+                                  label: const KsText('Chat'),
+                                  style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                                )),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: SizedBox(height: 40, child: ElevatedButton(
+                                  onPressed: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: KsText('Hiring flow initiated for ${w.name}')),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                                  child: const KsText('Hire now'),
+                                )),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     );

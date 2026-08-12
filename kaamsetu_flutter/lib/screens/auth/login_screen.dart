@@ -1,5 +1,6 @@
 // Login flow — mirrors components/auth/login-flow.tsx
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import '../../core/theme.dart';
 import '../../core/i18n.dart';
 import '../../providers/app_provider.dart';
 import '../../widgets/atoms.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LoginScreen extends StatefulWidget {
   final String? initialRole;
@@ -27,6 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _phoneCtrl = TextEditingController();
   final _otpCtrl = TextEditingController();
+  
+  double? _currentLat;
+  double? _currentLng;
 
   @override
   void initState() {
@@ -48,38 +53,89 @@ class _LoginScreenState extends State<LoginScreen> {
   final List<String> _steps = ['lang', 'role', 'phone', 'otp'];
   int get _stepIdx => _steps.indexOf(_step);
 
+  String? _sessionId;
+
+  Future<void> _detectLocation() async {
+    setState(() { _loading = true; });
+    try {
+      final permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        setState(() { _error = 'Location permission denied'; _loading = false; });
+        return;
+      }
+      final pos = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+      setState(() {
+        _currentLat = pos.latitude;
+        _currentLng = pos.longitude;
+        _loading = false;
+      });
+    } catch (e) {
+      setState(() { _loading = false; });
+    }
+  }
+
   void _nextStep() async {
     final provider = context.read<AppProvider>();
     setState(() { _error = ''; });
 
     if (_step == 'lang') {
+      provider.setLang(_lang);
       setState(() { _step = 'role'; });
     } else if (_step == 'role') {
       setState(() { _step = 'phone'; });
     } else if (_step == 'phone') {
       if (_phone.length != 10) return;
       setState(() { _loading = true; });
-      await provider.requestOtp(_phone);
-      if (mounted) setState(() { _loading = false; _step = 'otp'; });
+
+      // Request OTP from Netlify Backend
+      final sessionId = await provider.requestOtp(_phone);
+      if (!mounted) return;
+      
+      if (sessionId != null) {
+        setState(() {
+          _sessionId = sessionId;
+          _loading = false;
+          _step = 'otp';
+        });
+      } else {
+        setState(() {
+          _error = provider.error ?? 'Failed to send OTP';
+          _loading = false;
+        });
+      }
+
     } else if (_step == 'otp') {
-      if (_otp.length != 6) return;
+      if (_otp.length != 6 || _sessionId == null) return;
       setState(() { _loading = true; });
-      final ok = await provider.verifyOtp(_phone, _otp, _role);
+      
+      final ok = await provider.verifyOtp(_phone, _otp, _role, _sessionId!);
       if (!mounted) return;
       setState(() { _loading = false; });
+      
       if (!ok) {
-        setState(() { _error = provider.error ?? 'Verification failed'; });
+        setState(() { _error = provider.error ?? 'Invalid OTP or network error'; });
         return;
       }
-      final user = provider.user!;
-      if (!user.onboarded) {
-        Navigator.of(context).pushReplacementNamed(
-          '/onboarding',
-          arguments: {'role': _role, 'lang': _lang, 'phone': _phone},
-        );
-      } else {
-        Navigator.of(context).pushReplacementNamed('/home');
+      
+      if (_currentLat != null && _currentLng != null) {
+        await provider.updateLocation(_currentLat!, _currentLng!);
       }
+      
+      _navigateNext(provider);
+    }
+  }
+
+  void _navigateNext(AppProvider provider) {
+    final user = provider.user!;
+    if (!user.onboarded && user.role != 'ADMIN') {
+      Navigator.of(context).pushReplacementNamed(
+        '/onboarding',
+        arguments: {'role': _role, 'lang': _lang, 'phone': _phone},
+      );
+    } else if (user.role == 'ADMIN') {
+      Navigator.of(context).pushReplacementNamed('/admin');
+    } else {
+      Navigator.of(context).pushReplacementNamed('/home');
     }
   }
 
@@ -290,8 +346,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
+              ),
             ),
           ),
+        const SizedBox(height: 24),
+        Center(
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/admin');
+            },
+            child: KsText(
+              'Login as Admin',
+              style: GoogleFonts.notoSans(color: AppTheme.mutedForeground, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -339,6 +408,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        GestureDetector(
+          onTap: _detectLocation,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppTheme.secondary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.my_location, size: 16, color: AppTheme.primary),
+                const SizedBox(width: 8),
+                KsText(
+                  _currentLat != null ? '📍 Location detected' : '📍 Auto-detect my location',
+                  style: GoogleFonts.notoSans(fontSize: 13, color: AppTheme.primary),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 12),

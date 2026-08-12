@@ -4,6 +4,7 @@ import '../data/models.dart';
 import '../data/seed.dart';
 import '../core/domain.dart';
 import '../core/api_client.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class AppProvider extends ChangeNotifier {
   // Auth state
@@ -11,6 +12,15 @@ class AppProvider extends ChangeNotifier {
   WorkerProfile? _workerProfile;
   bool _isLoading = false;
   String? _error;
+
+  // Language
+  String _lang = 'en';
+  String get lang => _lang;
+  
+  void setLang(String newLang) {
+    _lang = newLang;
+    notifyListeners();
+  }
 
   // Demo data
   List<FeedJob> _feedJobs = [];
@@ -23,14 +33,10 @@ class AppProvider extends ChangeNotifier {
   // Navigation
   int _currentTab = 0;
 
-  // Language
-  String _lang = 'en';
-
   AppUser? get user => _user;
   WorkerProfile? get workerProfile => _workerProfile;
   bool get isLoading => _isLoading;
   String? get error => _error;
-  String get lang => _lang;
   int get currentTab => _currentTab;
   List<FeedJob> get feedJobs => _feedJobs;
   List<NearbyWorker> get nearbyWorkers => _nearbyWorkers;
@@ -43,9 +49,22 @@ class AppProvider extends ChangeNotifier {
 
   int get unreadCount => _notifications.where((n) => !n.read).length;
 
-  void setLang(String lang) {
-    _lang = lang;
-    notifyListeners();
+  Future<void> verifyIdentity(String identityNumber) async {
+    if (_user == null || !RegExp(r'^\d{12}$').hasMatch(identityNumber)) return;
+    
+    try {
+      final res = await apiClient.dio.post('/users/kyc', data: { 'identityNumber': identityNumber });
+      if (res.data['success'] == true) {
+        _user = _user!.copyWith(
+          kycStatus: 'PENDING',
+          aadhaarLast4: identityNumber.substring(8),
+        );
+        notifyListeners();
+      }
+    } catch (e) {
+      _error = 'Failed to submit KYC';
+      notifyListeners();
+    }
   }
 
   void setTab(int index) {
@@ -53,24 +72,24 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> requestOtp(String phone) async {
+  Future<String?> requestOtp(String phone) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
     try {
-      await apiClient.dio.post('/auth/request-otp', data: {'phone': phone});
+      final res = await apiClient.dio.post('/auth/send-otp', data: {'phone': phone});
       _isLoading = false;
       notifyListeners();
-      return true;
+      return res.data['data']?['sessionId']?.toString() ?? 'mock';
     } catch (e) {
       _isLoading = false;
       _error = 'Failed to request OTP';
       notifyListeners();
-      return false;
+      return null;
     }
   }
 
-  Future<bool> verifyOtp(String phone, String otp, String role) async {
+  Future<bool> verifyOtp(String phone, String otp, String role, String sessionId) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
@@ -79,6 +98,81 @@ class AppProvider extends ChangeNotifier {
       final res = await apiClient.dio.post('/auth/verify-otp', data: {
         'phone': phone,
         'otp': otp,
+        'role': role,
+        'sessionId': sessionId,
+      });
+
+      final payload = res.data['data'];
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('jwt_token', payload['accessToken']);
+
+      final userData = payload['user'];
+      _user = AppUser(
+        id: userData['id']?.toString() ?? '',
+        phone: userData['phone']?.toString() ?? phone,
+        name: userData['name'] ?? '',
+        role: userData['role'] ?? role,
+        language: userData['language'] ?? 'en',
+        onboarded: userData['onboarded'] ?? false,
+        kycStatus: userData['kycStatus'] ?? 'NONE',
+        aadhaarVerified: userData['kycStatus'] == 'APPROVED' || (userData['aadhaarVerified'] ?? false),
+        aadhaarLast4: userData['identityNumber'] != null && userData['identityNumber'].toString().length >= 4 
+            ? userData['identityNumber'].toString().substring(userData['identityNumber'].toString().length - 4) 
+            : userData['aadhaarLast4']?.toString(),
+        area: userData['area'] ?? '',
+        address: userData['address'] ?? '',
+        radiusKm: (userData['radiusKm'] ?? 10).toDouble(),
+        walletBalance: userData['walletBalance'] ?? 0,
+        streak: userData['streak'] ?? 0,
+        pin: userData['pin']?.toString(),
+      );
+
+      // Upload FCM token to backend
+      _uploadFcmToken();
+
+      if (role == 'worker') {
+        _workerProfile = demoWorkerProfile;
+        _transactions = demoTransactions;
+        _assignedJobs = [];
+        try {
+          final jobsRes = await apiClient.dio.get('/jobs');
+          final jobsList = (jobsRes.data['data'] as List? ?? []);
+          _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
+        } catch (e) {
+          print('Failed to fetch feed jobs: $e');
+          _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
+        }
+      } else {
+        try {
+          final jobsRes = await apiClient.dio.get('/jobs/my-posts');
+          final jobsList = (jobsRes.data['data'] as List? ?? []);
+          _myJobs = jobsList.map((j) => Job.fromJson(j as Map<String, dynamic>)).toList();
+        } catch (e) {
+          _myJobs = demoJobs.take(3).toList();
+        }
+        _nearbyWorkers = demoNearbyWorkers;
+        _transactions = [];
+      }
+      _notifications = demoNotifications;
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = 'Error: $e';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> verifyFirebase(String idToken, String phone, String role) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+    
+    try {
+      final res = await apiClient.dio.post('/auth/verify-firebase', data: {
+        'idToken': idToken,
         'role': role,
       });
 
@@ -94,8 +188,11 @@ class AppProvider extends ChangeNotifier {
         role: userData['role'] ?? role,
         language: userData['language'] ?? 'en',
         onboarded: userData['onboarded'] ?? false,
-        aadhaarVerified: userData['aadhaarVerified'] ?? false,
-        aadhaarLast4: userData['aadhaarLast4']?.toString(),
+        kycStatus: userData['kycStatus'] ?? 'NONE',
+        aadhaarVerified: userData['kycStatus'] == 'APPROVED' || (userData['aadhaarVerified'] ?? false),
+        aadhaarLast4: userData['identityNumber'] != null && userData['identityNumber'].toString().length >= 4 
+            ? userData['identityNumber'].toString().substring(userData['identityNumber'].toString().length - 4) 
+            : userData['aadhaarLast4']?.toString(),
         area: userData['area'] ?? '',
         address: userData['address'] ?? '',
         radiusKm: (userData['radiusKm'] ?? 10).toDouble(),
@@ -104,20 +201,28 @@ class AppProvider extends ChangeNotifier {
         pin: userData['pin']?.toString(),
       );
 
+      // Upload FCM token to backend
+      _uploadFcmToken();
+
       if (role == 'worker') {
         _workerProfile = demoWorkerProfile;
         _transactions = demoTransactions;
         _assignedJobs = [];
         try {
           final jobsRes = await apiClient.dio.get('/jobs');
-          print('WARNING: Fetched feed jobs but using mock parsing for now due to lack of fromJson: ${jobsRes.data}');
-          _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
+          final jobsList = (jobsRes.data['data'] as List? ?? []);
+          _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
         } catch (e) {
-          print('Failed to fetch feed jobs: $e');
           _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
         }
       } else {
-        _myJobs = demoJobs.take(3).toList();
+        try {
+          final jobsRes = await apiClient.dio.get('/jobs/my-posts');
+          final jobsList = (jobsRes.data['data'] as List? ?? []);
+          _myJobs = jobsList.map((j) => Job.fromJson(j as Map<String, dynamic>)).toList();
+        } catch (e) {
+          _myJobs = demoJobs.take(3).toList();
+        }
         _nearbyWorkers = demoNearbyWorkers;
         _transactions = [];
       }
@@ -211,6 +316,28 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> refreshJobs() async {
+    if (_user?.role == 'worker') {
+      try {
+        final jobsRes = await apiClient.dio.get('/jobs');
+        final jobsList = (jobsRes.data['data'] as List? ?? []);
+        _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
+        notifyListeners();
+      } catch (e) {
+        print('Failed to refresh jobs: $e');
+      }
+    } else if (_user?.role == 'household') {
+      try {
+        final jobsRes = await apiClient.dio.get('/jobs/my-posts');
+        final jobsList = (jobsRes.data['data'] as List? ?? []);
+        _myJobs = jobsList.map((j) => Job.fromJson(j as Map<String, dynamic>)).toList();
+        notifyListeners();
+      } catch (e) {
+        print('Failed to refresh my posts: $e');
+      }
+    }
+  }
+
   void toggleAvailability() {
     if (_workerProfile == null) return;
     _workerProfile = _workerProfile!.copyWith(
@@ -219,14 +346,15 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void expressInterest(String jobId) {
+  Future<void> expressInterest(String jobId) async {
+    await applyForJob(jobId);
     _feedJobs = _feedJobs.map((f) {
       if (f.job.id == jobId) {
         return FeedJob(
           job: f.job,
           household: f.household,
-          distanceKm: f.distanceKm,
           matchScore: f.matchScore,
+          distanceKm: f.distanceKm,
           interestCount: f.interestCount + 1,
           myInterest: 'interested',
         );
@@ -309,30 +437,36 @@ class AppProvider extends ChangeNotifier {
     try {
       final res = await apiClient.dio.post('/jobs', data: {
         'title': title,
-        'description': description,
+        'description': description ?? 'No description provided.',
         'category': category,
-        'budget': budget,
+        'budgetAmount': budget,
+        'budgetType': 'FIXED',
         'jobDate': jobDate,
-        'startTime': startTime,
-        'durationHours': durationHours,
-        'urgent': urgent,
+        'jobTime': startTime,
+        'latitude': _user?.latitude ?? 28.6139,   // fallback: New Delhi
+        'longitude': _user?.longitude ?? 77.2090,
+        'address': _user?.address ?? '',
       });
 
-      final job = Job(
-        id: res.data['job']?['id']?.toString() ?? 'job-${DateTime.now().millisecondsSinceEpoch}',
-        householdId: _user!.id,
-        title: title,
-        description: description,
-        category: category,
-        budget: budget,
-        jobDate: jobDate,
-        startTime: startTime,
-        durationHours: durationHours,
-        status: 'open',
-        urgent: urgent,
-      );
+      final job = Job.fromJson(res.data['data'] ?? res.data['job'] ?? {
+        'id': 'job-${DateTime.now().millisecondsSinceEpoch}',
+        'householdId': _user!.id,
+        'title': title,
+        'description': description,
+        'category': category,
+        'budgetAmount': budget,
+        'jobDate': jobDate,
+        'jobTime': startTime,
+        'durationHours': durationHours,
+        'status': 'open',
+        'urgent': urgent,
+      });
       _myJobs.insert(0, job);
       notifyListeners();
+      
+      // Refresh to ensure we have up to date data
+      refreshJobs();
+
       return null;
     } catch (e) {
       print('Failed to post job: $e');
@@ -360,5 +494,89 @@ class AppProvider extends ChangeNotifier {
       bio: bio,
     );
     notifyListeners();
+  }
+
+  Future<String?> updateJobStatus(String jobId, String status) async {
+    try {
+      await apiClient.dio.patch('/jobs/$jobId/status', data: {'status': status});
+      final idx = _myJobs.indexWhere((j) => j.id == jobId);
+      if (idx >= 0) {
+        _myJobs[idx] = Job(
+          id: _myJobs[idx].id, title: _myJobs[idx].title, description: _myJobs[idx].description,
+          category: _myJobs[idx].category, jobDate: _myJobs[idx].jobDate, jobTime: _myJobs[idx].jobTime,
+          address: _myJobs[idx].address, latitude: _myJobs[idx].latitude, longitude: _myJobs[idx].longitude,
+          budgetAmount: _myJobs[idx].budgetAmount, budgetType: _myJobs[idx].budgetType, status: status,
+          createdAt: _myJobs[idx].createdAt, household: _myJobs[idx].household, distance: _myJobs[idx].distance,
+          interestsCount: _myJobs[idx].interestsCount,
+        );
+        notifyListeners();
+      }
+      return null;
+    } catch (e) {
+      return 'Failed to update job status';
+    }
+  }
+
+  Future<String?> applyForJob(String jobId) async {
+    try {
+      await apiClient.dio.post('/jobs/$jobId/apply');
+      return null;
+    } catch (e) {
+      return 'Failed to apply for job';
+    }
+  }
+
+  Future<List<dynamic>> getApplicants(String jobId) async {
+    try {
+      final res = await apiClient.dio.get('/jobs/$jobId/applicants');
+      return res.data['data'] as List<dynamic>;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<String?> assignWorker(String jobId, String workerId) async {
+    try {
+      await apiClient.dio.post('/jobs/$jobId/assign', data: {'workerId': workerId});
+      refreshJobs();
+      return null;
+    } catch (e) {
+      return 'Failed to assign worker';
+    }
+  }
+
+  Future<List<dynamic>> getInbox() async {
+    try {
+      final res = await apiClient.dio.get('/chat/inbox');
+      return res.data['data'] as List<dynamic>;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<void> updateLocation(double lat, double lng) async {
+    try {
+      await apiClient.dio.patch('/users/me/location', data: { 'latitude': lat, 'longitude': lng });
+      if (_user != null) {
+        _user = _user!.copyWith(latitude: lat, longitude: lng);
+        notifyListeners();
+      }
+    } catch (e) {
+      // silently fail - location update is optional
+    }
+  }
+
+  Future<void> _uploadFcmToken() async {
+    try {
+      final messaging = FirebaseMessaging.instance;
+      final token = await messaging.getToken();
+      if (token != null) {
+        await apiClient.dio.patch('/users/me/fcm-token', data: {'fcmToken': token});
+        print('FCM token uploaded successfully');
+      }
+    } catch (e) {
+      print('Failed to upload FCM token: $e');
+      // silently fail
+    }
   }
 }

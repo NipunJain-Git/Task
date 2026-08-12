@@ -1,11 +1,12 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { WalletService } from './wallet.service';
 import prisma from '../../config/database';
+import { AuthRequest } from '../../middleware/auth.middleware';
 
 export class WalletController {
-  static async getWallet(req: Request, res: Response) {
+  static async getWallet(req: AuthRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.userId;
       if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
       const wallet = await WalletService.getWallet(userId);
@@ -18,9 +19,9 @@ export class WalletController {
     }
   }
 
-  static async setupPin(req: Request, res: Response) {
+  static async setupPin(req: AuthRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.userId;
       if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
       const { pin } = req.body;
@@ -31,9 +32,9 @@ export class WalletController {
     }
   }
 
-  static async addMoney(req: Request, res: Response) {
+  static async addMoney(req: AuthRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.userId;
       if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
       const { amount, referenceId } = req.body;
@@ -44,9 +45,9 @@ export class WalletController {
     }
   }
 
-  static async transferToFamily(req: Request, res: Response) {
+  static async transferToFamily(req: AuthRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.userId;
       if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
       const { amount, pin } = req.body;
@@ -57,9 +58,9 @@ export class WalletController {
     }
   }
 
-  static async jobPayout(req: Request, res: Response) {
+  static async jobPayout(req: AuthRequest, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.userId;
       if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
       const { jobId, amount, pin } = req.body;

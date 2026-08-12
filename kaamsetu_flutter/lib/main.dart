@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:provider/provider.dart';
 import 'core/theme.dart';
 import 'providers/app_provider.dart';
@@ -8,19 +10,53 @@ import 'screens/shared/home_shell.dart';
 import 'screens/shared/home_shell.dart' show KaamSetuLogo;
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/onboarding_screen.dart';
+import 'screens/shared/chat_screen.dart';
+import 'screens/admin/admin_dashboard.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-  ));
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => AppProvider(),
-      child: const KaamSetuApp(),
-    ),
-  );
+Future<void> main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+
+    // Request notification permissions
+    final messaging = FirebaseMessaging.instance;
+    await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    // Handle foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // Just print for now — could show a snackbar in the future
+      print('FCM foreground message: ${message.notification?.title}');
+    });
+    runApp(
+      ChangeNotifierProvider(
+        create: (_) => AppProvider(),
+        child: const KaamSetuApp(),
+      ),
+    );
+  } catch (e, stackTrace) {
+    runApp(MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              "FATAL STARTUP ERROR:\n\n$e\n\n$stackTrace",
+              style: const TextStyle(color: Colors.redAccent, fontSize: 14),
+            ),
+          ),
+        ),
+      ),
+    ));
+  }
 }
 
 class KaamSetuApp extends StatelessWidget {
@@ -57,8 +93,20 @@ class KaamSetuApp extends StatelessWidget {
                     phone: args['phone'] as String? ?? '',
                   ),
                 );
+              case '/chat':
+                final args = settings.arguments as Map<String, String>;
+                return MaterialPageRoute(
+                  builder: (_) => ChatScreen(
+                    jobId: args['jobId']!,
+                    otherUserId: args['otherUserId']!,
+                    otherUserName: args['otherUserName']!,
+                    jobTitle: args['jobTitle']!,
+                  ),
+                );
               case '/home':
                 return MaterialPageRoute(builder: (_) => const HomeShell());
+              case '/admin':
+                return MaterialPageRoute(builder: (_) => AdminDashboard());
               default:
                 return MaterialPageRoute(builder: (_) => const LandingScreen());
             }
@@ -91,7 +139,16 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     Future.delayed(const Duration(milliseconds: 1600), () {
       if (!mounted) return;
-      Navigator.of(context).pushReplacementNamed('/landing');
+      final provider = context.read<AppProvider>();
+      if (provider.isAuthenticated) {
+        if (provider.user?.role == 'ADMIN') {
+          Navigator.of(context).pushReplacementNamed('/admin');
+        } else {
+          Navigator.of(context).pushReplacementNamed('/home');
+        }
+      } else {
+        Navigator.of(context).pushReplacementNamed('/landing');
+      }
     });
   }
 

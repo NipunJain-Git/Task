@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch src/server.ts",
     "build": "npx prisma generate && tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/server.js",
     "db:generate": "npx prisma generate",
     "db:push": "npx prisma db push",
     "db:seed": "tsx prisma/seed.ts",
@@ -38,10 +38,14 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "prisma": "^5.22.0",
+    "serverless-http": "^4.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^5.3.0"
   }
 }

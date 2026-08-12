@@ -29,9 +29,12 @@ class WorkerHomeScreen extends StatelessWidget {
     final feed = provider.feedJobs;
     final inRadius = feed.where((f) => f.distanceKm <= user.radiusKm).toList();
 
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
+    return RefreshIndicator(
+      color: AppTheme.primary,
+      onRefresh: () => provider.refreshJobs(),
+      child: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
         // Availability toggle
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -133,7 +136,8 @@ class WorkerHomeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 12),
             child: JobCardWidget(feedJob: e.value, rank: e.key),
           )),
-      ],
+        ],
+      ),
     );
   }
 }

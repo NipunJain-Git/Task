@@ -2,6 +2,7 @@ import { Response, NextFunction } from 'express';
 import { UsersService } from './users.service';
 import { sendSuccess } from '../../utils/api-response';
 import { AuthRequest } from '../../middleware/auth.middleware';
+import prisma from '../../config/database';
 
 export class UsersController {
   static async getMe(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
@@ -50,6 +51,44 @@ export class UsersController {
     try {
       const result = await UsersService.getRatingSummary(req.params.id);
       sendSuccess(res, result);
+    } catch (err) { next(err); }
+  }
+
+  static async updateFcmToken(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      await prisma.user.update({
+        where: { id: req.userId! },
+        data: { fcmToken: req.body.fcmToken },
+      });
+      sendSuccess(res, { message: 'FCM token updated' });
+    } catch (err) { next(err); }
+  }
+
+  static async updateLocation(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      await prisma.user.update({
+        where: { id: req.userId! },
+        data: { latitude: req.body.latitude, longitude: req.body.longitude },
+      });
+      sendSuccess(res, { message: 'Location updated' });
+    } catch (err) { next(err); }
+  }
+
+  static async submitKyc(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { identityNumber } = req.body;
+      if (!identityNumber || !/^\d{12}$/.test(identityNumber)) {
+        res.status(400).json({ success: false, message: 'Invalid identity number' });
+        return;
+      }
+      await prisma.user.update({
+        where: { id: req.userId! },
+        data: { 
+          kycStatus: 'PENDING',
+          identityNumber,
+        },
+      });
+      sendSuccess(res, { message: 'KYC submitted successfully', kycStatus: 'PENDING' });
     } catch (err) { next(err); }
   }
 }

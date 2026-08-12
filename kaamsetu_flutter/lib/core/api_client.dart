@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiClient {
-  static const String baseUrl = 'http://10.0.2.2:3000/api';
+  static const String baseUrl = 'https://kaamsetu-api-vedant-v2.netlify.app/api';
   final Dio dio;
 
   ApiClient() : dio = Dio(BaseOptions(baseUrl: baseUrl, connectTimeout: const Duration(seconds: 10))) {

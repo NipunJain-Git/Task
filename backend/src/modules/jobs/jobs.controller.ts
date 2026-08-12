@@ -41,8 +41,30 @@ export class JobsController {
 
   static async updateStatus(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await JobsService.updateJobStatus(req.params.id, req.userId!, req.body.status);
-      sendSuccess(res, result);
+      const job = await JobsService.updateJobStatus(req.params.id, req.userId!, req.body.status);
+      sendSuccess(res, job);
+    } catch (err) { next(err); }
+  }
+
+  static async apply(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const interest = await JobsService.applyForJob(req.params.id, req.userId!);
+      sendSuccess(res, interest);
+    } catch (err) { next(err); }
+  }
+
+  static async getApplicants(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const applicants = await JobsService.getApplicants(req.params.id, req.userId!);
+      sendSuccess(res, applicants);
+    } catch (err) { next(err); }
+  }
+
+  static async assignWorker(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { workerId } = req.body;
+      const job = await JobsService.assignWorker(req.params.id, req.userId!, workerId);
+      sendSuccess(res, job);
     } catch (err) { next(err); }
   }
 }

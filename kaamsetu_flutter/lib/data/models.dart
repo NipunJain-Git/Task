@@ -6,6 +6,7 @@ class AppUser {
   final String role; // 'worker' | 'household'
   final String language;
   final bool onboarded;
+  final String kycStatus;
   final bool aadhaarVerified;
   final String? aadhaarLast4;
   final String area;
@@ -17,6 +18,8 @@ class AppUser {
   final String? familyName;
   final String? familyPhone;
   final String? familyRelation;
+  final double? latitude;
+  final double? longitude;
 
   AppUser({
     required this.id,
@@ -25,6 +28,7 @@ class AppUser {
     required this.role,
     required this.language,
     required this.onboarded,
+    required this.kycStatus,
     required this.aadhaarVerified,
     this.aadhaarLast4,
     required this.area,
@@ -36,6 +40,8 @@ class AppUser {
     this.familyName,
     this.familyPhone,
     this.familyRelation,
+    this.latitude,
+    this.longitude,
   });
 
   AppUser copyWith({
@@ -43,6 +49,7 @@ class AppUser {
     String? role,
     String? language,
     bool? onboarded,
+    String? kycStatus,
     bool? aadhaarVerified,
     String? aadhaarLast4,
     String? area,
@@ -54,6 +61,8 @@ class AppUser {
     String? familyName,
     String? familyPhone,
     String? familyRelation,
+    double? latitude,
+    double? longitude,
   }) {
     return AppUser(
       id: id,
@@ -62,6 +71,7 @@ class AppUser {
       role: role ?? this.role,
       language: language ?? this.language,
       onboarded: onboarded ?? this.onboarded,
+      kycStatus: kycStatus ?? this.kycStatus,
       aadhaarVerified: aadhaarVerified ?? this.aadhaarVerified,
       aadhaarLast4: aadhaarLast4 ?? this.aadhaarLast4,
       area: area ?? this.area,
@@ -73,6 +83,8 @@ class AppUser {
       familyName: familyName ?? this.familyName,
       familyPhone: familyPhone ?? this.familyPhone,
       familyRelation: familyRelation ?? this.familyRelation,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 }
@@ -153,6 +165,7 @@ class Job {
   final String status; // 'open' | 'assigned' | 'in_progress' | 'completed' | 'cancelled'
   final bool urgent;
   final String? assignedWorkerId;
+  final String? assignedWorkerName;
 
   const Job({
     required this.id,
@@ -167,7 +180,26 @@ class Job {
     required this.status,
     required this.urgent,
     this.assignedWorkerId,
+    this.assignedWorkerName,
   });
+
+  factory Job.fromJson(Map<String, dynamic> json) {
+    return Job(
+      id: json['id']?.toString() ?? '',
+      householdId: json['householdId']?.toString() ?? json['household']?['id']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString(),
+      category: json['category']?.toString() ?? '',
+      budget: (json['budgetAmount'] ?? json['budget'] ?? 0) is num ? (json['budgetAmount'] ?? json['budget'] ?? 0).toInt() : int.tryParse((json['budgetAmount'] ?? json['budget'] ?? 0).toString()) ?? 0,
+      jobDate: json['jobDate']?.toString() ?? '',
+      startTime: json['jobTime']?.toString() ?? json['startTime']?.toString() ?? '',
+      durationHours: (json['durationHours'] ?? 0) is num ? (json['durationHours'] ?? 0).toInt() : int.tryParse((json['durationHours'] ?? 0).toString()) ?? 0,
+      status: json['status']?.toString().toLowerCase() ?? 'open',
+      urgent: json['urgent'] ?? false,
+      assignedWorkerId: json['assignedWorkerId']?.toString(),
+      assignedWorkerName: json['assignedWorker']?['name']?.toString(),
+    );
+  }
 }
 
 class FeedJob {
@@ -186,6 +218,38 @@ class FeedJob {
     required this.interestCount,
     this.myInterest,
   });
+
+  factory FeedJob.fromApiJob(Map<String, dynamic> json) {
+    final job = Job.fromJson(json);
+    
+    final hhJson = json['household'] as Map<String, dynamic>? ?? {};
+    final household = AppUser(
+      id: hhJson['id']?.toString() ?? job.householdId,
+      phone: hhJson['phone']?.toString() ?? '',
+      name: hhJson['name']?.toString() ?? 'Unknown',
+      role: 'household',
+      language: json['language'] ?? 'en',
+      onboarded: true,
+      kycStatus: json['kycStatus'] ?? 'NONE',
+      aadhaarVerified: json['kycStatus'] == 'APPROVED' || (hhJson['aadhaarVerified'] ?? false),
+      aadhaarLast4: json['identityNumber'] != null && json['identityNumber'].toString().length >= 4 
+          ? json['identityNumber'].toString().substring(json['identityNumber'].toString().length - 4) 
+          : hhJson['aadhaarLast4'],
+      area: '',
+      address: '',
+      radiusKm: 5.0,
+      walletBalance: 0,
+      streak: 0,
+    );
+
+    return FeedJob(
+      job: job,
+      household: household,
+      distanceKm: (json['distance'] ?? 0.0) is num ? (json['distance'] as num).toDouble() : double.tryParse(json['distance']?.toString() ?? '0') ?? 0.0,
+      matchScore: 80,
+      interestCount: json['interestCount'] ?? 0,
+    );
+  }
 }
 
 class NearbyWorker {

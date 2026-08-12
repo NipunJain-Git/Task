@@ -17,23 +17,11 @@ class KaamSetuLogo extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: size,
+        Image.asset(
+          'assets/images/logo.png',
+          width: size * 1.55,
           height: size,
-          decoration: BoxDecoration(
-            color: AppTheme.primary,
-            borderRadius: BorderRadius.circular(size * 0.3),
-          ),
-          child: Center(
-            child: KsText(
-              'K',
-              style: GoogleFonts.notoSans(
-                color: Colors.white,
-                fontSize: size * 0.55,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
+          fit: BoxFit.contain,
         ),
         const SizedBox(width: 8),
         Column(

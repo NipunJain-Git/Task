@@ -7,6 +7,93 @@ import '../../core/domain.dart';
 import '../../providers/app_provider.dart';
 import '../../widgets/atoms.dart';
 
+void _showApplicants(BuildContext context, String jobId) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (ctx) => _ApplicantsSheet(jobId: jobId),
+  );
+}
+
+class _ApplicantsSheet extends StatefulWidget {
+  final String jobId;
+  const _ApplicantsSheet({required this.jobId});
+  @override
+  State<_ApplicantsSheet> createState() => _ApplicantsSheetState();
+}
+
+class _ApplicantsSheetState extends State<_ApplicantsSheet> {
+  bool _loading = true;
+  List<dynamic> _applicants = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final list = await context.read<AppProvider>().getApplicants(widget.jobId);
+    if (mounted) setState(() { _applicants = list; _loading = false; });
+  }
+
+  Future<void> _assign(String workerId) async {
+    setState(() => _loading = true);
+    await context.read<AppProvider>().assignWorker(widget.jobId, workerId);
+    if (mounted) Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.7,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(color: AppTheme.background, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          KsText('Applicants', style: GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.w800)),
+          IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
+        ]),
+        const SizedBox(height: 16),
+        if (_loading) const Expanded(child: Center(child: CircularProgressIndicator()))
+        else if (_applicants.isEmpty) Expanded(child: Center(child: KsText('No applicants yet', style: GoogleFonts.notoSans(color: AppTheme.mutedForeground))))
+        else Expanded(
+          child: ListView.separated(
+            itemCount: _applicants.length,
+            separatorBuilder: (c, i) => const SizedBox(height: 12),
+            itemBuilder: (c, i) {
+              final w = _applicants[i]['worker'];
+              return Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.border)),
+                child: Row(children: [
+                  Container(
+                    width: 48, height: 48,
+                    decoration: BoxDecoration(color: AppTheme.secondary, shape: BoxShape.circle),
+                    child: Center(child: KsText(w['name'][0], style: GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.w800, color: AppTheme.primary))),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    KsText(w['name'], style: GoogleFonts.notoSans(fontSize: 16, fontWeight: FontWeight.w700)),
+                    const SizedBox(height: 2),
+                    KsText('Matched worker', style: GoogleFonts.notoSans(fontSize: 13, color: AppTheme.mutedForeground)),
+                  ])),
+                  ElevatedButton(
+                    onPressed: () => _assign(w['id']),
+                    style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                    child: const KsText('Accept & Chat'),
+                  ),
+                ]),
+              );
+            },
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
 class HouseholdHomeScreen extends StatelessWidget {
   const HouseholdHomeScreen({super.key});
 
@@ -139,20 +226,56 @@ class HouseholdHomeScreen extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.border)),
-            child: Row(children: [
-              Container(
-                width: 40, height: 40,
-                decoration: BoxDecoration(color: AppTheme.secondary, borderRadius: BorderRadius.circular(10)),
-                child: Center(child: SkillIcon(skill: job.category, size: 20)),
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                KsText(job.title, style: GoogleFonts.notoSans(fontSize: 13, fontWeight: FontWeight.w700), overflow: TextOverflow.ellipsis),
-                KsText('${skillLabel(job.category)} · ${job.jobDate} · ₹${job.budget}',
-                    style: GoogleFonts.notoSans(fontSize: 12, color: AppTheme.mutedForeground)),
-              ])),
-              StatusPill(status: job.status),
-            ]),
+            child: Column(
+              children: [
+                Row(children: [
+                  Container(
+                    width: 40, height: 40,
+                    decoration: BoxDecoration(color: AppTheme.secondary, borderRadius: BorderRadius.circular(10)),
+                    child: Center(child: SkillIcon(skill: job.category, size: 20)),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    KsText(job.title, style: GoogleFonts.notoSans(fontSize: 13, fontWeight: FontWeight.w700), overflow: TextOverflow.ellipsis),
+                    KsText('${skillLabel(job.category)} · ${job.jobDate} · ₹${job.budget}',
+                        style: GoogleFonts.notoSans(fontSize: 12, color: AppTheme.mutedForeground)),
+                  ])),
+                  if (job.status == 'assigned' && job.assignedWorkerId != null) ...[
+                    IconButton(
+                      icon: const Icon(Icons.chat_bubble_outline, color: AppTheme.primary, size: 20),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/chat', arguments: {
+                          'jobId': job.id,
+                          'otherUserId': job.assignedWorkerId!,
+                          'otherUserName': job.assignedWorkerName ?? 'Worker',
+                          'jobTitle': job.title,
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 4),
+                  ],
+                  StatusPill(status: job.status),
+                ]),
+                if (job.status == 'open' && job.interestsCount > 0) ...[
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 36,
+                    child: ElevatedButton.icon(
+                      onPressed: () => _showApplicants(context, job.id),
+                      icon: const Icon(Icons.people, size: 16),
+                      label: KsText('View ${job.interestsCount} Applicant${job.interestsCount > 1 ? 's' : ''}'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primary.withOpacity(0.1),
+                        foregroundColor: AppTheme.primary,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  )
+                ]
+              ],
+            ),
           )),
 
         // Wallet

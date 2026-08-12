@@ -26,8 +26,10 @@ export function authMiddleware(req: AuthRequest, _res: Response, next: NextFunct
 }
 
 export function roleMiddleware(...roles: string[]) {
+  const upperRoles = roles.map(r => r.toUpperCase());
   return (req: AuthRequest, _res: Response, next: NextFunction): void => {
-    if (!req.userRole || !roles.includes(req.userRole)) {
+    const userRole = req.userRole?.toUpperCase();
+    if (!userRole || !upperRoles.includes(userRole)) {
       throw new ApiError(403, 'FORBIDDEN', 'You do not have permission to perform this action.');
     }
     next();

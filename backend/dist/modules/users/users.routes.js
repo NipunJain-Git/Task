@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const users_controller_1 = require("./users.controller");
+const validate_middleware_1 = require("../../middleware/validate.middleware");
+const users_validators_1 = require("./users.validators");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/me', auth_middleware_1.authMiddleware, users_controller_1.UsersController.getMe);
+router.put('/me', auth_middleware_1.authMiddleware, (0, validate_middleware_1.validate)(users_validators_1.updateProfileSchema), users_controller_1.UsersController.updateProfile);
+router.put('/me/worker-profile', auth_middleware_1.authMiddleware, (0, auth_middleware_1.roleMiddleware)('WORKER'), (0, validate_middleware_1.validate)(users_validators_1.updateWorkerProfileSchema), users_controller_1.UsersController.updateWorkerProfile);
+router.put('/me/household-profile', auth_middleware_1.authMiddleware, (0, auth_middleware_1.roleMiddleware)('HOUSEHOLD'), (0, validate_middleware_1.validate)(users_validators_1.updateHouseholdProfileSchema), users_controller_1.UsersController.updateHouseholdProfile);
+router.patch('/me/availability', auth_middleware_1.authMiddleware, (0, auth_middleware_1.roleMiddleware)('WORKER'), (0, validate_middleware_1.validate)(users_validators_1.toggleAvailabilitySchema), users_controller_1.UsersController.toggleAvailability);
+router.patch('/me/fcm-token', auth_middleware_1.authMiddleware, users_controller_1.UsersController.updateFcmToken);
+router.patch('/me/location', auth_middleware_1.authMiddleware, users_controller_1.UsersController.updateLocation);
+router.get('/:id', auth_middleware_1.authMiddleware, users_controller_1.UsersController.getUserById);
+router.get('/:id/ratings', auth_middleware_1.authMiddleware, users_controller_1.UsersController.getRatingSummary);
+router.post('/kyc', auth_middleware_1.authMiddleware, users_controller_1.UsersController.submitKyc);
+exports.default = router;
+//# sourceMappingURL=users.routes.js.map

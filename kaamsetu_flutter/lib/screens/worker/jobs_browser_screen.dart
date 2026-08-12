@@ -18,6 +18,7 @@ class JobsBrowserScreen extends StatefulWidget {
 class _JobsBrowserScreenState extends State<JobsBrowserScreen> {
   String _filterSkill = 'all';
   String _sort = 'distance';
+  String _selectedCity = 'Delhi';
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,42 @@ class _JobsBrowserScreenState extends State<JobsBrowserScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // City Selector
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  KsText('Nearby Jobs', style: GoogleFonts.notoSans(fontSize: 16, fontWeight: FontWeight.w700, color: AppTheme.foreground)),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _selectedCity,
+                        icon: const Icon(Icons.arrow_drop_down, color: AppTheme.primary),
+                        isDense: true,
+                        style: GoogleFonts.notoSans(color: AppTheme.primary, fontWeight: FontWeight.w700),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            setState(() { _selectedCity = newValue; });
+                            // In a real app we'd trigger a reload with the new city.
+                          }
+                        },
+                        items: ['Delhi', 'Mumbai', 'Bangalore'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: KsText(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [

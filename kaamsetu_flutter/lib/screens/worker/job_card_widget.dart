@@ -171,6 +171,18 @@ class _JobCardWidgetState extends State<JobCardWidget> {
               ]),
             )),
             const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.chat_bubble_outline, color: AppTheme.primary, size: 20),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/chat', arguments: {
+                  'jobId': job.id,
+                  'otherUserId': household.id,
+                  'otherUserName': household.name,
+                  'jobTitle': job.title,
+                });
+              },
+            ),
+            const SizedBox(width: 4),
             TextButton(onPressed: _loading ? null : _pull, child: KsText('Undo', style: GoogleFonts.notoSans(color: AppTheme.mutedForeground, fontWeight: FontWeight.w600))),
           ])
           else if (_expanded) Row(children: [

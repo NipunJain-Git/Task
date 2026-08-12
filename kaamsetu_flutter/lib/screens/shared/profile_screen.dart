@@ -69,6 +69,58 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: 24),
 
+        if (!user.aadhaarVerified) ...[
+          GestureDetector(
+            onTap: () {
+              import '../kyc/kyc_screen.dart'; // Just checking if I need to import, wait I can't put import here.
+            },
+            child: Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppTheme.card,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppTheme.border),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.verified_user_outlined,
+                    color: AppTheme.primary,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        KsText(
+                          'Verify your identity',
+                          style: GoogleFonts.notoSans(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        KsText(
+                          'Required to accept jobs over ₹500',
+                          style: GoogleFonts.notoSans(
+                            fontSize: 12,
+                            color: AppTheme.mutedForeground,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Icon(
+                    Icons.chevron_right,
+                    color: AppTheme.mutedForeground,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+
         // Stats
         if (isWorker && profile != null) ...[
           Row(children: [
@@ -109,6 +161,46 @@ class ProfileScreen extends StatelessWidget {
             Wrap(spacing: 8, runSpacing: 8, children: profile.badges.map((b) => BadgeChip(badge: b)).toList()),
             const SizedBox(height: 20),
           ],
+
+          // Video Portfolio
+          KsText('Video Portfolio', style: GoogleFonts.notoSans(fontSize: 16, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            height: 160,
+            decoration: BoxDecoration(
+              color: AppTheme.card,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppTheme.border),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.play_circle_fill, size: 48, color: AppTheme.primary.withOpacity(0.5)),
+                  const SizedBox(height: 8),
+                  KsText('No video uploaded', style: GoogleFonts.notoSans(color: AppTheme.mutedForeground)),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            height: 44,
+            child: OutlinedButton.icon(
+              onPressed: () {
+                // TODO: Implement video upload
+              },
+              icon: const Icon(Icons.upload_file, size: 18),
+              label: const KsText('Upload New Video'),
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                side: const BorderSide(color: AppTheme.border),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
 
           // Skills
           KsText('Skills', style: GoogleFonts.notoSans(fontSize: 16, fontWeight: FontWeight.w700)),
@@ -151,6 +243,59 @@ class ProfileScreen extends StatelessWidget {
 
         const SizedBox(height: 24),
 
+        // KaamBot help
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed('/chatbot');
+          },
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: AppTheme.card,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppTheme.border),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.chat_bubble_outline,
+                  size: 20,
+                  color: AppTheme.primary,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      KsText(
+                        'KaamBot',
+                        style: GoogleFonts.notoSans(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      KsText(
+                        'Live help & support',
+                        style: GoogleFonts.notoSans(
+                          fontSize: 13,
+                          color: AppTheme.mutedForeground,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(
+                  Icons.chevron_right,
+                  size: 20,
+                  color: AppTheme.mutedForeground,
+                ),
+              ],
+            ),
+          ),
+        ),
+
         // Sign out
         SizedBox(
           width: double.infinity, height: 48,
@@ -170,5 +315,58 @@ class ProfileScreen extends StatelessWidget {
         const SizedBox(height: 32),
       ],
     );
+  }
+
+  void _showIdentityVerification(BuildContext context) {
+    final controller = TextEditingController();
+    String? error;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: const KsText('Verify your identity'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const KsText(
+                'Demo: any 12-digit identity number will pass eKYC.',
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                maxLength: 12,
+                decoration: InputDecoration(
+                  hintText: '1234 5678 9012',
+                  counterText: '',
+                  errorText: error,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const KsText('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () {
+                final identityNumber = controller.text.replaceAll(
+                  RegExp(r'\D'),
+                  '',
+                );
+                if (identityNumber.length != 12) {
+                  setDialogState(() => error = 'Enter all 12 digits');
+                  return;
+                }
+                context.read<AppProvider>().verifyIdentity(identityNumber);
+                Navigator.pop(dialogContext);
+              },
+              child: const KsText('Verify'),
+            ),
+          ],
+        ),
+      ),
+    ).whenComplete(controller.dispose);
   }
 }

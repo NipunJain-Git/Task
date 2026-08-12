@@ -11,4 +11,5 @@ export const env = {
   MOCK_OTP: process.env.MOCK_OTP || '123456',
   DATABASE_URL: process.env.DATABASE_URL || 'file:./dev.db',
   GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+  TWO_FACTOR_API_KEY: process.env.TWO_FACTOR_API_KEY,
 };

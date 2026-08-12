@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kaamsetu_app/l10n/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../providers/auth_provider.dart';
@@ -99,6 +100,16 @@ class _RoleSelectionScreenState extends ConsumerState<RoleSelectionScreen> {
                 title: l10n.householdRole,
                 description: l10n.householdRoleDescription,
                 onTap: () => _selectRole('HOUSEHOLD'),
+              ),
+              const SizedBox(height: 24),
+              Center(
+                child: TextButton(
+                  onPressed: () => context.go('/admin'),
+                  child: const Text(
+                    'Login as Admin',
+                    style: TextStyle(color: AppTheme.textLight),
+                  ),
+                ),
               ),
             ],
           ),

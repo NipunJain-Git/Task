@@ -7,6 +7,8 @@ export const sendOtpSchema = z.object({
 export const verifyOtpSchema = z.object({
   phone: z.string().min(10).max(15),
   otp: z.string().length(6, 'OTP must be 6 digits'),
+  sessionId: z.string().optional(),
+  role: z.string().optional(),
 });
 
 export const selectRoleSchema = z.object({

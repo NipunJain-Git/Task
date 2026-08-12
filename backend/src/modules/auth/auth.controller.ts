@@ -15,7 +15,7 @@ export class AuthController {
 
   static async verifyOtp(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await AuthService.verifyOtp(req.body.phone, req.body.otp);
+      const result = await AuthService.verifyOtp(req.body.phone, req.body.otp, req.body.sessionId);
       sendSuccess(res, result);
     } catch (err) {
       next(err);
@@ -24,7 +24,7 @@ export class AuthController {
 
   static async verifyFirebase(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await AuthService.verifyFirebase(req.body.idToken);
+      const result = await AuthService.verifyFirebase(req.body.idToken, req.body.role);
       sendSuccess(res, result);
     } catch (err) {
       next(err);

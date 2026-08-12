@@ -15,6 +15,7 @@ import '../shared/notifications_screen.dart';
 import '../household/household_home_screen.dart';
 import '../household/workers_browser_screen.dart';
 import '../household/post_job_screen.dart';
+import '../shared/inbox_screen.dart';
 
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
@@ -35,7 +36,7 @@ class _HomeShellState extends State<HomeShell> {
     final workerTabs = [
       _TabItem(label: t('home'), icon: Icons.home_outlined, activeIcon: Icons.home),
       _TabItem(label: t('jobs'), icon: Icons.work_outline, activeIcon: Icons.work),
-      _TabItem(label: t('map'), icon: Icons.map_outlined, activeIcon: Icons.map),
+      _TabItem(label: 'Inbox', icon: Icons.chat_bubble_outline, activeIcon: Icons.chat_bubble),
       _TabItem(label: t('wallet'), icon: Icons.account_balance_wallet_outlined, activeIcon: Icons.account_balance_wallet),
       _TabItem(label: t('profile'), icon: Icons.person_outline, activeIcon: Icons.person),
     ];
@@ -44,7 +45,7 @@ class _HomeShellState extends State<HomeShell> {
       _TabItem(label: t('home'), icon: Icons.home_outlined, activeIcon: Icons.home),
       _TabItem(label: t('workers'), icon: Icons.people_outline, activeIcon: Icons.people),
       _TabItem(label: t('post'), icon: Icons.add_circle_outline, activeIcon: Icons.add_circle, isPost: true),
-      _TabItem(label: t('map'), icon: Icons.map_outlined, activeIcon: Icons.map),
+      _TabItem(label: 'Inbox', icon: Icons.chat_bubble_outline, activeIcon: Icons.chat_bubble),
       _TabItem(label: t('profile'), icon: Icons.person_outline, activeIcon: Icons.person),
     ];
 
@@ -53,7 +54,7 @@ class _HomeShellState extends State<HomeShell> {
     final workerScreens = [
       const WorkerHomeScreen(),
       const JobsBrowserScreen(),
-      const MapScreen(),
+      const InboxScreen(),
       const WalletScreen(),
       const ProfileScreen(),
     ];
@@ -62,7 +63,7 @@ class _HomeShellState extends State<HomeShell> {
       const HouseholdHomeScreen(),
       const WorkersBrowserScreen(),
       const PostJobScreen(),
-      const MapScreen(),
+      const InboxScreen(),
       const ProfileScreen(),
     ];
 

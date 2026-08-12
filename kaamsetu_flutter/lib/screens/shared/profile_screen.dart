@@ -6,6 +6,7 @@ import '../../core/theme.dart';
 import '../../core/domain.dart';
 import '../../providers/app_provider.dart';
 import '../../widgets/atoms.dart';
+import '../kyc/kyc_screen.dart' as kyc;
 import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -72,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
         if (!user.aadhaarVerified) ...[
           GestureDetector(
             onTap: () {
-              import '../kyc/kyc_screen.dart'; // Just checking if I need to import, wait I can't put import here.
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const kyc.KycScreen()));
             },
             child: Container(
               padding: const EdgeInsets.all(14),

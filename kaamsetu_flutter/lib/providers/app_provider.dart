@@ -32,6 +32,7 @@ class AppProvider extends ChangeNotifier {
 
   // Navigation
   int _currentTab = 0;
+  final List<int> _tabHistory = [];
 
   AppUser? get user => _user;
   WorkerProfile? get workerProfile => _workerProfile;

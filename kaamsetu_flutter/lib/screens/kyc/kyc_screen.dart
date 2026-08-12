@@ -26,7 +26,7 @@ class _KycScreenState extends State<KycScreen> {
             Text(
               'KYC Status',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppTheme.primaryGreen,
+                    color: AppTheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -50,7 +50,7 @@ class _KycScreenState extends State<KycScreen> {
             Text(
               'Upload Aadhar / ID Proof',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppTheme.primaryGreen,
+                    color: AppTheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -65,7 +65,7 @@ class _KycScreenState extends State<KycScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.file_present, color: AppTheme.primaryGreen),
+                    const Icon(Icons.file_present, color: AppTheme.primary),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -110,7 +110,7 @@ class _KycScreenState extends State<KycScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.cloud_upload, size: 48, color: AppTheme.primaryGreen.withOpacity(0.5)),
+                      Icon(Icons.cloud_upload, size: 48, color: AppTheme.primary.withOpacity(0.5)),
                       const SizedBox(height: 12),
                       Text(
                         'Tap to upload document',
@@ -150,10 +150,10 @@ class _KycScreenState extends State<KycScreen> {
       case 'APPROVED':
         return Colors.green;
       case 'REJECTED':
-        return AppTheme.errorRed;
+        return AppTheme.destructive;
       case 'PENDING':
       default:
-        return AppTheme.secondaryGold;
+        return AppTheme.accent;
     }
   }
 }

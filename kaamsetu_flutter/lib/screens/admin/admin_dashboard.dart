@@ -60,8 +60,8 @@ class AdminDashboard extends StatelessWidget {
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundColor: AppTheme.primaryGreen.withOpacity(0.1),
-                          child: Icon(Icons.person, color: AppTheme.primaryGreen),
+                          backgroundColor: AppTheme.primary.withOpacity(0.1),
+                          child: Icon(Icons.person, color: AppTheme.primary),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -85,12 +85,12 @@ class AdminDashboard extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.check_circle, color: AppTheme.primaryGreen),
+                              icon: Icon(Icons.check_circle, color: AppTheme.primary),
                               tooltip: 'Approve',
                             ),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.cancel, color: AppTheme.errorRed),
+                              icon: Icon(Icons.cancel, color: AppTheme.destructive),
                               tooltip: 'Reject',
                             ),
                           ],
@@ -127,12 +127,12 @@ class _StatCard extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Icon(icon, size: 32, color: AppTheme.primaryGreen),
+            Icon(icon, size: 32, color: AppTheme.primary),
             const SizedBox(height: 8),
             Text(
               value,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: AppTheme.primaryGreen,
+                color: AppTheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -166,6 +166,7 @@ class Job {
   final bool urgent;
   final String? assignedWorkerId;
   final String? assignedWorkerName;
+  final int interestsCount;
 
   const Job({
     required this.id,
@@ -181,6 +182,7 @@ class Job {
     required this.urgent,
     this.assignedWorkerId,
     this.assignedWorkerName,
+    this.interestsCount = 0,
   });
 
   factory Job.fromJson(Map<String, dynamic> json) {
@@ -198,6 +200,7 @@ class Job {
       urgent: json['urgent'] ?? false,
       assignedWorkerId: json['assignedWorkerId']?.toString(),
       assignedWorkerName: json['assignedWorker']?['name']?.toString(),
+      interestsCount: (json['interestsCount'] ?? 0) is num ? (json['interestsCount'] ?? 0).toInt() : int.tryParse((json['interestsCount'] ?? 0).toString()) ?? 0,
     );
   }
 }

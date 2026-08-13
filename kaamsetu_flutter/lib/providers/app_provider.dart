@@ -28,7 +28,7 @@ class AppProvider extends ChangeNotifier {
   List<NearbyWorker> _nearbyWorkers = [];
   List<Job> _myJobs = []; // for household
   List<WalletTx> _transactions = [];
-  List<Notification> _notifications = [];
+  List<models.Notification> _notifications = [];
   List<Job> _assignedJobs = []; // for worker
 
   // Navigation
@@ -44,7 +44,7 @@ class AppProvider extends ChangeNotifier {
   List<NearbyWorker> get nearbyWorkers => _nearbyWorkers;
   List<Job> get myJobs => _myJobs;
   List<WalletTx> get transactions => _transactions;
-  List<Notification> get notifications => _notifications;
+  List<models.Notification> get notifications => _notifications;
   List<Job> get assignedJobs => _assignedJobs;
   bool get isAuthenticated => _user != null;
   bool get isWorker => _user?.role == 'worker';
@@ -516,7 +516,7 @@ class AppProvider extends ChangeNotifier {
   }
 
   void markNotificationsRead() {
-    _notifications = _notifications.map((n) => Notification(
+    _notifications = _notifications.map((n) => models.Notification(
       id: n.id,
       title: n.title,
       body: n.body,

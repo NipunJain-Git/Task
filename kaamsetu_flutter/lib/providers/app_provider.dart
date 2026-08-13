@@ -60,14 +60,13 @@ class AppProvider extends ChangeNotifier {
     if (_user == null || !RegExp(r'^\d{12}$').hasMatch(identityNumber)) return;
     
     try {
-      final res = await apiClient.dio.post('/users/kyc', data: { 'identityNumber': identityNumber });
-      if (res.data['success'] == true) {
-        _user = _user!.copyWith(
-          kycStatus: 'PENDING',
-          aadhaarLast4: identityNumber.substring(8),
-        );
-        notifyListeners();
-      }
+      // MOCK: Instantly approve KYC for demo
+      _user = _user!.copyWith(
+        kycStatus: 'APPROVED',
+        aadhaarVerified: true,
+        aadhaarLast4: identityNumber.substring(8),
+      );
+      notifyListeners();
     } catch (e) {
       _error = 'Failed to submit KYC';
       notifyListeners();

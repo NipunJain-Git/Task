@@ -1,4 +1,4 @@
-// Login flow — mirrors components/auth/login-flow.tsx
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
   double? _currentLat;
   double? _currentLng;
 
+  Timer? _resendTimer;
+  int _resendSeconds = 0;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    _resendTimer?.cancel();
     _phoneCtrl.dispose();
     _otpCtrl.dispose();
     super.dispose();
@@ -74,6 +78,22 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void _startResendTimer() {
+    _resendTimer?.cancel();
+    setState(() { _resendSeconds = 30; });
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      if (_resendSeconds > 0) {
+        setState(() { _resendSeconds--; });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
   void _nextStep() async {
     final provider = context.read<AppProvider>();
     setState(() { _error = ''; });
@@ -101,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _loading = false;
           _step = 'otp';
         });
+        _startResendTimer();
       } else {
         setState(() {
           _error = provider.error ?? 'Failed to send OTP';
@@ -482,7 +503,13 @@ class _LoginScreenState extends State<LoginScreen> {
           keyboardType: TextInputType.number,
           maxLength: 6,
           textAlign: TextAlign.center,
-          onChanged: (v) => setState(() { _otp = v.replaceAll(RegExp(r'\D'), ''); }),
+          onChanged: (v) {
+            final digits = v.replaceAll(RegExp(r'\D'), '');
+            setState(() { _otp = digits; });
+            if (digits.length == 6) {
+              _nextStep(); // Auto-submit when 6 digits are typed
+            }
+          },
           style: GoogleFonts.notoSans(
               fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: 16),
           decoration: InputDecoration(
@@ -495,11 +522,36 @@ class _LoginScreenState extends State<LoginScreen> {
             contentPadding: const EdgeInsets.symmetric(vertical: 20),
           ),
         ),
+        const SizedBox(height: 24),
+        Center(
+          child: TextButton(
+            onPressed: _resendSeconds == 0 && !_loading ? () async {
+              setState(() { _loading = true; });
+              final sessionId = await context.read<AppProvider>().requestOtp(_phone);
+              if (!mounted) return;
+              if (sessionId != null) {
+                setState(() { _sessionId = sessionId; _loading = false; });
+                _startResendTimer();
+              } else {
+                setState(() { _loading = false; _error = 'Failed to resend OTP'; });
+              }
+            } : null,
+            child: KsText(
+              _resendSeconds > 0 ? 'Resend code in ${_resendSeconds}s' : 'Resend code',
+              style: GoogleFonts.notoSans(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: _resendSeconds > 0 ? AppTheme.mutedForeground : AppTheme.primary,
+              ),
+            ),
+          ),
+        ),
         const SizedBox(height: 12),
         GestureDetector(
           onTap: () {
             setState(() { _otp = '123456'; });
             _otpCtrl.text = '123456';
+            _nextStep(); // Auto-submit for demo autofill too
           },
           child: Container(
             width: double.infinity,

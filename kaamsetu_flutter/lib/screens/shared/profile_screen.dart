@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme.dart';
 import '../../core/domain.dart';
+import '../../core/i18n.dart';
 import '../../providers/app_provider.dart';
 import '../../widgets/atoms.dart';
 import '../kyc/kyc_screen.dart' as kyc;
@@ -228,22 +229,61 @@ class ProfileScreen extends StatelessWidget {
         KsText('Account', style: GoogleFonts.notoSans(fontSize: 16, fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
         for (final row in [
-          {'icon': Icons.phone, 'label': 'Phone', 'val': '+91 ${user.phone}'},
-          {'icon': Icons.location_on_outlined, 'label': 'Area', 'val': user.area},
-          {'icon': Icons.language, 'label': 'Language', 'val': user.language.toUpperCase()},
-          {'icon': Icons.radar, 'label': 'Radius', 'val': '${user.radiusKm.round()} km'},
-          if (user.familyName != null) {'icon': Icons.family_restroom, 'label': 'Family contact', 'val': '${user.familyName} (${user.familyRelation})'},
-        ]) Container(
-          margin: const EdgeInsets.only(bottom: 8),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.border)),
-          child: Row(children: [
-            Icon(row['icon'] as IconData, size: 18, color: AppTheme.mutedForeground),
-            const SizedBox(width: 12),
-            KsText(row['label'] as String, style: GoogleFonts.notoSans(fontSize: 13, color: AppTheme.mutedForeground, fontWeight: FontWeight.w500)),
-            const Spacer(),
-            KsText(row['val'] as String, style: GoogleFonts.notoSans(fontSize: 13, fontWeight: FontWeight.w700)),
-          ]),
+          {'icon': Icons.phone, 'label': 'Phone', 'val': '+91 ${user.phone}', 'key': 'phone'},
+          {'icon': Icons.location_on_outlined, 'label': 'Area', 'val': user.area, 'key': 'area'},
+          {'icon': Icons.language, 'label': 'Language', 'val': user.language.toUpperCase(), 'key': 'lang'},
+          {'icon': Icons.radar, 'label': 'Radius', 'val': '${user.radiusKm.round()} km', 'key': 'radius'},
+          if (user.familyName != null) {'icon': Icons.family_restroom, 'label': 'Family contact', 'val': '${user.familyName} (${user.familyRelation})', 'key': 'family'},
+        ]) GestureDetector(
+          onTap: () {
+            if (row['key'] == 'lang') {
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) => Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: AppTheme.card,
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      KsText('Select Language', style: GoogleFonts.notoSans(fontSize: 18, fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 16),
+                      for (final l in kLanguages)
+                        ListTile(
+                          title: KsText(l['native']!, style: GoogleFonts.notoSans(fontWeight: FontWeight.w600)),
+                          subtitle: KsText(l['code'] == 'en' ? 'English' : 'KaamSetu language', style: GoogleFonts.notoSans(fontSize: 12, color: AppTheme.mutedForeground)),
+                          trailing: user.language == l['code'] ? const Icon(Icons.check_circle, color: AppTheme.primary) : null,
+                          onTap: () {
+                            context.read<AppProvider>().setLang(l['code']!);
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: KsText('Language updated to ${l['native']}'), behavior: SnackBarBehavior.floating));
+                          },
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          },
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.border)),
+            child: Row(children: [
+              Icon(row['icon'] as IconData, size: 18, color: AppTheme.mutedForeground),
+              const SizedBox(width: 12),
+              KsText(row['label'] as String, style: GoogleFonts.notoSans(fontSize: 13, color: AppTheme.mutedForeground, fontWeight: FontWeight.w500)),
+              const Spacer(),
+              KsText(row['val'] as String, style: GoogleFonts.notoSans(fontSize: 13, fontWeight: FontWeight.w700)),
+              if (row['key'] == 'lang') ...[
+                const SizedBox(width: 8),
+                const Icon(Icons.chevron_right, size: 16, color: AppTheme.mutedForeground),
+              ]
+            ]),
+          ),
         ),
 
         const SizedBox(height: 24),

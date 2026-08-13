@@ -43,15 +43,14 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   Future<void> _loadTutorial() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!mounted || prefs.getBool(_tutorialSeenKey) == true) return;
+    // MOCK: Always show tutorial for demo purposes
+    if (!mounted) return;
     setState(() => _showTutorial = true);
   }
 
   Future<void> _finishTutorial() async {
     setState(() => _showTutorial = false);
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_tutorialSeenKey, true);
+    // Removed shared preferences set to ensure it shows next time as well
   }
 
   Future<void> _handleBack() async {

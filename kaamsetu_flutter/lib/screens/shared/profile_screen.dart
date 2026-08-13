@@ -188,10 +188,14 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
-            height: 44,
             child: OutlinedButton.icon(
               onPressed: () {
-                // TODO: Implement video upload
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Opening gallery... (Demo Mock)'),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
               },
               icon: const Icon(Icons.upload_file, size: 18),
               label: const KsText('Upload New Video'),

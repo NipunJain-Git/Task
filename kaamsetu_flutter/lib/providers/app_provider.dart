@@ -50,6 +50,71 @@ class AppProvider extends ChangeNotifier {
 
   int get unreadCount => _notifications.where((n) => !n.read).length;
 
+  Future<bool> initAuth() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('jwt_token');
+      if (token == null) return false;
+
+      // Fetch user profile to restore session
+      final res = await apiClient.dio.get('/users/me');
+      final userData = res.data['data'];
+      
+      _user = AppUser(
+        id: userData['id']?.toString() ?? '',
+        phone: userData['phone']?.toString() ?? '',
+        name: userData['name'] ?? '',
+        role: userData['role'] ?? '',
+        language: userData['language'] ?? 'en',
+        onboarded: userData['onboarded'] ?? false,
+        kycStatus: userData['kycStatus'] ?? 'NONE',
+        aadhaarVerified: userData['kycStatus'] == 'APPROVED' || (userData['aadhaarVerified'] ?? false),
+        aadhaarLast4: userData['identityNumber'] != null && userData['identityNumber'].toString().length >= 4 
+            ? userData['identityNumber'].toString().substring(userData['identityNumber'].toString().length - 4) 
+            : userData['aadhaarLast4']?.toString(),
+        area: userData['area'] ?? '',
+        address: userData['address'] ?? '',
+        radiusKm: (userData['radiusKm'] ?? 10).toDouble(),
+        walletBalance: userData['walletBalance'] ?? 0,
+        streak: userData['streak'] ?? 0,
+        pin: userData['pin']?.toString(),
+      );
+
+      _uploadFcmToken();
+      
+      // Load necessary data based on role
+      if (_user?.role == 'WORKER' || _user?.role == 'worker') {
+        _workerProfile = demoWorkerProfile;
+        _transactions = demoTransactions;
+        _assignedJobs = [];
+        try {
+          final jobsRes = await apiClient.dio.get('/jobs');
+          final jobsList = (jobsRes.data['data'] as List? ?? []);
+          _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
+        } catch (e) {
+          _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
+        }
+      } else if (_user?.role == 'HOUSEHOLD' || _user?.role == 'household') {
+        try {
+          final jobsRes = await apiClient.dio.get('/jobs/my-posts');
+          final jobsList = (jobsRes.data['data'] as List? ?? []);
+          _myJobs = jobsList.map((j) => Job.fromJson(j as Map<String, dynamic>)).toList();
+        } catch (e) {
+          _myJobs = demoJobs.take(3).toList();
+        }
+        _nearbyWorkers = demoNearbyWorkers;
+        _transactions = [];
+      }
+
+      notifyListeners();
+      return true;
+    } catch (e) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('jwt_token');
+      return false;
+    }
+  }
+
   Future<void> verifyIdentity(String identityNumber) async {
     if (_user == null || !RegExp(r'^\d{12}$').hasMatch(identityNumber)) return;
     
@@ -69,8 +134,20 @@ class AppProvider extends ChangeNotifier {
   }
 
   void setTab(int index) {
-    _currentTab = index;
-    notifyListeners();
+    if (_currentTab != index) {
+      _tabHistory.add(_currentTab);
+      _currentTab = index;
+      notifyListeners();
+    }
+  }
+
+  bool goToPreviousTab() {
+    if (_tabHistory.isNotEmpty) {
+      _currentTab = _tabHistory.removeLast();
+      notifyListeners();
+      return true;
+    }
+    return false;
   }
 
   Future<String?> requestOtp(String phone) async {
@@ -84,9 +161,9 @@ class AppProvider extends ChangeNotifier {
       return res.data['data']?['sessionId']?.toString() ?? 'mock';
     } catch (e) {
       _isLoading = false;
-      // Fallback to mock session if backend is down
+      _error = 'Failed to request OTP';
       notifyListeners();
-      return 'mock-session-123';
+      return null;
     }
   }
 
@@ -140,6 +217,7 @@ class AppProvider extends ChangeNotifier {
           final jobsList = (jobsRes.data['data'] as List? ?? []);
           _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
         } catch (e) {
+          print('Failed to fetch feed jobs: $e');
           _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
         }
       } else {
@@ -158,24 +236,7 @@ class AppProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      if (otp == '123456') {
-        _user = role == 'worker' ? demoWorker : demoHousehold;
-        if (role == 'worker') {
-          _workerProfile = demoWorkerProfile;
-          _transactions = demoTransactions;
-          _assignedJobs = [];
-          _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
-        } else {
-          _myJobs = demoJobs.take(3).toList();
-          _nearbyWorkers = demoNearbyWorkers;
-          _transactions = [];
-        }
-        _notifications = demoNotifications;
-        _isLoading = false;
-        notifyListeners();
-        return true;
-      }
-      _error = 'Failed to verify OTP. Please try again.';
+      _error = 'Error: $e';
       _isLoading = false;
       notifyListeners();
       return false;
@@ -248,7 +309,7 @@ class AppProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _error = 'Failed to verify Firebase token. Please try again.';
+      _error = 'Error: $e';
       _isLoading = false;
       notifyListeners();
       return false;
@@ -341,9 +402,7 @@ class AppProvider extends ChangeNotifier {
         _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
         notifyListeners();
       } catch (e) {
-        // Fallback to mock feed jobs
-        _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
-        notifyListeners();
+        print('Failed to refresh jobs: $e');
       }
     } else if (_user?.role == 'household') {
       try {
@@ -352,9 +411,7 @@ class AppProvider extends ChangeNotifier {
         _myJobs = jobsList.map((j) => Job.fromJson(j as Map<String, dynamic>)).toList();
         notifyListeners();
       } catch (e) {
-        // Fallback to mock my posts
-        _myJobs = demoJobs.take(3).toList();
-        notifyListeners();
+        print('Failed to refresh my posts: $e');
       }
     }
   }
@@ -489,28 +546,10 @@ class AppProvider extends ChangeNotifier {
       refreshJobs();
 
       return null;
-      } catch (e) {
-        // Fallback to mock job creation
-        final newJob = Job(
-          id: 'mock-job-${DateTime.now().millisecondsSinceEpoch}',
-          householdId: _user?.id ?? 'household-1',
-          title: title,
-          description: description ?? 'No description provided.',
-          category: category,
-          budget: budget,
-          jobDate: jobDate,
-          startTime: startTime,
-          durationHours: durationHours,
-          status: 'open',
-          urgent: urgent,
-          assignedWorkerId: null,
-          assignedWorkerName: null,
-          interestsCount: 0,
-        );
-        _myJobs = [newJob, ..._myJobs];
-        notifyListeners();
-        return null;
-      }
+    } catch (e) {
+      print('Failed to post job: $e');
+      return 'Failed to post job';
+    }
   }
 
   void updateWorkerProfile({
@@ -559,40 +598,55 @@ class AppProvider extends ChangeNotifier {
         notifyListeners();
       }
       return null;
+    } catch (e) {
+      return 'Failed to update job status';
+    }
+  }
+
+  Future<String?> completeAndRateJob(String jobId, String workerId, bool thumbsUp) async {
+    try {
+      await apiClient.dio.patch('/jobs/$jobId/status', data: {'status': 'completed'});
+      try {
+        await apiClient.dio.post('/jobs/$jobId/rate', data: {
+          'value': thumbsUp ? 'THUMBS_UP' : 'THUMBS_DOWN',
+        });
       } catch (e) {
-        // Fallback: update status locally
-        final idx = _myJobs.indexWhere((j) => j.id == jobId);
-        if (idx >= 0) {
-          _myJobs[idx] = Job(
-            id: _myJobs[idx].id,
-            householdId: _myJobs[idx].householdId,
-            title: _myJobs[idx].title,
-            description: _myJobs[idx].description,
-            category: _myJobs[idx].category,
-            budget: _myJobs[idx].budget,
-            jobDate: _myJobs[idx].jobDate,
-            startTime: _myJobs[idx].startTime,
-            durationHours: _myJobs[idx].durationHours,
-            status: status,
-            urgent: _myJobs[idx].urgent,
-            assignedWorkerId: _myJobs[idx].assignedWorkerId,
-            assignedWorkerName: _myJobs[idx].assignedWorkerName,
-            interestsCount: _myJobs[idx].interestsCount,
-          );
-          notifyListeners();
-        }
-        return null;
+        print('Rating API error: $e'); // Ignore rating error if it fails (e.g. already rated)
       }
+      
+      final idx = _myJobs.indexWhere((j) => j.id == jobId);
+      if (idx >= 0) {
+        _myJobs[idx] = Job(
+          id: _myJobs[idx].id,
+          householdId: _myJobs[idx].householdId,
+          title: _myJobs[idx].title,
+          description: _myJobs[idx].description,
+          category: _myJobs[idx].category,
+          budget: _myJobs[idx].budget,
+          jobDate: _myJobs[idx].jobDate,
+          startTime: _myJobs[idx].startTime,
+          durationHours: _myJobs[idx].durationHours,
+          status: 'completed',
+          urgent: _myJobs[idx].urgent,
+          assignedWorkerId: _myJobs[idx].assignedWorkerId,
+          assignedWorkerName: _myJobs[idx].assignedWorkerName,
+          interestsCount: _myJobs[idx].interestsCount,
+        );
+        notifyListeners();
+      }
+      return null;
+    } catch (e) {
+      return 'Failed to complete job';
+    }
   }
 
   Future<String?> applyForJob(String jobId) async {
     try {
       await apiClient.dio.post('/jobs/$jobId/apply');
       return null;
-      } catch (e) {
-        // Mock fallback
-        return null;
-      }
+    } catch (e) {
+      return 'Failed to apply for job';
+    }
   }
 
   Future<List<dynamic>> getApplicants(String jobId) async {
@@ -609,10 +663,9 @@ class AppProvider extends ChangeNotifier {
       await apiClient.dio.post('/jobs/$jobId/assign', data: {'workerId': workerId});
       refreshJobs();
       return null;
-      } catch (e) {
-        // Mock fallback
-        return null;
-      }
+    } catch (e) {
+      return 'Failed to assign worker';
+    }
   }
 
   Future<List<dynamic>> getInbox() async {
@@ -642,8 +695,10 @@ class AppProvider extends ChangeNotifier {
       final token = await messaging.getToken();
       if (token != null) {
         await apiClient.dio.patch('/users/me/fcm-token', data: {'fcmToken': token});
+        print('FCM token uploaded successfully');
       }
     } catch (e) {
+      print('Failed to upload FCM token: $e');
       // silently fail
     }
   }

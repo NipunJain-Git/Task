@@ -44,10 +44,38 @@ class _JobCardWidgetState extends State<JobCardWidget> {
   bool get _isTop => widget.rank == 0 && widget.feedJob.matchScore >= 60;
 
   Future<void> _apply() async {
+    final provider = context.read<AppProvider>();
+    if (provider.user?.aadhaarVerified != true) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: AppTheme.card,
+          title: KsText('Verification Required', style: GoogleFonts.notoSans(fontWeight: FontWeight.w700, fontSize: 18)),
+          content: KsText('You must verify your identity before you can apply to jobs.', style: GoogleFonts.notoSans(color: AppTheme.mutedForeground)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: KsText('Cancel', style: GoogleFonts.notoSans(color: AppTheme.mutedForeground)),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/kyc');
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primary, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+              child: KsText('Complete KYC', style: GoogleFonts.notoSans(fontWeight: FontWeight.w600)),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
     setState(() { _loading = true; });
     await Future.delayed(const Duration(milliseconds: 600));
     if (mounted) {
-      context.read<AppProvider>().expressInterest(widget.feedJob.job.id);
+      provider.expressInterest(widget.feedJob.job.id);
       setState(() { _loading = false; _expanded = false; _interest = 'interested'; });
     }
   }
@@ -186,15 +214,15 @@ class _JobCardWidgetState extends State<JobCardWidget> {
             TextButton(onPressed: _loading ? null : _pull, child: KsText('Undo', style: GoogleFonts.notoSans(color: AppTheme.mutedForeground, fontWeight: FontWeight.w600))),
           ])
           else if (_expanded) Row(children: [
-            Expanded(child: SizedBox(height: 44, child: ElevatedButton(
+            Expanded(child: ElevatedButton(
               onPressed: _loading ? null : _apply,
               style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               child: _loading ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const KsText('Send interest'),
-            ))),
+            )),
             const SizedBox(width: 8),
             TextButton(onPressed: () => setState(() { _expanded = false; }), child: const KsText('Cancel')),
           ])
-          else SizedBox(width: double.infinity, height: 44, child: ElevatedButton(
+          else SizedBox(width: double.infinity, child: ElevatedButton(
             onPressed: () => setState(() { _expanded = true; }),
             style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             child: const KsText("I'm interested"),

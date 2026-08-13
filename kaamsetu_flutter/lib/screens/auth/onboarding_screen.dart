@@ -214,7 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       setState(() {
         _loading = false;
       });
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pushNamedAndRemoveUntil('/home', (r) => false);
     }
   }
 

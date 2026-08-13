@@ -80,9 +80,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (_step == 'lang') {
       provider.setLang(_lang);
-      setState(() { _step = 'role'; });
-    } else if (_step == 'role') {
       setState(() { _step = 'phone'; });
+    } else if (_step == 'role') {
+      if (_otp.isNotEmpty && _sessionId != null) {
+        _navigateNext(provider, forceOnboarding: true);
+      } else {
+        setState(() { _step = 'phone'; });
+      }
     } else if (_step == 'phone') {
       if (_phone.length != 10) return;
       setState(() { _loading = true; });
@@ -125,17 +129,22 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _navigateNext(AppProvider provider) {
+  void _navigateNext(AppProvider provider, {bool forceOnboarding = false}) {
     final user = provider.user!;
-    if (!user.onboarded && user.role != 'ADMIN') {
-      Navigator.of(context).pushReplacementNamed(
-        '/onboarding',
-        arguments: {'role': _role, 'lang': _lang, 'phone': _phone},
-      );
+    if ((!user.onboarded && user.role != 'ADMIN') || forceOnboarding) {
+      if (widget.initialRole == null && !forceOnboarding) {
+        // New user didn't pick a role on the landing screen, ask now!
+        setState(() { _step = 'role'; });
+      } else {
+        Navigator.of(context).pushReplacementNamed(
+          '/onboarding',
+          arguments: {'role': _role, 'lang': _lang, 'phone': _phone},
+        );
+      }
     } else if (user.role == 'ADMIN') {
-      Navigator.of(context).pushReplacementNamed('/admin');
+      Navigator.of(context).pushNamedAndRemoveUntil('/admin', (r) => false);
     } else {
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pushNamedAndRemoveUntil('/home', (r) => false);
     }
   }
 
@@ -352,7 +361,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Center(
           child: TextButton(
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/admin');
+              Navigator.of(context).pushNamedAndRemoveUntil('/admin', (r) => false);
             },
             child: KsText(
               'Login as Admin',

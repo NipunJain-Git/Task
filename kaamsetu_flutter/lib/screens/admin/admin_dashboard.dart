@@ -84,12 +84,28 @@ class AdminDashboard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('KYC Approved for User ${index + 1}'),
+                                    backgroundColor: AppTheme.success,
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              },
                               icon: Icon(Icons.check_circle, color: AppTheme.primary),
                               tooltip: 'Approve',
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('KYC Rejected for User ${index + 1}'),
+                                    backgroundColor: AppTheme.destructive,
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              },
                               icon: Icon(Icons.cancel, color: AppTheme.destructive),
                               tooltip: 'Reject',
                             ),

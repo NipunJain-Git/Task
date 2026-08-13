@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import '../../core/theme.dart';
 import '../../core/domain.dart';
 import '../../providers/app_provider.dart';
+import '../../data/models.dart';
 import '../../widgets/atoms.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 void _showApplicants(BuildContext context, String jobId) {
   showModalBottomSheet(
@@ -94,6 +96,106 @@ class _ApplicantsSheetState extends State<_ApplicantsSheet> {
   }
 }
 
+void _showRatingSheet(BuildContext context, Job job) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (ctx) => _RatingSheet(job: job),
+  );
+}
+
+class _RatingSheet extends StatefulWidget {
+  final Job job;
+  const _RatingSheet({required this.job});
+  @override
+  State<_RatingSheet> createState() => _RatingSheetState();
+}
+
+class _RatingSheetState extends State<_RatingSheet> {
+  bool _loading = false;
+
+  Future<void> _submit(bool thumbsUp) async {
+    setState(() => _loading = true);
+    await context.read<AppProvider>().completeAndRateJob(widget.job.id, widget.job.assignedWorkerId ?? '', thumbsUp);
+    if (mounted) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: KsText('Job marked as completed! ${thumbsUp ? '👍' : '👎'}', style: const TextStyle(color: Colors.white)),
+          backgroundColor: AppTheme.success,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(color: AppTheme.background, borderRadius: const BorderRadius.vertical(top: Radius.circular(32))),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(width: 40, height: 4, decoration: BoxDecoration(color: AppTheme.border, borderRadius: BorderRadius.circular(2))),
+            const SizedBox(height: 24),
+            Container(
+              width: 80, height: 80,
+              decoration: BoxDecoration(color: AppTheme.success.withOpacity(0.1), shape: BoxShape.circle),
+              child: const Icon(Icons.check_circle, color: AppTheme.success, size: 40),
+            ).animate().scale(delay: 100.ms, duration: 400.ms, curve: Curves.easeOutBack),
+            const SizedBox(height: 20),
+            KsText('Job Completed!', style: GoogleFonts.notoSans(fontSize: 24, fontWeight: FontWeight.w900)).animate().fadeIn(delay: 200.ms).slideY(begin: 0.2),
+            const SizedBox(height: 8),
+            KsText('How was ${widget.job.assignedWorkerName ?? 'the worker'}?', style: GoogleFonts.notoSans(fontSize: 16, color: AppTheme.mutedForeground)).animate().fadeIn(delay: 300.ms).slideY(begin: 0.2),
+            const SizedBox(height: 32),
+            if (_loading) const CircularProgressIndicator()
+            else Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _RateButton(icon: Icons.thumb_down, label: 'Poor', color: AppTheme.destructive, onTap: () => _submit(false))
+                    .animate().fadeIn(delay: 400.ms).slideX(begin: -0.5),
+                const SizedBox(width: 24),
+                _RateButton(icon: Icons.thumb_up, label: 'Great', color: AppTheme.success, onTap: () => _submit(true))
+                    .animate().fadeIn(delay: 400.ms).slideX(begin: 0.5),
+              ],
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RateButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+  const _RateButton({required this.icon, required this.label, required this.color, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 72, height: 72,
+            decoration: BoxDecoration(color: AppTheme.card, shape: BoxShape.circle, border: Border.all(color: AppTheme.border), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 12, offset: const Offset(0, 4))]),
+            child: Icon(icon, color: color, size: 32),
+          ),
+          const SizedBox(height: 8),
+          KsText(label, style: GoogleFonts.notoSans(fontSize: 14, fontWeight: FontWeight.w700, color: color)),
+        ],
+      ),
+    );
+  }
+}
+
 class HouseholdHomeScreen extends StatelessWidget {
   const HouseholdHomeScreen({super.key});
 
@@ -121,7 +223,7 @@ class HouseholdHomeScreen extends StatelessWidget {
               KsText('Post a job and get replies in minutes', style: GoogleFonts.notoSans(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white, height: 1.3)),
               const SizedBox(height: 16),
               Row(children: [
-                Expanded(child: SizedBox(height: 44, child: ElevatedButton.icon(
+                Expanded(child: ElevatedButton.icon(
                   onPressed: () => provider.setTab(2),
                   icon: const Icon(Icons.add_circle_outline, size: 16),
                   label: const KsText('Post a job'),
@@ -129,9 +231,9 @@ class HouseholdHomeScreen extends StatelessWidget {
                     backgroundColor: Colors.white, foregroundColor: AppTheme.primary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                ))),
+                )),
                 const SizedBox(width: 8),
-                Expanded(child: SizedBox(height: 44, child: OutlinedButton.icon(
+                Expanded(child: OutlinedButton.icon(
                   onPressed: () => provider.setTab(1),
                   icon: const Icon(Icons.people_outline, size: 16, color: Colors.white),
                   label: const KsText('Browse', style: TextStyle(color: Colors.white)),
@@ -139,7 +241,7 @@ class HouseholdHomeScreen extends StatelessWidget {
                     side: BorderSide(color: Colors.white.withOpacity(0.5)),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                ))),
+                )),
               ]),
             ],
           ),
@@ -269,6 +371,21 @@ class HouseholdHomeScreen extends StatelessWidget {
                         backgroundColor: AppTheme.primary.withOpacity(0.1),
                         foregroundColor: AppTheme.primary,
                         elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  )
+                ] else if (job.status == 'assigned') ...[
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 36,
+                    child: OutlinedButton.icon(
+                      onPressed: () => _showRatingSheet(context, job),
+                      icon: const Icon(Icons.check_circle_outline, size: 16, color: AppTheme.success),
+                      label: const KsText('Mark Completed', style: TextStyle(color: AppTheme.success, fontWeight: FontWeight.bold)),
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: AppTheme.success.withOpacity(0.5)),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
                     ),

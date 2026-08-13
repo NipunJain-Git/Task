@@ -11,7 +11,10 @@ import 'screens/shared/home_shell.dart' show KaamSetuLogo;
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/onboarding_screen.dart';
 import 'screens/shared/chat_screen.dart';
+import 'screens/shared/chatbot_screen.dart';
 import 'screens/admin/admin_dashboard.dart';
+import 'screens/kyc/kyc_screen.dart';
+import 'widgets/ks_text.dart';
 
 Future<void> main() async {
   try {
@@ -105,8 +108,12 @@ class KaamSetuApp extends StatelessWidget {
                 );
               case '/home':
                 return MaterialPageRoute(builder: (_) => const HomeShell());
+              case '/chatbot':
+                return MaterialPageRoute(builder: (_) => const ChatbotScreen());
               case '/admin':
                 return MaterialPageRoute(builder: (_) => AdminDashboard());
+              case '/kyc':
+                return MaterialPageRoute(builder: (_) => const KycScreen());
               default:
                 return MaterialPageRoute(builder: (_) => const LandingScreen());
             }
@@ -137,17 +144,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     _scale = Tween<double>(begin: 0.8, end: 1.0).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
     _ctrl.forward();
 
-    Future.delayed(const Duration(milliseconds: 1600), () {
+    Future.delayed(const Duration(milliseconds: 1400), () async {
       if (!mounted) return;
       final provider = context.read<AppProvider>();
-      if (provider.isAuthenticated) {
+      final isLoggedIn = await provider.initAuth();
+      if (!mounted) return;
+      
+      if (isLoggedIn) {
         if (provider.user?.role == 'ADMIN') {
-          Navigator.of(context).pushReplacementNamed('/admin');
+          Navigator.of(context).pushNamedAndRemoveUntil('/admin', (r) => false);
         } else {
-          Navigator.of(context).pushReplacementNamed('/home');
+          Navigator.of(context).pushNamedAndRemoveUntil('/home', (r) => false);
         }
       } else {
-        Navigator.of(context).pushReplacementNamed('/landing');
+        Navigator.of(context).pushNamedAndRemoveUntil('/landing', (r) => false);
       }
     });
   }
@@ -171,23 +181,46 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 96, height: 96,
+                  width: 140,
+                  height: 96,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(28),
-                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 32, offset: const Offset(0, 8))],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 32,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
-                  child: Center(
-                    child: Text('K',
-                        style: TextStyle(fontSize: 52, fontWeight: FontWeight.w900, color: AppTheme.primary, height: 1)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text('KaamSetu',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900, color: Colors.white, letterSpacing: -0.5)),
+                const KsText(
+                  'KaamSetu',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                    letterSpacing: -0.5,
+                  ),
+                ),
                 const SizedBox(height: 8),
-                Text('Work near you, today',
-                    style: TextStyle(fontSize: 15, color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w500)),
+                KsText(
+                  'Work near you, today',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white.withOpacity(0.8),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
           ),

@@ -52,68 +52,8 @@ class AppProvider extends ChangeNotifier {
   int get unreadCount => _notifications.where((n) => !n.read).length;
 
   Future<bool> initAuth() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('jwt_token');
-      if (token == null) return false;
-
-      // Fetch user profile to restore session
-      final res = await apiClient.dio.get('/users/me');
-      final userData = res.data['data'];
-      
-      _user = AppUser(
-        id: userData['id']?.toString() ?? '',
-        phone: userData['phone']?.toString() ?? '',
-        name: userData['name'] ?? '',
-        role: userData['role'] ?? '',
-        language: userData['language'] ?? 'en',
-        onboarded: userData['onboarded'] ?? false,
-        kycStatus: userData['kycStatus'] ?? 'NONE',
-        aadhaarVerified: userData['kycStatus'] == 'APPROVED' || (userData['aadhaarVerified'] ?? false),
-        aadhaarLast4: userData['identityNumber'] != null && userData['identityNumber'].toString().length >= 4 
-            ? userData['identityNumber'].toString().substring(userData['identityNumber'].toString().length - 4) 
-            : userData['aadhaarLast4']?.toString(),
-        area: userData['area'] ?? '',
-        address: userData['address'] ?? '',
-        radiusKm: (userData['radiusKm'] ?? 10).toDouble(),
-        walletBalance: userData['walletBalance'] ?? 0,
-        streak: userData['streak'] ?? 0,
-        pin: userData['pin']?.toString(),
-      );
-
-      _uploadFcmToken();
-      
-      // Load necessary data based on role
-      if (_user?.role == 'WORKER' || _user?.role == 'worker') {
-        _workerProfile = demoWorkerProfile;
-        _transactions = demoTransactions;
-        _assignedJobs = [];
-        try {
-          final jobsRes = await apiClient.dio.get('/jobs');
-          final jobsList = (jobsRes.data['data'] as List? ?? []);
-          _feedJobs = jobsList.map((j) => FeedJob.fromApiJob(j as Map<String, dynamic>)).toList();
-        } catch (e) {
-          _feedJobs = buildFeedJobs(demoJobs, demoHouseholds);
-        }
-      } else if (_user?.role == 'HOUSEHOLD' || _user?.role == 'household') {
-        try {
-          final jobsRes = await apiClient.dio.get('/jobs/my-posts');
-          final jobsList = (jobsRes.data['data'] as List? ?? []);
-          _myJobs = jobsList.map((j) => Job.fromJson(j as Map<String, dynamic>)).toList();
-        } catch (e) {
-          _myJobs = demoJobs.take(3).toList();
-        }
-        _nearbyWorkers = demoNearbyWorkers;
-        _transactions = [];
-      }
-
-      notifyListeners();
-      return true;
-    } catch (e) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('jwt_token');
-      return false;
-    }
+    // For demo purposes, persistent login is disabled so it always starts at onboarding
+    return false;
   }
 
   Future<void> verifyIdentity(String identityNumber) async {
@@ -382,7 +322,7 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void signOut() {
+  Future<void> signOut() async {
     _user = null;
     _workerProfile = null;
     _feedJobs = [];
@@ -392,6 +332,10 @@ class AppProvider extends ChangeNotifier {
     _notifications = [];
     _assignedJobs = [];
     _error = null;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('jwt_token');
+    } catch (_) {}
     notifyListeners();
   }
 

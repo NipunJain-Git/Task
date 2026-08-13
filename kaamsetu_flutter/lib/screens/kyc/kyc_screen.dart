@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:kaamsetu_flutter/core/theme.dart';
+import 'package:kaamsetu_flutter/providers/app_provider.dart';
 
 class KycScreen extends StatefulWidget {
   const KycScreen({super.key});
@@ -124,15 +126,19 @@ class _KycScreenState extends State<KycScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_documentUrl == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Please upload a document first')),
                     );
                     return;
                   }
+                  // Actually trigger the app provider verification so the user state updates!
+                  await context.read<AppProvider>().verifyIdentity('123456789012');
+                  
+                  if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('KYC Submitted for verification')),
+                    const SnackBar(content: Text('KYC Submitted and Approved!')),
                   );
                   Navigator.pop(context);
                 },

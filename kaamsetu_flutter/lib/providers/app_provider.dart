@@ -369,6 +369,25 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addMockHiredJob(NearbyWorker w) {
+    _myJobs.insert(0, Job(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      householdId: _user?.id ?? 'h1',
+      title: 'Help with ${skillLabel(w.skills.isNotEmpty ? w.skills.first : 'cleaning')}',
+      description: 'Mock job generated from Direct Hire',
+      category: w.skills.isNotEmpty ? w.skills.first : 'cleaning',
+      budget: w.expectedWage,
+      jobDate: DateTime.now().toIso8601String().substring(0, 10),
+      startTime: 'Now',
+      durationHours: 4,
+      status: 'ACCEPTED',
+      urgent: true,
+      assignedWorkerId: w.id,
+      assignedWorkerName: w.name,
+    ));
+    notifyListeners();
+  }
+
   Future<void> expressInterest(String jobId) async {
     await applyForJob(jobId);
     

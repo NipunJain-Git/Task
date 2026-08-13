@@ -97,13 +97,13 @@ class KaamSetuApp extends StatelessWidget {
                   ),
                 );
               case '/chat':
-                final args = settings.arguments as Map<String, String>;
+                final args = settings.arguments as Map<String, dynamic>;
                 return MaterialPageRoute(
                   builder: (_) => ChatScreen(
-                    jobId: args['jobId']!,
-                    otherUserId: args['otherUserId']!,
-                    otherUserName: args['otherUserName']!,
-                    jobTitle: args['jobTitle']!,
+                    jobId: args['jobId'].toString(),
+                    otherUserId: args['otherUserId'].toString(),
+                    otherUserName: args['otherUserName'].toString(),
+                    jobTitle: args['jobTitle'].toString(),
                   ),
                 );
               case '/home':

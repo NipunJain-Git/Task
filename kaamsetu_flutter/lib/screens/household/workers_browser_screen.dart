@@ -128,8 +128,15 @@ class _WorkersBrowserScreenState extends State<WorkersBrowserScreen> {
                               Expanded(
                                 child: SizedBox(height: 40, child: ElevatedButton(
                                   onPressed: () {
+                                    final provider = context.read<AppProvider>();
+                                    provider.addMockHiredJob(w);
+                                    provider.setTab(0); // Switch to Home (Active Jobs)
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: KsText('Hiring flow initiated for ${w.name}')),
+                                      SnackBar(
+                                        content: KsText('${w.name} automatically accepted your job!'),
+                                        backgroundColor: AppTheme.success,
+                                        behavior: SnackBarBehavior.floating,
+                                      ),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),

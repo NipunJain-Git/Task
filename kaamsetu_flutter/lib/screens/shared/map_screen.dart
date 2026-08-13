@@ -7,6 +7,7 @@ import '../../core/theme.dart';
 import '../../providers/app_provider.dart';
 import '../../widgets/atoms.dart';
 import '../../data/seed.dart' show demoHouseholds;
+import '../worker/job_card_widget.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -57,69 +58,120 @@ class _MapScreenState extends State<MapScreen> {
         // Map
         Expanded(
           flex: 2,
-          child: FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              initialCenter: _puneCenter,
-              initialZoom: 12.0,
-              minZoom: 10.0,
-              maxZoom: 18.0,
-            ),
+          child: Stack(
             children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.kaamsetu.app',
-              ),
-              MarkerLayer(
-                markers: [
-                  // Center Marker (Household / Worker)
-                  Marker(
-                    point: _puneCenter,
-                    width: 60,
-                    height: 60,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppTheme.secondary,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppTheme.primary, width: 2),
-                        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4, offset: const Offset(0, 2))],
-                      ),
-                      child: Icon(isWorker ? Icons.construction : Icons.home, color: AppTheme.primary, size: 24),
-                    ),
+              FlutterMap(
+                mapController: _mapController,
+                options: MapOptions(
+                  initialCenter: _puneCenter,
+                  initialZoom: 12.0,
+                  minZoom: 10.0,
+                  maxZoom: 18.0,
+                ),
+                children: [
+                  TileLayer(
+                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'com.kaamsetu.app',
                   ),
-
-                  // Workers
-                  if (_mapMode == 'workers')
-                    ...workers.asMap().entries.map((e) {
-                      final w = e.value;
-                      // Generate dummy coordinates around Pune based on index
-                      final lat = _puneCenter.latitude + (e.key % 3 == 0 ? 0.01 : -0.01) * e.key;
-                      final lng = _puneCenter.longitude + (e.key % 2 == 0 ? 0.01 : -0.01) * e.key;
-                      
-                      return Marker(
-                        point: LatLng(lat, lng),
-                        width: 50,
-                        height: 50,
-                        child: _WorkerPin(name: w.name, isVerified: w.aadhaarVerified),
-                      );
-                    }),
-
-                  // Jobs
-                  if (_mapMode == 'jobs')
-                    ...jobs.asMap().entries.map((e) {
-                      final j = e.value.job;
-                      // Generate dummy coordinates around Pune based on index
-                      final lat = _puneCenter.latitude + (e.key % 2 == 0 ? 0.02 : -0.01) * e.key;
-                      final lng = _puneCenter.longitude + (e.key % 3 == 0 ? 0.02 : -0.01) * e.key;
-                      
-                      return Marker(
-                        point: LatLng(lat, lng),
+                  MarkerLayer(
+                    markers: [
+                      // Center Marker (Household / Worker)
+                      Marker(
+                        point: _puneCenter,
                         width: 60,
-                        height: 40,
-                        child: _JobPin(budget: j.budget, urgent: j.urgent),
-                      );
-                    }),
+                        height: 60,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.secondary,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: AppTheme.primary, width: 2),
+                            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4, offset: const Offset(0, 2))],
+                          ),
+                          child: Icon(isWorker ? Icons.construction : Icons.home, color: AppTheme.primary, size: 24),
+                        ),
+                      ),
+
+                      // Workers
+                      if (_mapMode == 'workers')
+                        ...workers.asMap().entries.map((e) {
+                          final w = e.value;
+                          final lat = _puneCenter.latitude + (e.key % 3 == 0 ? 0.01 : -0.01) * e.key;
+                          final lng = _puneCenter.longitude + (e.key % 2 == 0 ? 0.01 : -0.01) * e.key;
+                          
+                          return Marker(
+                            point: LatLng(lat, lng),
+                            width: 50,
+                            height: 50,
+                            child: _WorkerPin(name: w.name, isVerified: w.aadhaarVerified),
+                          );
+                        }),
+
+                      // Jobs
+                      if (_mapMode == 'jobs')
+                        ...jobs.asMap().entries.map((e) {
+                          final f = e.value;
+                          final j = f.job;
+                          final lat = _puneCenter.latitude + (e.key % 2 == 0 ? 0.02 : -0.01) * e.key;
+                          final lng = _puneCenter.longitude + (e.key % 3 == 0 ? 0.02 : -0.01) * e.key;
+                          
+                          return Marker(
+                            point: LatLng(lat, lng),
+                            width: 60,
+                            height: 40,
+                            child: GestureDetector(
+                              onTap: () {
+                                // MOCK: Show job card in bottom sheet
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (ctx) => Padding(
+                                    padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+                                    child: Container(
+                                      decoration: BoxDecoration(color: AppTheme.background, borderRadius: const BorderRadius.vertical(top: Radius.circular(20))),
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(width: 40, height: 4, margin: const EdgeInsets.only(bottom: 16), decoration: BoxDecoration(color: AppTheme.border, borderRadius: BorderRadius.circular(2))),
+                                          JobCardWidget(feedJob: f),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: _JobPin(budget: j.budget, urgent: j.urgent),
+                            ),
+                          );
+                        }),
+                    ],
+                  ),
                 ],
+              ),
+              // Map control icons
+              Positioned(
+                bottom: 16,
+                right: 16,
+                child: Column(
+                  children: [
+                    FloatingActionButton.small(
+                      heroTag: 'map_layer',
+                      backgroundColor: AppTheme.card,
+                      foregroundColor: AppTheme.primary,
+                      onPressed: () {},
+                      child: const Icon(Icons.layers),
+                    ),
+                    const SizedBox(height: 8),
+                    FloatingActionButton.small(
+                      heroTag: 'map_location',
+                      backgroundColor: AppTheme.primary,
+                      foregroundColor: Colors.white,
+                      onPressed: () {},
+                      child: const Icon(Icons.my_location),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

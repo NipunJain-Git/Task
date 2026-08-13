@@ -1,4 +1,5 @@
 // Home shell — bottom nav + routing for worker and household
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/atoms.dart';
@@ -133,6 +134,7 @@ class _HomeShellState extends State<HomeShell> {
       child: Stack(
         children: [
           Scaffold(
+            extendBody: true,
             appBar: AppBar(
               centerTitle: false,
               titleSpacing: 16,
@@ -155,42 +157,50 @@ class _HomeShellState extends State<HomeShell> {
               backgroundColor: AppTheme.primary,
               child: const Icon(Icons.support_agent, color: Colors.white),
             ),
-            bottomNavigationBar: Container(
-              decoration: const BoxDecoration(
-                border: Border(top: BorderSide(color: AppTheme.border)),
-              ),
-              child: BottomNavigationBar(
-                currentIndex: provider.currentTab,
-                onTap: (i) => provider.setTab(i),
-                items: tabs.asMap().entries.map((e) {
-                  final item = e.value;
-                  if (item.isPost) {
-                    return BottomNavigationBarItem(
-                      label: item.label,
-                      icon: Transform.translate(
-                        offset: const Offset(0, -6),
-                        child: Container(
-                          key: tabKeys[e.key],
-                          width: 44, height: 44,
-                          decoration: BoxDecoration(
-                            color: AppTheme.primary,
-                            shape: BoxShape.circle,
-                            boxShadow: [BoxShadow(color: AppTheme.primary.withOpacity(0.4), blurRadius: 16, offset: const Offset(0, 6))],
+            bottomNavigationBar: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.85),
+                    border: const Border(top: BorderSide(color: AppTheme.border)),
+                  ),
+                  child: BottomNavigationBar(
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    currentIndex: provider.currentTab,
+                    onTap: (i) => provider.setTab(i),
+                    items: tabs.asMap().entries.map((e) {
+                      final item = e.value;
+                      if (item.isPost) {
+                        return BottomNavigationBarItem(
+                          label: item.label,
+                          icon: Transform.translate(
+                            offset: const Offset(0, -6),
+                            child: Container(
+                              key: tabKeys[e.key],
+                              width: 44, height: 44,
+                              decoration: BoxDecoration(
+                                color: AppTheme.primary,
+                                shape: BoxShape.circle,
+                                boxShadow: [BoxShadow(color: AppTheme.primary.withOpacity(0.4), blurRadius: 16, offset: const Offset(0, 6))],
+                              ),
+                              child: Icon(item.icon, color: Colors.white, size: 24),
+                            ),
                           ),
-                          child: Icon(item.icon, color: Colors.white, size: 24),
+                        );
+                      }
+                      return BottomNavigationBarItem(
+                        label: item.label,
+                        icon: Icon(
+                          key: tabKeys[e.key],
+                          provider.currentTab == e.key ? item.activeIcon : item.icon, 
+                          size: 22
                         ),
-                      ),
-                    );
-                  }
-                  return BottomNavigationBarItem(
-                    label: item.label,
-                    icon: Icon(
-                      key: tabKeys[e.key],
-                      provider.currentTab == e.key ? item.activeIcon : item.icon, 
-                      size: 22
-                    ),
-                  );
-                }).toList(),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ),
             ),
           ),

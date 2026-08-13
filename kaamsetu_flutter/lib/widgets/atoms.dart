@@ -7,6 +7,54 @@ import '../core/theme.dart';
 import '../core/domain.dart';
 import '../data/models.dart';
 
+// ─── Shimmer Skeleton Loader ──────────────────────────────────────────────────
+class ShimmerBox extends StatefulWidget {
+  final double width;
+  final double height;
+  final BorderRadiusGeometry? borderRadius;
+
+  const ShimmerBox({super.key, required this.width, required this.height, this.borderRadius});
+
+  @override
+  State<ShimmerBox> createState() => _ShimmerBoxState();
+}
+
+class _ShimmerBoxState extends State<ShimmerBox> with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+  late final Animation<double> _anim;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000))..repeat(reverse: true);
+    _anim = Tween<double>(begin: 0.3, end: 0.7).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _anim,
+      builder: (_, __) => Opacity(
+        opacity: _anim.value,
+        child: Container(
+          width: widget.width,
+          height: widget.height,
+          decoration: BoxDecoration(
+            color: AppTheme.border,
+            borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 // ─── KaamSetu Logo / Wordmark ────────────────────────────────────────────────
 class KaamSetuLogo extends StatelessWidget {
   final double size;

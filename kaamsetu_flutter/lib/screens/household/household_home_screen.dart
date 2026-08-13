@@ -395,23 +395,7 @@ class HouseholdHomeScreen extends StatelessWidget {
             ),
           )),
 
-        // Wallet
-        const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(color: AppTheme.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.border)),
-          child: Row(children: [
-            Container(width: 40, height: 40, decoration: BoxDecoration(color: AppTheme.secondary, borderRadius: BorderRadius.circular(10)),
-                child: const Icon(Icons.account_balance_wallet_outlined, color: AppTheme.primary, size: 20)),
-            const SizedBox(width: 12),
-            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              KsText('Wallet', style: GoogleFonts.notoSans(fontSize: 14, fontWeight: FontWeight.w700)),
-              KsText('Pay workers straight from the app', style: GoogleFonts.notoSans(fontSize: 12, color: AppTheme.mutedForeground)),
-            ])),
-            KsText('₹${user.walletBalance}', style: GoogleFonts.notoSans(fontSize: 16, fontWeight: FontWeight.w800)),
-          ]),
-        ),
-        const SizedBox(height: 16),
+        // Wallet section removed per household spec
       ],
     );
   }

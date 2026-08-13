@@ -110,7 +110,7 @@ class _WorkersBrowserScreenState extends State<WorkersBrowserScreen> {
                           Row(
                             children: [
                               Expanded(
-                                child: SizedBox(height: 40, child: OutlinedButton.icon(
+                                child: SizedBox(height: 48, child: OutlinedButton.icon(
                                   onPressed: () {
                                     Navigator.of(context).pushNamed('/chat', arguments: {
                                       'jobId': 'direct', // Generic direct message ID since it's from browser
@@ -121,12 +121,15 @@ class _WorkersBrowserScreenState extends State<WorkersBrowserScreen> {
                                   },
                                   icon: const Icon(Icons.chat_bubble_outline, size: 18),
                                   label: const KsText('Chat'),
-                                  style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  ),
                                 )),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
-                                child: SizedBox(height: 40, child: ElevatedButton(
+                                child: SizedBox(height: 48, child: ElevatedButton(
                                   onPressed: () {
                                     final provider = context.read<AppProvider>();
                                     provider.addMockHiredJob(w);
@@ -139,7 +142,10 @@ class _WorkersBrowserScreenState extends State<WorkersBrowserScreen> {
                                       ),
                                     );
                                   },
-                                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  ),
                                   child: const KsText('Hire now'),
                                 )),
                               ),

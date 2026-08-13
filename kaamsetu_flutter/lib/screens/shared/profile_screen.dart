@@ -71,7 +71,51 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: 24),
 
-        if (!user.aadhaarVerified) ...[
+        // Complete Profile Banner (Workers only)
+        if (isWorker && profile != null && profile.skills.isEmpty) ...[
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/onboarding', arguments: {
+                'role': user.role,
+                'lang': user.language,
+                'phone': user.phone,
+                'profileDetailsOnly': true,
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF3B3B98), Color(0xFF5758BB)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.auto_awesome, color: Colors.white, size: 28),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        KsText('Make your profile stand out', style: GoogleFonts.notoSans(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white)),
+                        const SizedBox(height: 4),
+                        KsText('Add location, work preferences and safety details anytime.', style: GoogleFonts.notoSans(fontSize: 12, color: Colors.white.withOpacity(0.8))),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.arrow_forward, color: Colors.white, size: 20),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+
+        // Verify Identity Banner (Workers only)
+        if (isWorker && !user.aadhaarVerified) ...[
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_) => const kyc.KycScreen()));
@@ -103,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         KsText(
-                          'Required to accept jobs over ₹500',
+                          'Build trust and get more matches',
                           style: GoogleFonts.notoSans(
                             fontSize: 12,
                             color: AppTheme.mutedForeground,

@@ -64,15 +64,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           'family',
           'pin',
         ]
-      : ['identity', 'area', 'aadhaar', 'family', 'pin'];
+      : ['identity', 'area', 'family', 'pin'];
 
   List<String> get _stepIds {
-    if (widget.quickSignUp) {
-      return widget.role == 'household' ? ['identity', 'area'] : ['identity'];
+    if (widget.profileDetailsOnly) {
+      return _fullStepIds.skip(1).toList(); // Everything after identity
     }
-    return widget.profileDetailsOnly
-        ? _fullStepIds.skip(1).toList()
-        : _fullStepIds;
+    // Initial onboarding is JUST the identity (name) step for everyone!
+    return ['identity'];
   }
 
   String get _current => _stepIds[_step];

@@ -76,6 +76,15 @@ class _JobCardWidgetState extends State<JobCardWidget> {
     await Future.delayed(const Duration(milliseconds: 600));
     if (mounted) {
       provider.expressInterest(widget.feedJob.job.id);
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Job Application Accepted! Check your Inbox.'),
+          backgroundColor: AppTheme.success,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+
       setState(() { _loading = false; _expanded = false; _interest = 'interested'; });
     }
   }

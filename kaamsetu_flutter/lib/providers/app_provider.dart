@@ -426,19 +426,44 @@ class AppProvider extends ChangeNotifier {
 
   Future<void> expressInterest(String jobId) async {
     await applyForJob(jobId);
-    _feedJobs = _feedJobs.map((f) {
-      if (f.job.id == jobId) {
-        return FeedJob(
-          job: f.job,
-          household: f.household,
-          matchScore: f.matchScore,
-          distanceKm: f.distanceKm,
-          interestCount: f.interestCount + 1,
-          myInterest: 'interested',
-        );
-      }
-      return f;
-    }).toList();
+    
+    // DEMO MOCK LOGIC: Instantly 'accept' the job to demonstrate the accepted flow
+    try {
+      final feedJob = _feedJobs.firstWhere((f) => f.job.id == jobId);
+      
+      // Move to assigned jobs
+      _assignedJobs.insert(0, Job(
+        id: feedJob.job.id,
+        householdId: feedJob.job.householdId,
+        title: feedJob.job.title,
+        description: feedJob.job.description,
+        category: feedJob.job.category,
+        budget: feedJob.job.budget,
+        jobDate: feedJob.job.jobDate,
+        startTime: feedJob.job.startTime,
+        durationHours: feedJob.job.durationHours,
+        status: 'ACCEPTED',
+        urgent: feedJob.job.urgent,
+        assignedWorkerId: _user?.id,
+        assignedWorkerName: _user?.name,
+      ));
+
+      // Remove from feed
+      _feedJobs.removeWhere((f) => f.job.id == jobId);
+
+      // Add to inbox notifications
+      _notifications.insert(0, NotificationItem(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        title: 'Job Accepted!',
+        message: '${feedJob.household.name} accepted your application for ${feedJob.job.title}.',
+        timestamp: DateTime.now().toIso8601String(),
+        read: false,
+        type: 'JOB_UPDATE',
+      ));
+    } catch (e) {
+      print('Error in mock express interest: $e');
+    }
+
     notifyListeners();
   }
 

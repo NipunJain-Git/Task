@@ -94,6 +94,8 @@ class KaamSetuApp extends StatelessWidget {
                     role: args['role'] as String,
                     lang: args['lang'] as String? ?? 'en',
                     phone: args['phone'] as String? ?? '',
+                    profileDetailsOnly: args['profileDetailsOnly'] as bool? ?? false,
+                    singleStep: args['singleStep'] as String?,
                   ),
                 );
               case '/chat':

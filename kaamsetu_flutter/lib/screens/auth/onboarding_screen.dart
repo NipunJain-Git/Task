@@ -14,6 +14,7 @@ class OnboardingScreen extends StatefulWidget {
   final String phone;
   final bool quickSignUp;
   final bool profileDetailsOnly;
+  final String? singleStep;
   const OnboardingScreen({
     super.key,
     required this.role,
@@ -21,6 +22,7 @@ class OnboardingScreen extends StatefulWidget {
     required this.phone,
     this.quickSignUp = false,
     this.profileDetailsOnly = false,
+    this.singleStep,
   });
 
   @override
@@ -68,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   List<String> get _stepIds {
     if (widget.profileDetailsOnly) {
-      return _fullStepIds.skip(1).toList(); // Everything after identity
+      return _fullStepIds.skip(1).where((s) => s != 'aadhaar').toList(); // Skip identity and aadhaar for general profile completion
     }
     // Initial onboarding is JUST the identity (name) step for everyone!
     return ['identity'];

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../data/models.dart';
+import '../data/models.dart' hide Notification;
+import '../data/models.dart' as models show Notification;
 import '../data/seed.dart';
 import '../core/domain.dart';
 import '../core/api_client.dart';
@@ -452,13 +453,12 @@ class AppProvider extends ChangeNotifier {
       _feedJobs.removeWhere((f) => f.job.id == jobId);
 
       // Add to inbox notifications
-      _notifications.insert(0, NotificationItem(
+      _notifications.insert(0, models.Notification(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         title: 'Job Accepted!',
-        message: '${feedJob.household.name} accepted your application for ${feedJob.job.title}.',
-        timestamp: DateTime.now().toIso8601String(),
+        body: '${feedJob.household.name} accepted your application for ${feedJob.job.title}.',
+        createdAt: DateTime.now(),
         read: false,
-        type: 'JOB_UPDATE',
       ));
     } catch (e) {
       print('Error in mock express interest: $e');

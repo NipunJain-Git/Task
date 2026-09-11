@@ -1,8 +1,0 @@
-setup.py
-custom_action_nodes/__init__.py
-custom_action_nodes/action_client.py
-custom_action_nodes/action_server.py
-custom_action_nodes.egg-info/PKG-INFO
-custom_action_nodes.egg-info/SOURCES.txt
-custom_action_nodes.egg-info/dependency_links.txt
-custom_action_nodes.egg-info/top_level.txt

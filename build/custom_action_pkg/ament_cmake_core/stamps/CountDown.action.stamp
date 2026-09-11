@@ -1,6 +1,0 @@
-int32 target
----
-string status
----
-int32 current_count
-

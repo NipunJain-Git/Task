@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "custom_action_pkg__rs",
+		"source" : "/home/nipun/ros2_ws/build/custom_action_pkg/custom_action_pkg__rs"
+	}
+}

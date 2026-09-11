@@ -1,0 +1,6 @@
+{
+  "package_name": "custom_action_pkg",
+  "non_idl_tuples": [
+    "/home/nipun/ros2_ws/custom_action_pkg:action/CountDown.action"
+  ]
+}

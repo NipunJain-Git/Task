@@ -1,0 +1,384 @@
+[0.000000] (-) TimerEvent: {}
+[0.000607] (-) JobUnselected: {'identifier': 'custom_msg_pkg'}
+[0.001073] (-) JobUnselected: {'identifier': 'sensor_pipeline'}
+[0.001114] (-) JobUnselected: {'identifier': 'task3'}
+[0.001149] (custom_action_pkg) JobQueued: {'identifier': 'custom_action_pkg', 'dependencies': OrderedDict()}
+[0.001186] (custom_action_pkg) JobStarted: {'identifier': 'custom_action_pkg'}
+[0.024615] (custom_action_pkg) JobProgress: {'identifier': 'custom_action_pkg', 'progress': 'cmake'}
+[0.025818] (custom_action_pkg) Command: {'cmd': ['/usr/bin/cmake', '/home/nipun/ros2_ws/custom_action_pkg', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/nipun/ros2_ws/install/custom_action_pkg'], 'cwd': '/home/nipun/ros2_ws/build/custom_action_pkg', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'nipun'), ('FONTCONFIG_PATH', '/etc/fonts'), ('GIO_MODULE_DIR', '/home/nipun/snap/code/common/.cache/gio-modules'), ('XDG_SESSION_TYPE', 'x11'), ('GIT_ASKPASS', '/snap/code/262/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('GTK_EXE_PREFIX_VSCODE_SNAP_ORIG', ''), ('GDK_BACKEND_VSCODE_SNAP_ORIG', ''), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/nipun'), ('CHROME_DESKTOP', 'code.desktop'), ('LOCPATH_VSCODE_SNAP_ORIG', ''), ('OLDPWD', '/home/nipun/ros2_ws/custom_action_pkg'), ('TERM_PROGRAM_VERSION', '1.136.2'), ('DESKTOP_SESSION', 'ubuntu'), ('GTK_PATH', '/snap/code/262/usr/lib/x86_64-linux-gnu/gtk-3.0'), ('NVM_BIN', '/home/nipun/.nvm/versions/node/v20.20.2/bin'), ('NVM_INC', '/home/nipun/.nvm/versions/node/v20.20.2/include/node'), ('XDG_DATA_HOME_VSCODE_SNAP_ORIG', ''), ('GTK_IM_MODULE_FILE', '/home/nipun/snap/code/common/.cache/immodules/immodules.cache'), ('GIO_LAUNCHED_DESKTOP_FILE', '/var/lib/snapd/desktop/applications/code_code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge:appmenu-gtk-module'), ('GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG', ''), ('VSCODE_GIT_ASKPASS_MAIN', '/snap/code/262/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/snap/code/262/usr/share/code/code'), ('MANAGERPID', '1414'), ('SYSTEMD_EXEC_PID', '1808'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '14867'), ('NVM_DIR', '/home/nipun/.nvm'), ('COLCON_PREFIX_PATH', '/home/nipun/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'nipun'), ('JOURNAL_STREAM', '8:9016'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_CONFIG_DIRS_VSCODE_SNAP_ORIG', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_SESSION_CLASS', 'user'), ('XDG_DATA_DIRS_VSCODE_SNAP_ORIG', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('USERNAME', 'nipun'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/nipun/.opencode/bin:/opt/ros/humble/bin:/home/nipun/.nvm/versions/node/v20.20.2/bin:/home/nipun/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/nipun/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/nipun-LOQ-15IRH8:@/tmp/.ICE-unix/1780,unix/nipun-LOQ-15IRH8:/tmp/.ICE-unix/1780'), ('GTK_EXE_PREFIX', '/snap/code/262/usr'), ('INVOCATION_ID', 'bda130f0d0fa4b158d174d76c864bdc7'), ('XDG_MENU_PREFIX', 'gnome-'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('LOCPATH', '/snap/code/262/usr/lib/locale'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('CLINE_ACTIVE', 'true'), ('GIO_MODULE_DIR_VSCODE_SNAP_ORIG', ''), ('XDG_DATA_HOME', '/home/nipun/snap/code/262/.local/share'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-e88df151a0.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('GSETTINGS_SCHEMA_DIR', '/home/nipun/snap/code/262/.local/share/glib-2.0/schemas'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GTK_PATH_VSCODE_SNAP_ORIG', ''), ('FONTCONFIG_FILE', '/etc/fonts/fonts.conf'), ('GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG', ''), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/nipun/ros2_ws/build/custom_action_pkg'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('COPILOT_DEBUG_NONCE', '38ab305d7eb5fc0f3369b770d7534dbd'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/home/nipun/snap/code/262/.local/share:/home/nipun/snap/code/262:/snap/code/262/usr/share:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.098948] (-) TimerEvent: {}
+[0.199273] (-) TimerEvent: {}
+[0.299568] (-) TimerEvent: {}
+[0.300578] (custom_action_pkg) StdoutLine: {'line': b'-- The C compiler identification is GNU 12.3.0\n'}
+[0.399699] (-) TimerEvent: {}
+[0.487803] (custom_action_pkg) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 12.3.0\n'}
+[0.499866] (-) TimerEvent: {}
+[0.511891] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.599993] (-) TimerEvent: {}
+[0.700316] (-) TimerEvent: {}
+[0.723716] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.772035] (custom_action_pkg) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.774608] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.777890] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.798891] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.800463] (-) TimerEvent: {}
+[0.900880] (-) TimerEvent: {}
+[1.001414] (-) TimerEvent: {}
+[1.101973] (-) TimerEvent: {}
+[1.202471] (-) TimerEvent: {}
+[1.219362] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.249792] (custom_action_pkg) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.251150] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.252663] (custom_action_pkg) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.260486] (custom_action_pkg) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.302611] (-) TimerEvent: {}
+[1.402912] (-) TimerEvent: {}
+[1.503225] (-) TimerEvent: {}
+[1.603534] (-) TimerEvent: {}
+[1.703897] (-) TimerEvent: {}
+[1.733430] (custom_action_pkg) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[1.804028] (-) TimerEvent: {}
+[1.897387] (custom_action_pkg) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[1.904287] (-) TimerEvent: {}
+[1.953341] (custom_action_pkg) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.1 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[1.961231] (custom_action_pkg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[1.975241] (custom_action_pkg) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.9 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[2.004428] (-) TimerEvent: {}
+[2.071673] (custom_action_pkg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.104587] (-) TimerEvent: {}
+[2.180549] (custom_action_pkg) StdoutLine: {'line': b'-- Found action_msgs: 1.2.3 (/opt/ros/humble/share/action_msgs/cmake)\n'}
+[2.204877] (-) TimerEvent: {}
+[2.305177] (-) TimerEvent: {}
+[2.405509] (-) TimerEvent: {}
+[2.505828] (-) TimerEvent: {}
+[2.606192] (-) TimerEvent: {}
+[2.706506] (-) TimerEvent: {}
+[2.806800] (-) TimerEvent: {}
+[2.907107] (-) TimerEvent: {}
+[2.937903] (custom_action_pkg) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[3.007229] (-) TimerEvent: {}
+[3.107505] (-) TimerEvent: {}
+[3.207769] (-) TimerEvent: {}
+[3.308109] (-) TimerEvent: {}
+[3.362813] (custom_action_pkg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[3.408250] (-) TimerEvent: {}
+[3.508548] (-) TimerEvent: {}
+[3.608792] (-) TimerEvent: {}
+[3.709073] (-) TimerEvent: {}
+[3.809307] (-) TimerEvent: {}
+[3.905341] (custom_action_pkg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.909404] (-) TimerEvent: {}
+[3.963646] (custom_action_pkg) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") \n'}
+[3.966450] (custom_action_pkg) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[4.009549] (-) TimerEvent: {}
+[4.019532] (custom_action_pkg) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") \n'}
+[4.019786] (custom_action_pkg) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[4.019888] (custom_action_pkg) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[4.019970] (custom_action_pkg) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so\n'}
+[4.061580] (custom_action_pkg) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[4.109769] (-) TimerEvent: {}
+[4.210013] (-) TimerEvent: {}
+[4.310279] (-) TimerEvent: {}
+[4.410536] (-) TimerEvent: {}
+[4.510772] (-) TimerEvent: {}
+[4.611008] (-) TimerEvent: {}
+[4.711281] (-) TimerEvent: {}
+[4.811519] (-) TimerEvent: {}
+[4.911771] (-) TimerEvent: {}
+[5.012041] (-) TimerEvent: {}
+[5.063042] (custom_action_pkg) StderrLine: {'line': b'CMake Warning at /opt/ros/humble/share/ament_cmake_pytest/cmake/ament_add_pytest_test.cmake:79 (message):\n'}
+[5.063389] (custom_action_pkg) StderrLine: {'line': b"  The Python module 'pytest' was not found, pytests cannot be run.  On Linux,\n"}
+[5.063502] (custom_action_pkg) StderrLine: {'line': b"  install the 'python3-pytest' package.  On other platforms, install 'pytest'\n"}
+[5.063592] (custom_action_pkg) StderrLine: {'line': b'  using pip.\n'}
+[5.063674] (custom_action_pkg) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[5.063762] (custom_action_pkg) StderrLine: {'line': b'  CMakeLists.txt:32 (ament_add_pytest_test)\n'}
+[5.063853] (custom_action_pkg) StderrLine: {'line': b'\n'}
+[5.063938] (custom_action_pkg) StderrLine: {'line': b'\n'}
+[5.084658] (custom_action_pkg) StdoutLine: {'line': b'-- Configuring done\n'}
+[5.112133] (-) TimerEvent: {}
+[5.144301] (custom_action_pkg) StdoutLine: {'line': b'-- Generating done\n'}
+[5.166173] (custom_action_pkg) StdoutLine: {'line': b'-- Build files have been written to: /home/nipun/ros2_ws/build/custom_action_pkg\n'}
+[5.177476] (custom_action_pkg) CommandEnded: {'returncode': 0}
+[5.178820] (custom_action_pkg) JobProgress: {'identifier': 'custom_action_pkg', 'progress': 'build'}
+[5.180090] (custom_action_pkg) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nipun/ros2_ws/build/custom_action_pkg', '--', '-j12', '-l12'], 'cwd': '/home/nipun/ros2_ws/build/custom_action_pkg', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'nipun'), ('FONTCONFIG_PATH', '/etc/fonts'), ('GIO_MODULE_DIR', '/home/nipun/snap/code/common/.cache/gio-modules'), ('XDG_SESSION_TYPE', 'x11'), ('GIT_ASKPASS', '/snap/code/262/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('GTK_EXE_PREFIX_VSCODE_SNAP_ORIG', ''), ('GDK_BACKEND_VSCODE_SNAP_ORIG', ''), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/nipun'), ('CHROME_DESKTOP', 'code.desktop'), ('LOCPATH_VSCODE_SNAP_ORIG', ''), ('OLDPWD', '/home/nipun/ros2_ws/custom_action_pkg'), ('TERM_PROGRAM_VERSION', '1.136.2'), ('DESKTOP_SESSION', 'ubuntu'), ('GTK_PATH', '/snap/code/262/usr/lib/x86_64-linux-gnu/gtk-3.0'), ('NVM_BIN', '/home/nipun/.nvm/versions/node/v20.20.2/bin'), ('NVM_INC', '/home/nipun/.nvm/versions/node/v20.20.2/include/node'), ('XDG_DATA_HOME_VSCODE_SNAP_ORIG', ''), ('GTK_IM_MODULE_FILE', '/home/nipun/snap/code/common/.cache/immodules/immodules.cache'), ('GIO_LAUNCHED_DESKTOP_FILE', '/var/lib/snapd/desktop/applications/code_code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge:appmenu-gtk-module'), ('GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG', ''), ('VSCODE_GIT_ASKPASS_MAIN', '/snap/code/262/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/snap/code/262/usr/share/code/code'), ('MANAGERPID', '1414'), ('SYSTEMD_EXEC_PID', '1808'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '14867'), ('NVM_DIR', '/home/nipun/.nvm'), ('COLCON_PREFIX_PATH', '/home/nipun/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'nipun'), ('JOURNAL_STREAM', '8:9016'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_CONFIG_DIRS_VSCODE_SNAP_ORIG', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_SESSION_CLASS', 'user'), ('XDG_DATA_DIRS_VSCODE_SNAP_ORIG', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('USERNAME', 'nipun'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/nipun/.opencode/bin:/opt/ros/humble/bin:/home/nipun/.nvm/versions/node/v20.20.2/bin:/home/nipun/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/nipun/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/nipun-LOQ-15IRH8:@/tmp/.ICE-unix/1780,unix/nipun-LOQ-15IRH8:/tmp/.ICE-unix/1780'), ('GTK_EXE_PREFIX', '/snap/code/262/usr'), ('INVOCATION_ID', 'bda130f0d0fa4b158d174d76c864bdc7'), ('XDG_MENU_PREFIX', 'gnome-'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('LOCPATH', '/snap/code/262/usr/lib/locale'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('CLINE_ACTIVE', 'true'), ('GIO_MODULE_DIR_VSCODE_SNAP_ORIG', ''), ('XDG_DATA_HOME', '/home/nipun/snap/code/262/.local/share'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-e88df151a0.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('GSETTINGS_SCHEMA_DIR', '/home/nipun/snap/code/262/.local/share/glib-2.0/schemas'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GTK_PATH_VSCODE_SNAP_ORIG', ''), ('FONTCONFIG_FILE', '/etc/fonts/fonts.conf'), ('GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG', ''), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/nipun/ros2_ws/build/custom_action_pkg'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('COPILOT_DEBUG_NONCE', '38ab305d7eb5fc0f3369b770d7534dbd'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/home/nipun/snap/code/262/.local/share:/home/nipun/snap/code/262:/snap/code/262/usr/share:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[5.212259] (-) TimerEvent: {}
+[5.265342] (custom_action_pkg) StdoutLine: {'line': b'[  3%] Generating C code for ROS interfaces\n'}
+[5.282373] (custom_action_pkg) StdoutLine: {'line': b'[  6%] Generating Rust code for ROS interfaces\n'}
+[5.291274] (custom_action_pkg) StdoutLine: {'line': b'[  9%] Generating C++ code for ROS interfaces\n'}
+[5.298346] (custom_action_pkg) StdoutLine: {'line': b'[  9%] Built target ament_cmake_python_symlink_custom_action_nodes\n'}
+[5.306482] (custom_action_pkg) StdoutLine: {'line': b'[  9%] Built target ament_cmake_python_symlink_custom_action_pkg\n'}
+[5.312429] (-) TimerEvent: {}
+[5.412712] (-) TimerEvent: {}
+[5.513001] (-) TimerEvent: {}
+[5.613316] (-) TimerEvent: {}
+[5.713609] (-) TimerEvent: {}
+[5.813885] (-) TimerEvent: {}
+[5.914153] (-) TimerEvent: {}
+[5.938065] (custom_action_pkg) StdoutLine: {'line': b'running egg_info\n'}
+[5.939960] (custom_action_pkg) StdoutLine: {'line': b'creating custom_action_nodes.egg-info\n'}
+[5.940618] (custom_action_pkg) StdoutLine: {'line': b'writing custom_action_nodes.egg-info/PKG-INFO\n'}
+[5.941591] (custom_action_pkg) StdoutLine: {'line': b'writing dependency_links to custom_action_nodes.egg-info/dependency_links.txt\n'}
+[5.943113] (custom_action_pkg) StdoutLine: {'line': b'writing top-level names to custom_action_nodes.egg-info/top_level.txt\n'}
+[5.943493] (custom_action_pkg) StdoutLine: {'line': b"writing manifest file 'custom_action_nodes.egg-info/SOURCES.txt'\n"}
+[5.949854] (custom_action_pkg) StdoutLine: {'line': b"reading manifest file 'custom_action_nodes.egg-info/SOURCES.txt'\n"}
+[5.951514] (custom_action_pkg) StdoutLine: {'line': b"writing manifest file 'custom_action_nodes.egg-info/SOURCES.txt'\n"}
+[6.014318] (-) TimerEvent: {}
+[6.015130] (custom_action_pkg) StdoutLine: {'line': b'[  9%] Built target custom_action_pkg__rs\n'}
+[6.044327] (custom_action_pkg) StdoutLine: {'line': b'[  9%] Built target ament_cmake_python_build_custom_action_nodes_egg\n'}
+[6.114466] (-) TimerEvent: {}
+[6.152233] (custom_action_pkg) StdoutLine: {'line': b'running egg_info\n'}
+[6.155001] (custom_action_pkg) StdoutLine: {'line': b'creating custom_action_pkg.egg-info\n'}
+[6.155426] (custom_action_pkg) StdoutLine: {'line': b'writing custom_action_pkg.egg-info/PKG-INFO\n'}
+[6.155682] (custom_action_pkg) StdoutLine: {'line': b'writing dependency_links to custom_action_pkg.egg-info/dependency_links.txt\n'}
+[6.156647] (custom_action_pkg) StdoutLine: {'line': b'writing top-level names to custom_action_pkg.egg-info/top_level.txt\n'}
+[6.156822] (custom_action_pkg) StdoutLine: {'line': b"writing manifest file 'custom_action_pkg.egg-info/SOURCES.txt'\n"}
+[6.160518] (custom_action_pkg) StdoutLine: {'line': b"reading manifest file 'custom_action_pkg.egg-info/SOURCES.txt'\n"}
+[6.161523] (custom_action_pkg) StdoutLine: {'line': b"writing manifest file 'custom_action_pkg.egg-info/SOURCES.txt'\n"}
+[6.214610] (-) TimerEvent: {}
+[6.217171] (custom_action_pkg) StdoutLine: {'line': b'[  9%] Built target ament_cmake_python_build_custom_action_pkg_egg\n'}
+[6.314752] (-) TimerEvent: {}
+[6.315729] (custom_action_pkg) StdoutLine: {'line': b'[  9%] Built target custom_action_pkg__cpp\n'}
+[6.336445] (custom_action_pkg) StdoutLine: {'line': b'[ 12%] Generating C++ type support dispatch for ROS interfaces\n'}
+[6.340127] (custom_action_pkg) StdoutLine: {'line': b'[ 15%] Generating C++ introspection for ROS interfaces\n'}
+[6.342501] (custom_action_pkg) StdoutLine: {'line': b'[ 18%] Generating C++ type support for eProsima Fast-RTPS\n'}
+[6.353416] (custom_action_pkg) StdoutLine: {'line': b'[ 21%] Building C object CMakeFiles/custom_action_pkg__rosidl_generator_c.dir/rosidl_generator_c/custom_action_pkg/action/detail/count_down__functions.c.o\n'}
+[6.414957] (-) TimerEvent: {}
+[6.515272] (-) TimerEvent: {}
+[6.615585] (-) TimerEvent: {}
+[6.715901] (-) TimerEvent: {}
+[6.733227] (custom_action_pkg) StdoutLine: {'line': b'[ 25%] Linking C shared library libcustom_action_pkg__rosidl_generator_c.so\n'}
+[6.816083] (-) TimerEvent: {}
+[6.825125] (custom_action_pkg) StdoutLine: {'line': b'[ 25%] Built target custom_action_pkg__rosidl_generator_c\n'}
+[6.847376] (custom_action_pkg) StdoutLine: {'line': b'[ 28%] Generating C introspection for ROS interfaces\n'}
+[6.852490] (custom_action_pkg) StdoutLine: {'line': b'[ 31%] Generating C type support for eProsima Fast-RTPS\n'}
+[6.853337] (custom_action_pkg) StdoutLine: {'line': b'[ 34%] Generating C type support dispatch for ROS interfaces\n'}
+[6.916214] (-) TimerEvent: {}
+[7.005833] (custom_action_pkg) StdoutLine: {'line': b'[ 37%] Building CXX object CMakeFiles/custom_action_pkg__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/custom_action_pkg/action/count_down__type_support.cpp.o\n'}
+[7.016352] (-) TimerEvent: {}
+[7.116655] (-) TimerEvent: {}
+[7.148767] (custom_action_pkg) StdoutLine: {'line': b'[ 40%] Building CXX object CMakeFiles/custom_action_pkg__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/custom_action_pkg/action/detail/count_down__type_support.cpp.o\n'}
+[7.216802] (-) TimerEvent: {}
+[7.253933] (custom_action_pkg) StdoutLine: {'line': b'[ 43%] Building CXX object CMakeFiles/custom_action_pkg__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/custom_action_pkg/action/detail/dds_fastrtps/count_down__type_support.cpp.o\n'}
+[7.317044] (-) TimerEvent: {}
+[7.417373] (-) TimerEvent: {}
+[7.517694] (-) TimerEvent: {}
+[7.547258] (custom_action_pkg) StdoutLine: {'line': b'[ 46%] Building CXX object CMakeFiles/custom_action_pkg__rosidl_typesupport_c.dir/rosidl_typesupport_c/custom_action_pkg/action/count_down__type_support.cpp.o\n'}
+[7.617860] (-) TimerEvent: {}
+[7.687651] (custom_action_pkg) StdoutLine: {'line': b'[ 50%] Linking CXX shared library libcustom_action_pkg__rosidl_typesupport_c.so\n'}
+[7.718856] (-) TimerEvent: {}
+[7.819261] (-) TimerEvent: {}
+[7.842496] (custom_action_pkg) StdoutLine: {'line': b'[ 50%] Built target custom_action_pkg__rosidl_typesupport_c\n'}
+[7.919497] (-) TimerEvent: {}
+[7.976582] (custom_action_pkg) StdoutLine: {'line': b'[ 53%] Building C object CMakeFiles/custom_action_pkg__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/custom_action_pkg/action/detail/count_down__type_support.c.o\n'}
+[8.019729] (-) TimerEvent: {}
+[8.120135] (-) TimerEvent: {}
+[8.121367] (custom_action_pkg) StdoutLine: {'line': b'[ 56%] Building CXX object CMakeFiles/custom_action_pkg__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/custom_action_pkg/action/detail/count_down__type_support_c.cpp.o\n'}
+[8.139982] (custom_action_pkg) StdoutLine: {'line': b'[ 59%] Linking C shared library libcustom_action_pkg__rosidl_typesupport_introspection_c.so\n'}
+[8.220322] (-) TimerEvent: {}
+[8.226699] (custom_action_pkg) StdoutLine: {'line': b'[ 59%] Built target custom_action_pkg__rosidl_typesupport_introspection_c\n'}
+[8.320483] (-) TimerEvent: {}
+[8.420799] (-) TimerEvent: {}
+[8.498582] (custom_action_pkg) StdoutLine: {'line': b'[ 62%] Linking CXX shared library libcustom_action_pkg__rosidl_typesupport_cpp.so\n'}
+[8.520992] (-) TimerEvent: {}
+[8.602126] (custom_action_pkg) StdoutLine: {'line': b'[ 62%] Built target custom_action_pkg__rosidl_typesupport_cpp\n'}
+[8.621153] (-) TimerEvent: {}
+[8.690483] (custom_action_pkg) StdoutLine: {'line': b'[ 65%] Linking CXX shared library libcustom_action_pkg__rosidl_typesupport_introspection_cpp.so\n'}
+[8.721321] (-) TimerEvent: {}
+[8.821700] (-) TimerEvent: {}
+[8.869678] (custom_action_pkg) StdoutLine: {'line': b'[ 65%] Built target custom_action_pkg__rosidl_typesupport_introspection_cpp\n'}
+[8.921939] (-) TimerEvent: {}
+[8.960096] (custom_action_pkg) StdoutLine: {'line': b'[ 68%] Linking CXX shared library libcustom_action_pkg__rosidl_typesupport_fastrtps_cpp.so\n'}
+[9.022080] (-) TimerEvent: {}
+[9.122351] (-) TimerEvent: {}
+[9.127006] (custom_action_pkg) StdoutLine: {'line': b'[ 68%] Built target custom_action_pkg__rosidl_typesupport_fastrtps_cpp\n'}
+[9.133239] (custom_action_pkg) StdoutLine: {'line': b'[ 71%] Linking CXX shared library libcustom_action_pkg__rosidl_typesupport_fastrtps_c.so\n'}
+[9.222513] (-) TimerEvent: {}
+[9.281737] (custom_action_pkg) StdoutLine: {'line': b'[ 71%] Built target custom_action_pkg__rosidl_typesupport_fastrtps_c\n'}
+[9.320846] (custom_action_pkg) StdoutLine: {'line': b'[ 71%] Built target custom_action_pkg\n'}
+[9.322617] (-) TimerEvent: {}
+[9.362492] (custom_action_pkg) StdoutLine: {'line': b'[ 75%] Generating Python code for ROS interfaces\n'}
+[9.422773] (-) TimerEvent: {}
+[9.523019] (-) TimerEvent: {}
+[9.623253] (-) TimerEvent: {}
+[9.723493] (-) TimerEvent: {}
+[9.823737] (-) TimerEvent: {}
+[9.924012] (-) TimerEvent: {}
+[10.024352] (-) TimerEvent: {}
+[10.124735] (-) TimerEvent: {}
+[10.224999] (-) TimerEvent: {}
+[10.325248] (-) TimerEvent: {}
+[10.425558] (-) TimerEvent: {}
+[10.525806] (-) TimerEvent: {}
+[10.626070] (-) TimerEvent: {}
+[10.726322] (-) TimerEvent: {}
+[10.730677] (custom_action_pkg) StdoutLine: {'line': b'[ 75%] Built target custom_action_pkg__py\n'}
+[10.773277] (custom_action_pkg) StdoutLine: {'line': b'[ 78%] Building C object CMakeFiles/custom_action_pkg__rosidl_generator_py.dir/rosidl_generator_py/custom_action_pkg/action/_count_down_s.c.o\n'}
+[10.826486] (-) TimerEvent: {}
+[10.926814] (-) TimerEvent: {}
+[11.027124] (-) TimerEvent: {}
+[11.115742] (custom_action_pkg) StdoutLine: {'line': b'[ 81%] Linking C shared library rosidl_generator_py/custom_action_pkg/libcustom_action_pkg__rosidl_generator_py.so\n'}
+[11.127287] (-) TimerEvent: {}
+[11.203653] (custom_action_pkg) StdoutLine: {'line': b'[ 81%] Built target custom_action_pkg__rosidl_generator_py\n'}
+[11.227501] (-) TimerEvent: {}
+[11.249496] (custom_action_pkg) StdoutLine: {'line': b'[ 84%] Building C object CMakeFiles/custom_action_pkg__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/custom_action_pkg/_custom_action_pkg_s.ep.rosidl_typesupport_introspection_c.c.o\n'}
+[11.249883] (custom_action_pkg) StdoutLine: {'line': b'[ 87%] Building C object CMakeFiles/custom_action_pkg__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/custom_action_pkg/_custom_action_pkg_s.ep.rosidl_typesupport_c.c.o\n'}
+[11.250608] (custom_action_pkg) StdoutLine: {'line': b'[ 90%] Building C object CMakeFiles/custom_action_pkg__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/custom_action_pkg/_custom_action_pkg_s.ep.rosidl_typesupport_fastrtps_c.c.o\n'}
+[11.327685] (-) TimerEvent: {}
+[11.427985] (-) TimerEvent: {}
+[11.528308] (-) TimerEvent: {}
+[11.540214] (custom_action_pkg) StdoutLine: {'line': b'[ 93%] Linking C shared library rosidl_generator_py/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[11.545107] (custom_action_pkg) StdoutLine: {'line': b'[ 96%] Linking C shared library rosidl_generator_py/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[11.571244] (custom_action_pkg) StdoutLine: {'line': b'[100%] Linking C shared library rosidl_generator_py/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[11.627455] (custom_action_pkg) StdoutLine: {'line': b'[100%] Built target custom_action_pkg__rosidl_typesupport_c__pyext\n'}
+[11.628372] (-) TimerEvent: {}
+[11.630958] (custom_action_pkg) StdoutLine: {'line': b'[100%] Built target custom_action_pkg__rosidl_typesupport_introspection_c__pyext\n'}
+[11.659855] (custom_action_pkg) StdoutLine: {'line': b'[100%] Built target custom_action_pkg__rosidl_typesupport_fastrtps_c__pyext\n'}
+[11.681075] (custom_action_pkg) CommandEnded: {'returncode': 0}
+[11.682498] (custom_action_pkg) JobProgress: {'identifier': 'custom_action_pkg', 'progress': 'install'}
+[11.697456] (custom_action_pkg) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nipun/ros2_ws/build/custom_action_pkg'], 'cwd': '/home/nipun/ros2_ws/build/custom_action_pkg', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'nipun'), ('FONTCONFIG_PATH', '/etc/fonts'), ('GIO_MODULE_DIR', '/home/nipun/snap/code/common/.cache/gio-modules'), ('XDG_SESSION_TYPE', 'x11'), ('GIT_ASKPASS', '/snap/code/262/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('GTK_EXE_PREFIX_VSCODE_SNAP_ORIG', ''), ('GDK_BACKEND_VSCODE_SNAP_ORIG', ''), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/nipun'), ('CHROME_DESKTOP', 'code.desktop'), ('LOCPATH_VSCODE_SNAP_ORIG', ''), ('OLDPWD', '/home/nipun/ros2_ws/custom_action_pkg'), ('TERM_PROGRAM_VERSION', '1.136.2'), ('DESKTOP_SESSION', 'ubuntu'), ('GTK_PATH', '/snap/code/262/usr/lib/x86_64-linux-gnu/gtk-3.0'), ('NVM_BIN', '/home/nipun/.nvm/versions/node/v20.20.2/bin'), ('NVM_INC', '/home/nipun/.nvm/versions/node/v20.20.2/include/node'), ('XDG_DATA_HOME_VSCODE_SNAP_ORIG', ''), ('GTK_IM_MODULE_FILE', '/home/nipun/snap/code/common/.cache/immodules/immodules.cache'), ('GIO_LAUNCHED_DESKTOP_FILE', '/var/lib/snapd/desktop/applications/code_code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge:appmenu-gtk-module'), ('GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG', ''), ('VSCODE_GIT_ASKPASS_MAIN', '/snap/code/262/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/snap/code/262/usr/share/code/code'), ('MANAGERPID', '1414'), ('SYSTEMD_EXEC_PID', '1808'), ('VSCODE_PYTHON_AUTOACTIVATE_GUARD', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '14867'), ('NVM_DIR', '/home/nipun/.nvm'), ('COLCON_PREFIX_PATH', '/home/nipun/ros2_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'nipun'), ('JOURNAL_STREAM', '8:9016'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_CONFIG_DIRS_VSCODE_SNAP_ORIG', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_SESSION_CLASS', 'user'), ('XDG_DATA_DIRS_VSCODE_SNAP_ORIG', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('USERNAME', 'nipun'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/nipun/.opencode/bin:/opt/ros/humble/bin:/home/nipun/.nvm/versions/node/v20.20.2/bin:/home/nipun/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/nipun/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/nipun-LOQ-15IRH8:@/tmp/.ICE-unix/1780,unix/nipun-LOQ-15IRH8:/tmp/.ICE-unix/1780'), ('GTK_EXE_PREFIX', '/snap/code/262/usr'), ('INVOCATION_ID', 'bda130f0d0fa4b158d174d76c864bdc7'), ('XDG_MENU_PREFIX', 'gnome-'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('LOCPATH', '/snap/code/262/usr/lib/locale'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('CLINE_ACTIVE', 'true'), ('GIO_MODULE_DIR_VSCODE_SNAP_ORIG', ''), ('XDG_DATA_HOME', '/home/nipun/snap/code/262/.local/share'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-e88df151a0.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('GSETTINGS_SCHEMA_DIR', '/home/nipun/snap/code/262/.local/share/glib-2.0/schemas'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GTK_PATH_VSCODE_SNAP_ORIG', ''), ('FONTCONFIG_FILE', '/etc/fonts/fonts.conf'), ('GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG', ''), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/nipun/ros2_ws/build/custom_action_pkg'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('COPILOT_DEBUG_NONCE', '38ab305d7eb5fc0f3369b770d7534dbd'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/home/nipun/snap/code/262/.local/share:/home/nipun/snap/code/262:/snap/code/262/usr/share:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[11.713395] (custom_action_pkg) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[11.714817] (custom_action_pkg) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[11.715210] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/ament_index/resource_index/rosidl_interfaces/custom_action_pkg\n'}
+[11.728530] (-) TimerEvent: {}
+[11.732675] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/count_down.h\n'}
+[11.746784] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__functions.h\n'}
+[11.762175] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__struct.h\n'}
+[11.777253] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__type_support.h\n'}
+[11.792292] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/msg/rosidl_generator_c__visibility_control.h\n'}
+[11.810334] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/library_path.sh\n'}
+[11.825759] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/library_path.dsv\n'}
+[11.828843] (-) TimerEvent: {}
+[11.843529] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__rosidl_typesupport_fastrtps_c.h\n'}
+[11.859308] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[11.876254] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__rosidl_typesupport_introspection_c.h\n'}
+[11.892000] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[11.907107] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/count_down.hpp\n'}
+[11.923563] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__builder.hpp\n'}
+[11.928996] (-) TimerEvent: {}
+[11.939074] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__struct.hpp\n'}
+[11.953181] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__traits.hpp\n'}
+[11.970883] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__type_support.hpp\n'}
+[11.989028] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[12.008090] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[12.023566] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[12.029167] (-) TimerEvent: {}
+[12.039730] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/include/custom_action_pkg/custom_action_pkg/action/detail/count_down__rosidl_typesupport_introspection_cpp.hpp\n'}
+[12.057628] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/pythonpath.sh\n'}
+[12.073387] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/pythonpath.dsv\n'}
+[12.092265] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg-0.0.0-py3.10.egg-info/PKG-INFO\n'}
+[12.107705] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg-0.0.0-py3.10.egg-info/SOURCES.txt\n'}
+[12.123895] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg-0.0.0-py3.10.egg-info/dependency_links.txt\n'}
+[12.129319] (-) TimerEvent: {}
+[12.139952] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg-0.0.0-py3.10.egg-info/top_level.txt\n'}
+[12.157982] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/__init__.py\n'}
+[12.173318] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/_custom_action_pkg_s.ep.rosidl_typesupport_c.c\n'}
+[12.188184] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/_custom_action_pkg_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[12.204755] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/_custom_action_pkg_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[12.219998] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/action/__init__.py\n'}
+[12.229438] (-) TimerEvent: {}
+[12.236510] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/action/_count_down.py\n'}
+[12.256300] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/action/_count_down_s.c\n'}
+[12.275255] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[12.293665] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[12.309543] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[12.326822] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/libcustom_action_pkg__rosidl_generator_py.so\n'}
+[12.329565] (-) TimerEvent: {}
+[12.342277] (custom_action_pkg) StdoutLine: {'line': b'-- Up-to-date symlink: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[12.342660] (custom_action_pkg) StdoutLine: {'line': b'-- Up-to-date symlink: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[12.343087] (custom_action_pkg) StdoutLine: {'line': b'-- Up-to-date symlink: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[12.343495] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/ament_index/resource_index/rust_packages/custom_action_pkg\n'}
+[12.360286] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/rust/Cargo.toml\n'}
+[12.376246] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/rust/build.rs\n'}
+[12.392972] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/rust/src/action.rs\n'}
+[12.409807] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/rust/src/action/rmw.rs\n'}
+[12.424201] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/rust/src/lib.rs\n'}
+[12.429716] (-) TimerEvent: {}
+[12.438933] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/action/CountDown.idl\n'}
+[12.455805] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/action/CountDown.action\n'}
+[12.472999] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes-0.0.0-py3.10.egg-info/PKG-INFO\n'}
+[12.490107] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes-0.0.0-py3.10.egg-info/SOURCES.txt\n'}
+[12.505795] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes-0.0.0-py3.10.egg-info/dependency_links.txt\n'}
+[12.523260] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes-0.0.0-py3.10.egg-info/top_level.txt\n'}
+[12.529940] (-) TimerEvent: {}
+[12.539752] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes/__init__.py\n'}
+[12.556042] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes/action_client.py\n'}
+[12.574030] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes/action_server.py\n'}
+[12.588373] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/lib/custom_action_pkg/action_server\n'}
+[12.603173] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/lib/custom_action_pkg/action_client\n'}
+[12.619038] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/launch/__pycache__/count_down.launch.cpython-310.pyc\n'}
+[12.630130] (-) TimerEvent: {}
+[12.636919] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/launch/count_down.launch.py\n'}
+[12.655462] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/ament_index/resource_index/package_run_dependencies/custom_action_pkg\n'}
+[12.672329] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/ament_index/resource_index/parent_prefix_path/custom_action_pkg\n'}
+[12.689867] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/ament_prefix_path.sh\n'}
+[12.705860] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/ament_prefix_path.dsv\n'}
+[12.725622] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/path.sh\n'}
+[12.730231] (-) TimerEvent: {}
+[12.741062] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/environment/path.dsv\n'}
+[12.759018] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/local_setup.bash\n'}
+[12.777388] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/local_setup.sh\n'}
+[12.793200] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/local_setup.zsh\n'}
+[12.809261] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/local_setup.dsv\n'}
+[12.826238] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/package.dsv\n'}
+[12.830358] (-) TimerEvent: {}
+[12.843006] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/ament_index/resource_index/packages/custom_action_pkg\n'}
+[12.858724] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/rosidl_cmake-extras.cmake\n'}
+[12.875732] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[12.892236] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[12.908651] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[12.926138] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[12.930505] (-) TimerEvent: {}
+[12.943241] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[12.961809] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[12.981796] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/rosidl_cmake_aggregate_target-extras.cmake\n'}
+[13.000923] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkgConfig.cmake\n'}
+[13.017898] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkgConfig-version.cmake\n'}
+[13.030760] (-) TimerEvent: {}
+[13.044700] (custom_action_pkg) StdoutLine: {'line': b'-- Symlinking: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/package.xml\n'}
+[13.067680] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_generator_c.so\n'}
+[13.068342] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_generator_c.so" to ""\n'}
+[13.068475] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_fastrtps_c.so\n'}
+[13.069206] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[13.069425] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_introspection_c.so\n'}
+[13.070289] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_introspection_c.so" to ""\n'}
+[13.070652] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_c.so\n'}
+[13.071030] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_c.so" to ""\n'}
+[13.071346] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_fastrtps_cpp.so\n'}
+[13.072512] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[13.072824] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_introspection_cpp.so\n'}
+[13.073341] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[13.073574] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_cpp.so\n'}
+[13.073985] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_typesupport_cpp.so" to ""\n'}
+[13.130929] (-) TimerEvent: {}
+[13.162272] (custom_action_pkg) StdoutLine: {'line': b"Listing '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg'...\n"}
+[13.162623] (custom_action_pkg) StdoutLine: {'line': b"Compiling '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/__init__.py'...\n"}
+[13.162788] (custom_action_pkg) StdoutLine: {'line': b"Listing '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/action'...\n"}
+[13.162934] (custom_action_pkg) StdoutLine: {'line': b"Compiling '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/action/__init__.py'...\n"}
+[13.163101] (custom_action_pkg) StdoutLine: {'line': b"Compiling '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_pkg/action/_count_down.py'...\n"}
+[13.172869] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_generator_py.so\n'}
+[13.173641] (custom_action_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/nipun/ros2_ws/install/custom_action_pkg/lib/libcustom_action_pkg__rosidl_generator_py.so" to ""\n'}
+[13.231067] (-) TimerEvent: {}
+[13.244547] (custom_action_pkg) StdoutLine: {'line': b"Listing '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes'...\n"}
+[13.244809] (custom_action_pkg) StdoutLine: {'line': b"Compiling '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes/__init__.py'...\n"}
+[13.244911] (custom_action_pkg) StdoutLine: {'line': b"Compiling '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes/action_client.py'...\n"}
+[13.244996] (custom_action_pkg) StdoutLine: {'line': b"Compiling '/home/nipun/ros2_ws/install/custom_action_pkg/local/lib/python3.10/dist-packages/custom_action_nodes/action_server.py'...\n"}
+[13.254368] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_generator_cExport.cmake\n'}
+[13.254926] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_generator_cExport-noconfig.cmake\n'}
+[13.255026] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[13.255387] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_typesupport_fastrtps_cExport-noconfig.cmake\n'}
+[13.255475] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_introspection_cExport.cmake\n'}
+[13.255954] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[13.256038] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_cExport.cmake\n'}
+[13.256225] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[13.256304] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_generator_cppExport.cmake\n'}
+[13.256644] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[13.256729] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake\n'}
+[13.256905] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[13.257094] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[13.257264] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_cppExport.cmake\n'}
+[13.257432] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/custom_action_pkg__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[13.257606] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_generator_pyExport.cmake\n'}
+[13.257796] (custom_action_pkg) StdoutLine: {'line': b'-- Installing: /home/nipun/ros2_ws/install/custom_action_pkg/share/custom_action_pkg/cmake/export_custom_action_pkg__rosidl_generator_pyExport-noconfig.cmake\n'}
+[13.261360] (custom_action_pkg) CommandEnded: {'returncode': 0}
+[13.311489] (custom_action_pkg) JobEnded: {'identifier': 'custom_action_pkg', 'rc': 0}
+[13.313137] (-) EventReactorShutdown: {}

@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/nipun/ros2_ws/build/custom_action_pkg/rosidl_generator_py/custom_action_pkg/custom_action_pkg_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so" "TARGETS" "custom_action_pkg__rosidl_typesupport_introspection_c__pyext" "DESTINATION" "local/lib/python3.10/dist-packages/custom_action_pkg")
